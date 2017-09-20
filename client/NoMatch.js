@@ -15,12 +15,11 @@ export default class NoMatch extends React.Component{
                 <p>임의로 이상한 값을 입력한 경우</p>
 
                 <div>
-                    <a href="#"> 다른 곳으로 보내기 1</a>
-                    <a href="#"> 다른 곳으로 보내기 2</a>
-                    <a href="#"> 다른 곳으로 보내기 3</a>
-                    <a href="#"> 다른 곳으로 보내기 4</a>
+                    <p><a href="#"> 다른 곳으로 보내기 1</a></p>
+                    <p><a href="#"> 다른 곳으로 보내기 2</a></p>
+                    <p><a href="#"> 다른 곳으로 보내기 3</a></p>
+                    <p><a href="#"> 다른 곳으로 보내기 4</a></p>
                 </div>
-
             </div>
         );
     }

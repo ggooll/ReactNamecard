@@ -18,33 +18,23 @@ export default class Consult extends React.Component {
 
         this.state = {
             consults: [],
-            cardHeaderStyle: {
-                backgroundColor: "#FCFCFC",
-                color: "#030303",
-                height: "6vh",
-                maxHeight: "6vh"
-            },
-            contentStyle: {
-                backgroundColor: "#D3D3D3",
-                color: "#030303",
-                maxHeight: "6vh",
-                overflow: "hidden"
-            }
+            searchValue: '',
+            sorting: ''
         };
+
+        this.handleSortSelect = this.handleSortSelect.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
-    componentDidMount() {
-        //window.scrollTo(0, 1);
+    componentWillMount() {
+        // window.scrollTo(0, 1);
         let empCode = location.pathname.split('/')[1];
-
-        // cookie
         let userNo = cookie.load('user');
 
         // axios -> array로 받아옴
         axios.get(`/api/consult/${empCode}/${userNo}`, {}).then((consults) => {
-            console.log(consults);
-            console.log(typeof consults);
             if ((typeof consults.data) !== 'string') {
+                consults.data.sort(this.dateDescSort);
                 this.setState({
                     consults: consults.data
                 });
@@ -55,6 +45,50 @@ export default class Consult extends React.Component {
         }).catch((error) => {
             console.log(error);
         });
+    }
+
+    dateDescSort(a, b) {
+        if (a["REG_DATE"] === b["REG_DATE"]) {
+            return 0
+        }
+        return a["REG_DATE"] < b["REG_DATE"] ? 1 : -1;
+    }
+
+    dateAscSort(a, b) {
+        if (a["REG_DATE"] === b["REG_DATE"]) {
+            return 0
+        }
+        return a["REG_DATE"] > b["REG_DATE"] ? 1 : -1;
+    }
+
+    handleChange(event) {
+        let filterToken = event.target.value;
+        let filteredConsults = this.state.consults.map((consult) => {
+            if (consult["TITLE"].indexOf(filterToken) < 0) {
+                consult["VISIBLE"] = 0;
+            } else {
+                consult["VISIBLE"] = 1;
+            }
+            return consult;
+        });
+
+        this.setState({
+            consults: filteredConsults,
+            searchValue: filterToken
+        });
+    }
+
+    handleSortSelect(event) {
+        let selected = event.target.value;
+        console.log(selected);
+        if (this.state.sorting !== selected) {
+            let sortFunc = selected === 'desc' ? this.dateDescSort : this.dateAscSort;
+            let sortedConsults = this.state.consults.sort(sortFunc);
+            this.setState({
+                consults: sortedConsults,
+                sorting: selected
+            });
+        }
     }
 
     handleClickCard(consultNo) {
@@ -68,34 +102,57 @@ export default class Consult extends React.Component {
     }
 
     render() {
+        let headerStyle = {
+            backgroundColor: "#FCFCFC",
+            color: "#030303",
+            height: "6vh",
+            maxHeight: "6vh"
+        };
+        let contentStyle = {
+            backgroundColor: "#D3D3D3",
+            color: "#030303",
+            maxHeight: "6vh",
+            overflow: "hidden"
+        };
+
         return (
             <div className="item-whole-div">
-                <TopNavigator title="Consult"/>
+                <TopNavigator title="내 상담기록"/>
                 <div className="clear-div-2"/>
 
                 <div className="search-div">
-                    <input type="text"/>
-                </div>
+                    <select onChange={this.handleSortSelect} value={this.state.sorting}>
+                        <option value="desc">{'최근부터'}</option>
+                        <option value="asc">{'처음부터'}</option>
+                    </select>
 
+                    <input type="text" name="searchValue" value={this.state.searchValue} onChange={this.handleChange}/>
+                </div>
                 <div className="clear-div-2"/>
 
                 <div className="item-section-div">
                     <Timeline>
                         {this.state.consults.map((consult, idx) => {
-                            return <TimelineEvent
-                                title=""
-                                createdAt={consult["REG_DATE"]}
-                                iconColor="#008485"
-                                container="card"
-                                key={idx}
-                                icon={this.getIcon()}
-                                cardHeaderStyle={this.state.cardHeaderStyle}
-                                contentStyle={this.state.contentStyle}
-                                onClick={this.handleClickCard.bind(this, consult["NO"])}>
-                                {consult["TITLE"]}
-                            </TimelineEvent>
+                            if (consult["VISIBLE"] === 1) {
+                                return (
+                                    <TimelineEvent
+                                        title=""
+                                        createdAt={consult["REG_DATE"]}
+                                        iconColor="#D40B3A"
+                                        container="card"
+                                        key={idx}
+                                        icon={this.getIcon()}
+                                        cardHeaderStyle={headerStyle}
+                                        contentStyle={contentStyle}
+                                        onClick={this.handleClickCard.bind(this, consult["NO"])}>
+                                        {consult["TITLE"]}
+                                    </TimelineEvent>);
+                            } else {
+                                return undefined;
+                            }
                         })}
                     </Timeline>
+
                 </div>
 
                 <div className="clear-div-4">{''}</div>
@@ -103,8 +160,4 @@ export default class Consult extends React.Component {
         );
     }
 }
-
-
-
-
 

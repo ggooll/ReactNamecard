@@ -54,7 +54,7 @@ export default class PopularProduct extends React.Component {
                     {/* 각 link가 붙음.. */}
                     <div className="drop-down-item" onClick={this.handleLinkMenu.bind(this, 'overall')}>
                         <span className="down-menu-span">
-                            <i className="fa fa-angle-right" aria-hidden="true"/>{'전체 Top3'}
+                            <i className="fa fa-angle-right" aria-hidden="true"/>{'전체 예,적금 상품보기'}
                         </span>
                     </div>
 

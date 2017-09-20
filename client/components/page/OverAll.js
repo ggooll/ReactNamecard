@@ -93,7 +93,7 @@ export default class OverAll extends React.Component {
     render() {
         return (
             <div className="item-whole-div">
-                <TopNavigator title="OverAll"/>
+                <TopNavigator title="전체 예,적금 상품"/>
 
                 <div className="item-top-introduce">
                     <img src={this.state.selectedImage}/>

@@ -72,8 +72,6 @@ export default class CommodityDetail extends React.Component {
         callback();
     }
 
-
-
     componentWillMount() {
         let parseUrl = window.location.pathname.split('/');
         let param = {
@@ -97,7 +95,7 @@ export default class CommodityDetail extends React.Component {
     render() {
         return (
             <div className="item-whole-div">
-                <TopNavigator title={"CommodityDetail"}/>
+                <TopNavigator title={"상품 상세정보"}/>
 
                 <div className="clear-div-2"/>
 

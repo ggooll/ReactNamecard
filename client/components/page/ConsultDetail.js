@@ -33,6 +33,7 @@ export default class ConsultDetail extends React.Component {
             console.log(err);
             console.log(result);
         });
+        window.scrollTo(0, 1);
     }
 
     getConsultData(component, consultNo, callback) {

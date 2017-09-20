@@ -1,5 +1,32 @@
-.search-div{
-    margin : 0 auto;
+.search-div {
+    margin: 1vh 5vw;
     text-align: center;
-    height : auto;
+    width: 90vw;
+    height: 5vh;
+    line-height: 5vh;
+}
+
+.item-section-div section {
+    font-size: 90% !important;
+    font-weight: bold !important;
+    width: inherit !important;
+    padding: 0;
+}
+
+.search-div input {
+    height: 5vh;
+    width: 40vw;
+    border : 1px solid #008485;
+    margin : auto 2.5vw;
+    font-size : 1.3rem;
+    padding-left : 2vw;
+}
+
+.search-div select {
+    height: 5vh;
+    width: 40vw;
+    border : 1px solid lightgray;
+    margin : auto 2.5vw;
+    font-size : 1.3rem;
+    border-radius : 0;
 }

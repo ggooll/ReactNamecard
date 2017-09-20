@@ -37,6 +37,7 @@ export default class NewCustomerModal extends React.Component {
 
     handleSubmit(){
         // state 전송
+
         this.props.closeModal();
     }
 
@@ -44,10 +45,11 @@ export default class NewCustomerModal extends React.Component {
         return(
             <div className="modal-horizontal-div">
                 <FormGroup>
+                    <Col xs={1}/>
                     <Col componentClass={ControlLabel} xs={3}>
                         {title}
                     </Col>
-                    <Col xs={8}>
+                    <Col xs={7}>
                         <FormControl type="text" value={inputState} name={name} placeholder={holder} onChange={this.handleChange}/>
                     </Col>
                     <Col xs={1}/>
@@ -65,11 +67,11 @@ export default class NewCustomerModal extends React.Component {
                 </div>
                 <div>
                     <Form horizontal>
-                        {this.renderFormGroup('이름','name','ha1', this.state.name)}
-                        {this.renderFormGroup('나이','age','ha2', this.state.age)}
-                        {this.renderFormGroup('전화번호','phone','ha3', this.state.phone)}
-                        {this.renderFormGroup('이메일','email','ha4', this.state.email)}
-                        {this.renderFormGroup('지역','location','ha5', this.state.location)}
+                        {this.renderFormGroup('이름','name','', this.state.name)}
+                        {this.renderFormGroup('나이','age','', this.state.age)}
+                        {this.renderFormGroup('전화번호','phone','-없이 입력해주세요', this.state.phone)}
+                        {this.renderFormGroup('이메일','email','ex)hong1@naver.com', this.state.email)}
+                        {this.renderFormGroup('지역','location','서울특별시 서초구 서초동', this.state.location)}
                     </Form>
 
                     <div className="modal-button-div">

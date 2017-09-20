@@ -13,6 +13,3 @@ ReactDOM.render(<App location={location}/>, rootElement);
 if (module.hot) {
     module.hot.accept();
 }
-
-// reactstrap CDN
-// https://unpkg.com/reactstrap/dist/reactstrap.min.js

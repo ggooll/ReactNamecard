@@ -8,13 +8,6 @@ const oracledbAuto = require('oracledb-autoreconnect');
 const oracledb = require('oracledb');
 const dbConfig = require('../database/config');
 
-function dateSort(a, b) {
-    if (a["REG_DATE"] === b["REG_DATE"]) {
-        return 0
-    }
-    return a["REG_DATE"] < b["REG_DATE"] ? 1 : -1;
-}
-
 function doRelease(conn) {
     conn.close(function (err) {
         if (err)
@@ -153,6 +146,7 @@ router.get('/findProducts/:consultNo', (req, res) => {
     });
 });
 
+
 router.get('/findOne/:consultNo', (req, res) => {
     let consultNo = req.params.consultNo;
     let params = [consultNo];
@@ -170,6 +164,7 @@ router.get('/findOne/:consultNo', (req, res) => {
     });
 });
 
+
 router.get('/:empCode/:customerNo', (req, res) => {
     let customerNo = req.params.customerNo;
     let empCode = req.params.empCode;
@@ -179,14 +174,14 @@ router.get('/:empCode/:customerNo', (req, res) => {
                             EMPLOYEE_NO,
                             CONTENT,
                             TO_CHAR(REG_DATE, 'yyyy-mm-dd') REG_DATE,
-                            TITLE 
+                            TITLE,
+                            1 as VISIBLE
                      FROM CONSULT 
                      WHERE CUSTOMER_NO = :customerNo 
                      AND EMPLOYEE_NO = (SELECT NO FROM EMPLOYEE WHERE CODE = :empCode)`;
 
     oracledbAuto.query(statement, params).then(function (dbResult) {
         let consults = oracledbAuto.transformToAssociated(dbResult);
-        consults.sort(dateSort);
         res.send(consults);
     });
 });
