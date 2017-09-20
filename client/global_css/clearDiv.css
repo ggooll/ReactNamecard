@@ -1,0 +1,63 @@
+.clear-div {
+    clear: both;
+}
+
+.clear-div-1 {
+    height: 1vh;
+    clear: both;
+}
+
+.clear-div-2 {
+    height: 2vh;
+    clear: both;
+}
+
+.clear-div-3 {
+    height: 4vh;
+    clear: both;
+}
+
+.clear-div-4 {
+    height: 4vh;
+    clear: both;
+}
+
+.clear-div-6 {
+    height: 6vh;
+    clear: both;
+}
+
+.clear-div-8 {
+    height: 8vh;
+    clear: both;
+}
+
+.clear-div-10 {
+    height: 10vh;
+    clear: both;
+}
+
+.clear-div-20 {
+    height: 20vh;
+    clear: both;
+}
+
+.clear-div-30 {
+    height: 30vh;
+    clear: both;
+}
+
+.clear-div-40 {
+    height: 40vh;
+    clear: both;
+}
+
+.clear-div-50 {
+    height: 50vh;
+    clear: both;
+}
+
+input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}

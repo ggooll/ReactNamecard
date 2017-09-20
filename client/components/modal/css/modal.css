@@ -1,0 +1,19 @@
+.modal-container {
+    margin : 0 auto;
+    height: 97vh;
+    background-color : white;
+    text-align: center;
+}
+
+.modal-container *{
+    margin : 0 auto;
+    text-align: center;
+}
+
+.modal-logo-div{
+    height: 25vh;
+    background-color : lightgray;
+    border : 1px solid black;
+    margin : 1vmin 2vmax;
+    padding : 2vw;
+}

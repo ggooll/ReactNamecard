@@ -1,0 +1,38 @@
+.bottom-item-titlespan {
+    margin-left: 2.5vmax;
+}
+
+.bottom-item-titlespan i {
+    float: right;
+    margin-right: 4vmax;
+    line-height: 8.5vmax;
+}
+
+.down-menu {
+    width: 100vmin;
+    background: #006C6C;
+    margin-top: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+}
+
+.down-menu.visible {
+    max-height: 25vmax;
+}
+
+.drop-down-item {
+    height: 8vmax;
+    line-height: 8vmax;
+    font-size: 1.4rem;
+    border-bottom: 1px solid white;
+}
+
+.down-menu-span {
+    margin-left: 4vmax;
+    color: white;
+}
+
+.down-menu-span i {
+    margin-right: 2.5vmax;
+}

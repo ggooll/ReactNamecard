@@ -1,0 +1,15 @@
+html, body {
+    height: 100%;
+    margin : 0 !important;
+    padding : 0 !important;
+}
+
+hr {
+    background-color : #488680;
+    margin : 0;
+}
+
+button:focus,
+input:focus{
+    outline: none !important;
+}

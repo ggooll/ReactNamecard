@@ -1,0 +1,18 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+
+window.detectingHistory = {
+    isModal : false,
+    modalFunc : undefined
+};
+
+let rootElement = document.getElementById('root');
+ReactDOM.render(<App location={location}/>, rootElement);
+
+if (module.hot) {
+    module.hot.accept();
+}
+
+// reactstrap CDN
+// https://unpkg.com/reactstrap/dist/reactstrap.min.js

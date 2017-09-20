@@ -1,0 +1,61 @@
+.item-whole-div {
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    background-color: white;
+    font-size: 1.4rem;
+}
+
+.item-top-introduce {
+    width: 100vw;
+    height: auto;
+    margin: 0 auto 1vh auto;
+    text-align: center;
+}
+
+.item-top-introduce img {
+    width: 100%;
+    height: auto;
+}
+
+.item-section-div {
+    margin-left: 5vw;
+    margin-right: 5vw;
+}
+
+.item-div {
+    margin-top: 1.5vh;
+    margin-bottom: 1.5vh;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+}
+
+.item-div div{
+    margin-top : 0.5vh;
+    margin-bottom : 0.5vh;
+}
+
+.item-div h5, .item-div h4{
+    font-weight: bolder;
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+}
+
+.item-div hr{
+    margin-top : 1vh;
+    margin-bottom : 1vh;
+}
+
+.item-fs-div {
+    background-color: #e5e5e5;
+    height: auto;
+}
+
+.item-fs-link-div {
+    height: 7vh;
+}
+
+.bank-logo-img{
+    width : 25vmin;
+    height: auto;
+}

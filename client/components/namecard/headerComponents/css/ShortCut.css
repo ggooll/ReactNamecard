@@ -1,0 +1,19 @@
+.short-cut-div {
+    margin : 0 auto;
+}
+
+.short-cut-div ul{
+    margin : 0;
+    padding : 0;
+    text-align: center;
+}
+
+.short-cut-div ul li{
+    display : inline;
+    padding : 0 2vmin;
+}
+
+.short-cut-div ul li a img {
+    width : 12vw;
+    height : auto;
+}

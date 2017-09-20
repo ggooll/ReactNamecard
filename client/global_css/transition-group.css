@@ -1,0 +1,52 @@
+.switch-wrapper {
+    position: relative;
+}
+
+.switch-wrapper > div {
+    position: absolute;
+    transition-duration: 5ms;
+}
+
+.slideIn-enter {
+    transform: translateX(100%);
+    transition: 0.35s transform ease;
+    opacity: 0.01;
+}
+
+.slideIn-enter.slideIn-enter-active {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.slideIn-leave {
+    transform: translateX(0);
+    transition: 0.35s transform ease;
+    opacity: 1;
+}
+
+.slideIn-leave.slideIn-leave-active {
+    transform: translateX(0);
+    opacity: 0.01;
+}
+
+.modal-enter {
+    transform: translateY(100%);
+    transition: 0.35s transform ease-in;
+    opacity: 0.01;
+}
+
+.modal-enter.modal-enter-active {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.modal-leave {
+    transform: translateY(0);
+    transition: 0.35s transform ease-out;
+    opacity: 1;
+}
+
+.modal-leave.modal-leave-active {
+    transform: translateY(0);
+    opacity: 0.01;
+}

@@ -1,0 +1,21 @@
+.namecard-bottom-container {
+    height: 35vmax;
+    width: 100vmin;
+}
+
+.namecard-bottom-itemdiv {
+    height: 8.5vmax;
+    background-color: #008485;
+    color: white;
+    line-height: 8.5vmax;
+    font-size: 1.4rem;
+    border-bottom : 1px solid white;
+}
+
+.namecard-bottom-itemdiv:active {
+    background-color: #005657;
+}
+
+.bottom-empty-div {
+    height: 0.5vmax;
+}

@@ -1,0 +1,28 @@
+
+.namecard-header-container {
+    height: 65vmax;
+    width: 100vmin;
+    margin: 0 !important;
+    padding: 0 !important;
+    background-color: white;
+    z-index: 10000;
+}
+
+.header-top-line div {
+    float: left;
+    height: 1.5vh;
+    background-color: #008485;
+}
+
+.top-left-line {
+    width: 80vw;
+}
+
+.top-focus-line {
+    width: 7.5vw;
+    background-color: #D40B3A !important;
+}
+
+.top-right-line {
+    width: 12.5vw;
+}
