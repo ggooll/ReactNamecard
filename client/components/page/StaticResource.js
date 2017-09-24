@@ -47,7 +47,6 @@ module.exports = {
     bankCodes: bankCodes
 };
 
-
 // 은행코드  / 은행명
 // 0010020	제주은행
 // 0014674	케이뱅크은행

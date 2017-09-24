@@ -1,52 +1,52 @@
-.namecard-introduce-div{
+.namecard-introduce-div {
     margin: 0 auto;
-    text-align : center;
+    text-align: center;
 }
 
-.namecard-image-div{
+.namecard-image-div {
     width: 100vmin;
     margin: 0 auto;
-    text-align : center;
+    text-align: center;
 }
 
-.logo-image{
-    height:6.5vh;
-    width:auto;
+.logo-image {
+    height: 6.5vh;
+    width: auto;
 }
 
-.namecard-image{
+.namecard-image {
     /* 사진의 고정값 or 고정비율 */
     width: 22vh;
     height: 23vh;
 
     object-fit: cover;
     /* 증명사진의 경우 position - top 추가 */
-    object-position : top;
+    object-position: top;
 
-    border : 5px solid #008485;
-    border-radius : 50%;
+    border: 5px solid #008485;
+    border-radius: 50%;
     -moz-border-radius: 50%;
     -webkit-border-radius: 50%;
 
     display: inline !important;
 }
 
-#introduce-name-text{
+#introduce-name-text {
     font-size: 2rem !important;
     color: #666;
     font-weight: bolder;
 }
 
-#introduce-dept-text{
-    font-size:1.5rem !important;
+#introduce-dept-text {
+    font-size: 1.5rem !important;
     color: dimgray;
 }
 
-.detail-introduce-div{
-    font-size : 1.5rem;
-    margin-top : 5vh;
+.detail-introduce-div {
+    font-size: 1.5rem;
+    margin-top: 5vh;
 }
 
-.detail-introduce-div p{
-    margin-left : 5vw;
+.detail-introduce-div p {
+    margin-left: 5vw;
 }

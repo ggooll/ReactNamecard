@@ -4,7 +4,7 @@ import history from './history';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 import NameCard from './components/namecard/NameCard';
-import AgeGroup from './components/page/AgeGroup';
+import OnDemand from './components/page/OnDemand';
 import OverAll from './components/page/OverAll';
 import Consult from './components/page/Consult';
 import Survey from './components/page/Survey';
@@ -17,8 +17,11 @@ import './global_css/transition-group.css';
 function getHistoryAction() {
     history.listen((location, action) => {
         window.detectingHistory.historyAction = action;
+        console.log(action);
     });
-    return window.detectingHistory.historyAction === 'PUSH' ? 'slideIn' : 'example';
+    let transition = window.detectingHistory.historyAction === 'PUSH' ? 'slideIn' : 'example';
+    console.log(transition);
+    return transition;
 }
 
 export default class App extends React.Component {
@@ -28,10 +31,12 @@ export default class App extends React.Component {
 
         window.onpopstate = function () {
             window.detectingHistory.historyAction = 'POP';
+
             let detect = window.detectingHistory;
             if (detect.isModal === true) {
                 let modalFunc = detect.modalFunc;
                 modalFunc.call();
+                detect.isModal = false;
             }
         };
     }
@@ -50,45 +55,45 @@ export default class App extends React.Component {
                         transitionLeaveTimeout={350}>
 
                         <Switch location={location} key={location.key}>
-
                             <Route name="fail"
-                                   exact path={"/fail"}
+                                   exact path={`/fail`}
                                    render={() => (<NoMatch />)}/>
 
-                            <Route name="home"
-                                   exact path={"/:empcode"}
-                                   component={NameCard}/>
+                            <Route name="productDetail"
+                                   exact path={`/:empcode/products/:option/:no`}
+                                   component={CommodityDetail}/>
 
-                            {/* depth 1 */}
-
-                            <Route name="overall"
-                                   exact path={"/:empcode/common/overall"}
+                            <Route name="products"
+                                   exact path={`/:empcode/products`}
                                    component={OverAll}/>
 
-                            <Route name="ageGroup"
-                                   exact path={"/:empcode/common/rankAge"}
-                                   component={AgeGroup}/>
-
-                            <Route name="consultInfo"
-                                   exact path={"/:empcode/private/consult"}
-                                   component={Consult}/>
-
-                            {/* 상담 관련 상품 정보 보기 추가 */}
-
-                            <Route name="survey"
-                                   exact path={"/:empcode/private/survey"}
-                                   component={Survey}/>
-
-
-                            {/* depth 2 */}
-
-                            <Route name="productDetail"
-                                   exact path={"/:empcode/commodities/:option/:no"}
+                            <Route name="consultDetailProducts"
+                                   exact path={`/:empcode/consult/:option/:no`}
                                    component={CommodityDetail}/>
 
                             <Route name="consultDetail"
-                                   exact path={"/:empcode/private/consult/detail/:no"}
+                                   exact path={`/:empcode/consult/:no`}
                                    component={ConsultDetail}/>
+
+                            <Route name="consultInfo"
+                                   exact path={`/:empcode/consult`}
+                                   component={Consult}/>
+
+
+
+                            {/*         */}
+                            <Route name="ageGroup"
+                                   exact path={`/:empcode/onDemand`}
+                                   component={OnDemand}/>
+
+                            {/* 상담 관련 상품 정보 보기 추가 */}
+                            <Route name="survey"
+                                   exact path={`/:empcode/private/survey`}
+                                   component={Survey}/>
+
+                            <Route name="home"
+                                   exact path={`/:empcode`}
+                                   component={NameCard}/>
 
                         </Switch>
                     </ReactCSSTransitionGroup>

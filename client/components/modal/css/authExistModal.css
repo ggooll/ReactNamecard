@@ -1,31 +1,31 @@
 .modal-input-div {
-    margin : 1vh auto;
+    margin: 1vh auto;
     vertical-align: middle;
 }
 
-.modal-input-div .form-control{
-    display : inline-block !important;
+.modal-input-div .form-control {
+    display: inline-block !important;
 }
 
-.modal-input-div .modal-btn{
+.modal-input-div .modal-btn {
     font-size: 1.0rem;
     line-height: 3vh;
     margin-left: 2vh;
     height: 5vh;
-    border : 1px solid #026e6f;
-    background-color : #008485;
-    color : white;
-    width : 25vw;
-    border-radius : 4px;
+    border: 1px solid #026e6f;
+    background-color: #008485;
+    color: white;
+    width: 25vw;
+    border-radius: 4px;
 }
 
-.modal-input{
+.modal-input {
     height: 5vh;
     line-height: 3vh;
     font-size: 1.0rem;
     width: 55vw;
     border: 1px solid #008485;
-    border-radius : 4px;
+    border-radius: 4px;
 }
 
 .modal-error-input {
@@ -36,54 +36,52 @@
     border: 1px solid #D70033;
 }
 
-.modal-button-div button{
-    background-color : #008485;
-    border : 1px solid #026e6f;
-    color : white;
-    height : 5vh !important;
+.modal-button-div button {
+    background-color: #008485;
+    border: 1px solid #026e6f;
+    color: white;
+    height: 5vh !important;
 }
 
-.form-error-check{
-    margin : 2vh auto;
-    color : #D70033;
+.form-error-check {
+    margin: 2vh auto;
+    color: #D70033;
 }
 
-.hide-div{
-    display : none;
+.hide-div {
+    display: none;
 }
 
-.input-phone-div{
-    margin-bottom : 2vh;
+.input-phone-div {
+    margin-bottom: 2vh;
 }
 
-
-
-.send-notice-div{
-    display : table;
+.send-notice-div {
+    display: table;
     height: 10vh;
-    padding-top : 2vh;
+    padding-top: 2vh;
     padding-bottom: 2vh;
 }
 
-.notice-icon-div{
-    display : table-cell;
+.notice-icon-div {
+    display: table-cell;
     width: 10vh;
     height: 10vh;
 }
 
-.notice-icon-div img{
-    width:100%;
-    height:100%;
+.notice-icon-div img {
+    width: 100%;
+    height: 100%;
 }
 
-.notice-para-div{
+.notice-para-div {
     height: 10vh;
-    width : 60vw;
-    display : table-cell;
+    width: 60vw;
+    display: table-cell;
     vertical-align: middle;
 }
 
-.notice-para-div p{
-    margin-left : 2vw;
-    color : gray;
+.notice-para-div p {
+    margin-left: 2vw;
+    color: gray;
 }

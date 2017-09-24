@@ -32,7 +32,7 @@ export default class Introduce extends React.Component {
         this.state = this.defaultState;
     }
 
-    componentWillMount() {
+    componentDidMount() {
         axios.get(`/api/employee/${this.props.name}`, {}).then((emp) => {
             if ((typeof emp.data) !== 'string') {
                 this.setState({
@@ -82,7 +82,7 @@ export default class Introduce extends React.Component {
                         <div className="clear-div-4"/>
                         <div className="namecard-image-div">
                             <img className="namecard-image"
-                                 src="https://static.pexels.com/photos/220453/pexels-photo-220453.jpeg"/>
+                                 src="https://vignette1.wikia.nocookie.net/cutemariobro/images/5/59/Person-placeholder.jpg"/>
                         </div>
 
                         <div className="namecard-introduce-div">

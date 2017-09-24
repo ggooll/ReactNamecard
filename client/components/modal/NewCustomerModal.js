@@ -25,24 +25,28 @@ export default class NewCustomerModal extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    componentDidMount() {
+        window.scrollTo(0, 1);
+    }
+
     handleChange(event) {
         let result = {};
         result[event.target.name] = event.target.value;
         this.setState(result);
     }
 
-    handleCloseModal(){
+    handleCloseModal() {
+        window.history.pushState('forward', null, './');
         this.props.closeModal();
     }
 
-    handleSubmit(){
-        // state 전송
-
+    handleSubmit() {
+        window.history.pushState('forward', null, './');
         this.props.closeModal();
     }
 
-    renderFormGroup(title, name, holder, inputState){
-        return(
+    renderFormGroup(title, name, holder, inputState) {
+        return (
             <div className="modal-horizontal-div">
                 <FormGroup>
                     <Col xs={1}/>
@@ -50,7 +54,8 @@ export default class NewCustomerModal extends React.Component {
                         {title}
                     </Col>
                     <Col xs={7}>
-                        <FormControl type="text" value={inputState} name={name} placeholder={holder} onChange={this.handleChange}/>
+                        <FormControl type="text" value={inputState} name={name} placeholder={holder}
+                                     onChange={this.handleChange}/>
                     </Col>
                     <Col xs={1}/>
                 </FormGroup>
@@ -67,11 +72,11 @@ export default class NewCustomerModal extends React.Component {
                 </div>
                 <div>
                     <Form horizontal>
-                        {this.renderFormGroup('이름','name','', this.state.name)}
-                        {this.renderFormGroup('나이','age','', this.state.age)}
-                        {this.renderFormGroup('전화번호','phone','-없이 입력해주세요', this.state.phone)}
-                        {this.renderFormGroup('이메일','email','ex)hong1@naver.com', this.state.email)}
-                        {this.renderFormGroup('지역','location','서울특별시 서초구 서초동', this.state.location)}
+                        {this.renderFormGroup('이름', 'name', '', this.state.name)}
+                        {this.renderFormGroup('나이', 'age', '', this.state.age)}
+                        {this.renderFormGroup('전화번호', 'phone', '-없이 입력해주세요', this.state.phone)}
+                        {this.renderFormGroup('이메일', 'email', 'ex)hong1@naver.com', this.state.email)}
+                        {this.renderFormGroup('지역', 'location', '서울특별시 서초구 서초동', this.state.location)}
                     </Form>
 
                     <div className="modal-button-div">

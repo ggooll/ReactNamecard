@@ -4,11 +4,10 @@
 
 import React from 'react';
 
+export default class NoMatch extends React.Component {
 
-export default class NoMatch extends React.Component{
-
-    render(){
-        return(
+    render() {
+        return (
             <div>
                 <div>잘못된 접근입니다.</div>
                 <p>사원 코드가 잘못 전송된 경우</p>

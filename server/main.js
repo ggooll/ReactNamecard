@@ -78,10 +78,6 @@ app.use('/:name', express.static(path.join(__dirname, '/../public')));
 
 app.get("*", function (req, res) {
     let empCode = req.path.split('/')[1];
-
-    console.log('https');
-    console.log(empCode);
-
     if (empCode !== undefined) {
         res.redirect(`/${empCode}`);
     } else {

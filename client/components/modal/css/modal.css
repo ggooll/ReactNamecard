@@ -1,19 +1,20 @@
 .modal-container {
-    margin : 0 auto;
+    margin: 0 auto;
     height: 97vh;
-    background-color : white;
+    background-color: white;
     text-align: center;
 }
 
-.modal-container *{
-    margin : 0 auto;
+.modal-container * {
+    margin: 0 auto;
     text-align: center;
 }
 
-.modal-logo-div{
+.modal-logo-div {
+    width: inherit;
     height: 25vh;
-    background-color : lightgray;
-    border : 1px solid black;
-    margin : 1vmin 2vmax;
-    padding : 2vw;
+    background-color: #008485;
+    border: 1px solid black;
+    margin: 1vmin 2vmax;
+    padding: 2vw;
 }

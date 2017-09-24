@@ -30,7 +30,7 @@ export default class PopularProduct extends React.Component {
     }
 
     handleLinkMenu(linkUri) {
-        history.push(`/${this.state.empCode}/common/${linkUri}`);
+        history.push(`/${this.state.empCode}/${linkUri}`);
     }
 
     render() {
@@ -52,15 +52,15 @@ export default class PopularProduct extends React.Component {
                 <div className={this.state.downVisible}>
 
                     {/* 각 link가 붙음.. */}
-                    <div className="drop-down-item" onClick={this.handleLinkMenu.bind(this, 'overall')}>
+                    <div className="drop-down-item" onClick={this.handleLinkMenu.bind(this, 'products')}>
                         <span className="down-menu-span">
                             <i className="fa fa-angle-right" aria-hidden="true"/>{'전체 예,적금 상품보기'}
                         </span>
                     </div>
 
-                    <div className="drop-down-item" onClick={this.handleLinkMenu.bind(this, 'rankAge')}>
+                    <div className="drop-down-item" onClick={this.handleLinkMenu.bind(this, 'onDemand')}>
                         <span className="down-menu-span">
-                            <i className="fa fa-angle-right" aria-hidden="true"/>{'연령별 Top3'}
+                            <i className="fa fa-angle-right" aria-hidden="true"/>{'나에게 맞는 상품보기'}
                         </span>
                     </div>
 

@@ -19,7 +19,7 @@ export default class NameCardHeader extends React.Component {
 
                 <div className="header-top-line">
                     <div className="top-left-line"/>
-                    <div className="top-focus-line"/>
+                    <div className="top-point-line"/>
                     <div className="top-right-line"/>
                 </div>
 
