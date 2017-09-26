@@ -49,7 +49,7 @@ export default class App extends React.Component {
 
     render() {
         return (
-            <Router history={history}>
+            <Router onUpdate={fireTracking} history={history}>
                 <Route render={({location}) =>
                     <ReactCSSTransitionGroup
                         transitionName={getHistoryAction()}
