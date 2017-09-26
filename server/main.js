@@ -11,19 +11,19 @@ import commodity from './routes/commodity';
 import consult from './routes/consult';
 import flash from 'connect-flash';
 import path from 'path';
-import fs from 'fs';
-import https from 'https';
-
-const sslPath = path.join(__dirname, '/../server/sslcert');
-const certOption = {
-    key: fs.readFileSync(sslPath + '/server.key', 'utf8'),
-    cert: fs.readFileSync(sslPath + '/server.crt', 'utf8')
-};
+//import fs from 'fs';
+//import https from 'https';
+//
+// const sslPath = path.join(__dirname, '/../server/sslcert');
+// const certOption = {
+//     key: fs.readFileSync(sslPath + '/server.key', 'utf8'),
+//     cert: fs.readFileSync(sslPath + '/server.crt', 'utf8')
+// };
 
 const app = express();
 const port = 3000;
 const devPort = 3001;
-const sslPort = 3002;
+//const sslPort = 3002;
 const db = require('oracledb-autoreconnect');
 const dbConfig = require('./database/config');
 
@@ -88,9 +88,9 @@ app.get("*", function (req, res) {
         res.redirect('/fail');
     }
 });
-https.createServer(certOption, app).listen(sslPort, function () {
-    console.log('Express HTTPS server listening on port ' + sslPort);
-});
+// https.createServer(certOption, app).listen(sslPort, function () {
+//     console.log('Express HTTPS server listening on port ' + sslPort);
+// });
 
 /**
  * Secondary express - http
@@ -98,17 +98,17 @@ https.createServer(certOption, app).listen(sslPort, function () {
  */
 const httpApp = express();
 import http from 'http';
-httpApp.get('*', function (req, res) {
-    let empCode = req.path.split('/')[1];
-    let host = req.get('Host');
-    host = host.replace(/:\d+$/, ":" + sslPort);
-
-    if (empCode !== undefined) {
-        res.redirect(`https://${host}/${empCode}`);
-    } else {
-        res.redirect('/fail');
-    }
-});
-http.createServer(httpApp).listen(port, function () {
+// httpApp.get('*', function (req, res) {
+//     let empCode = req.path.split('/')[1];
+//     let host = req.get('Host');
+//     host = host.replace(/:\d+$/, ":" + sslPort);
+//
+//     if (empCode !== undefined) {
+//         res.redirect(`https://${host}/${empCode}`);
+//     } else {
+//         res.redirect('/fail');
+//     }
+// });
+http.createServer(app).listen(port, function () {
     console.log('Express HTTP server listening on port ' + port);
 });
