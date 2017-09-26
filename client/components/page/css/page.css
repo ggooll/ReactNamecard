@@ -30,20 +30,20 @@
     padding-bottom: 1vh;
 }
 
-.item-div div{
-    margin-top : 0.5vh;
-    margin-bottom : 0.5vh;
+.item-div div {
+    margin-top: 0.5vh;
+    margin-bottom: 0.5vh;
 }
 
-.item-div h5, .item-div h4{
+.item-div h5, .item-div h4 {
     font-weight: bolder;
     margin-top: 1vh;
     margin-bottom: 1vh;
 }
 
-.item-div hr{
-    margin-top : 1vh;
-    margin-bottom : 1vh;
+.item-div hr {
+    margin-top: 1vh;
+    margin-bottom: 1vh;
 }
 
 .item-fs-div {
@@ -55,7 +55,7 @@
     height: 7vh;
 }
 
-.bank-logo-img{
-    width : 25vmin;
+.bank-logo-img {
+    width: 25vmin;
     height: auto;
 }

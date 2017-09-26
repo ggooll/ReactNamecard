@@ -50,7 +50,7 @@ router.post('/authNumber', (req, res) => {
     // 두 번호 검증
     let hashed = bcrypt.hashSync(inputNum, salt);
 
-    if(hashed !== refSaltedNum){
+    if (hashed !== refSaltedNum) {
         res.send(false);
     } else {
         // 인증 성공
@@ -61,24 +61,19 @@ router.post('/authNumber', (req, res) => {
     }
 });
 
-
-
-router.post('/isExistSession', (req, res)=>{
+router.post('/isExistSession', (req, res) => {
     const session = req.session;
     let sessSalt = session.refSalt;
     let authUser = session.authUser;
 
-    res.send(true);
-    //
-    // if(authUser !== undefined && sessSalt !== undefined){
-    //     // 세션의 phone + bcrypt와 refSalt를 추가로 검사할 수 있다.
-    //     res.send(true);
-    // } else {
-    //     res.send(false);
-    // }
+    // res.send(true);
+
+    if (authUser !== undefined && sessSalt !== undefined) {
+        // 세션의 phone + bcrypt와 refSalt를 추가로 검사할 수 있다.
+        res.send(true);
+    } else {
+        res.send(false);
+    }
 });
-
-
-// destroy;
 
 export default router;

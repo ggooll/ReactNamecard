@@ -1,0 +1,72 @@
+.top-introduce-frame {
+    height: 20vh;
+    background-color: aquamarine;
+}
+
+.list-demand {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.list-input-demand {
+    margin: 3vh auto;
+    background-color: lightcyan;
+    height: auto;
+    padding: 3vw;
+}
+
+.some-div {
+    margin-top: 1.5vh;
+    margin-bottom: 10vh;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+}
+
+.list-input-div {
+    border-bottom: 2px solid #008485;
+    height: 6vh;
+    line-height: 6vh;
+    margin: 1vh auto;
+}
+
+.list-input-div input {
+    height: 4vh;
+    line-height: 4vh;
+    text-align: right;
+    width: 60vw;
+    margin-left: 3vw;
+    font-size: 1.5rem;
+}
+
+.list-input-div div {
+    display: inline-block;
+    float: right;
+    margin-right: 5vw;
+    font-size: 1.5rem;
+}
+
+.gender-div {
+    width: 30vw;
+    height: 7vh;
+    line-height: 7vh;
+    border: 2px solid lightgray;
+    float: left !important;
+    text-align: -webkit-center;
+    margin-left: 3.5vw;
+    margin-right: 3.5vw !important;
+}
+
+.search-ondemand-commodities {
+    position: fixed;
+    bottom: 0;
+    margin: 0 auto;
+    width: 100vw;
+    background-color: #008485;
+    height: 8vh;
+    line-height: 8vh;
+    font-size: 1.5rem;
+    text-align: center;
+    color: white;
+}
+

@@ -7,7 +7,7 @@ import './css/ShortCut.css';
 
 export default class ShortCut extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
     }
 

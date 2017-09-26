@@ -18,7 +18,9 @@
 }
 
 .consult-content-div {
-    padding: 5vw;
+    margin: 0 auto;
+    width: 90vw;
+    padding: 3vw;
     min-height: 20vh;
     overflow: auto;
 }
@@ -61,10 +63,21 @@
     text-align: center;
 }
 
-.deposit-link{
+.consult-inquire-div {
+    width: 100vw;
+    height: 7vh;
+    text-align: center;
+    font-size: 1.3rem;
+    line-height: 7vh;
+    background-color: #008485;
+    color: white;
+    font-weight: bold;
+}
+
+.deposit-link {
     background-color: #008485;
 }
 
-.savings-link{
+.savings-link {
     background-color: #D70033;
 }

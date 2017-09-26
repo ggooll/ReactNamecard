@@ -16,7 +16,7 @@ function doRelease(conn) {
 }
 
 function getDepositProducts(deposits, callback) {
-    if(deposits.length === 0){
+    if (deposits.length === 0) {
         callback(null, []);
     } else {
         let baseStatement = `SELECT 
@@ -59,7 +59,7 @@ function getDepositProducts(deposits, callback) {
 }
 
 function getSavingsProducts(savings, callback) {
-    if(savings.length === 0){
+    if (savings.length === 0) {
         callback(null, []);
     } else {
         let baseStatement = `SELECT 
@@ -137,15 +137,14 @@ router.get('/findProducts/:consultNo', (req, res) => {
             },
             function (err, result) {
                 let resultObj = {
-                    depositProducts : result.depositProducts,
-                    savingsProducts : result.savingsProducts
+                    depositProducts: result.depositProducts,
+                    savingsProducts: result.savingsProducts
                 };
                 res.send(resultObj);
             }
         );
     });
 });
-
 
 router.get('/findOne/:consultNo', (req, res) => {
     let consultNo = req.params.consultNo;
@@ -163,7 +162,6 @@ router.get('/findOne/:consultNo', (req, res) => {
         res.send(consult);
     });
 });
-
 
 router.get('/:empCode/:customerNo', (req, res) => {
     let customerNo = req.params.customerNo;

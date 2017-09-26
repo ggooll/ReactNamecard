@@ -8,7 +8,6 @@ import IntroduceImages from './StaticResource';
 import TopNavigator from '../common/TopNavigator';
 import history from '../../history';
 import resource from './StaticResource';
-import './css/OverAll.css';
 import './css/page.css';
 
 export default class OverAll extends React.Component {
@@ -16,8 +15,8 @@ export default class OverAll extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            empCode: '',
+        this.defaultState = {
+            empCode: location.pathname.split('/')[1],
             selectedProducts: 'deposit_info',
             selectedImage: IntroduceImages.deposit_info[0],
             bankCodes: resource.bankCodes,
@@ -25,19 +24,20 @@ export default class OverAll extends React.Component {
             selectedBanksIndex: 0,
             overAllItems: []
         };
+
+        this.state = this.defaultState;
         this.handleChangeItem = this.handleChangeItem.bind(this);
         this.handleChangeBank = this.handleChangeBank.bind(this);
     }
 
-    componentDidMount() {
-        //window.scrollTo(0, 1);
-        let searchParam = this.state.selectedProducts;
-        let empCode = location.pathname.split('/')[1];
-        this.setState({
-            empCode: empCode
-        });
+    componentWillUnmount() {
+        this.setState(this.defaultState);
+    }
 
+    componentDidMount() {
+        let searchParam = this.state.selectedProducts;
         this.getCommodityData(this, {selectedItem: searchParam});
+        window.scrollTo(0, 1);
     }
 
     getCommodityData(component, param) {
@@ -54,28 +54,20 @@ export default class OverAll extends React.Component {
         let selected = event.target.value;
 
         if (selected !== this.state.selectedProducts) {
-            this.setState({
-                selectedProducts: selected
-            });
-
             let bankCode = resource.bankCodes[this.state.selectedBanksIndex];
-
             this.getCommodityData(this, {
                 selectedItem: selected, selectedBankCode: bankCode
             });
         }
 
         this.setState({
+            selectedProducts: selected,
             selectedImage: IntroduceImages[`${selected}`][0]
         });
     }
 
     handleChangeBank(event) {
         let selected = event.target.value;
-        this.setState({
-            selectedBanksIndex: selected
-        });
-
         let params = {
             selectedItem: this.state.selectedProducts
         };
@@ -84,10 +76,13 @@ export default class OverAll extends React.Component {
             params.selectedBankCode = resource.bankCodes[selected];
         }
         this.getCommodityData(this, params);
+        this.setState({
+            selectedBanksIndex: selected
+        });
     }
 
     handleClickProduct(productNo) {
-        history.push(`/${this.state.empCode}/commodities/${this.state.selectedProducts}/${productNo}`);
+        history.push(`/${this.state.empCode}/products/${this.state.selectedProducts}/${productNo}`);
     }
 
     render() {
@@ -100,6 +95,7 @@ export default class OverAll extends React.Component {
                 </div>
 
                 <div className="item-section-div">
+
                     <div className="clear-div-1"/>
                     <div>
                         <select className="form-control" onChange={this.handleChangeItem}
@@ -124,7 +120,7 @@ export default class OverAll extends React.Component {
                             {this.state.overAllItems.map((item, idx) => {
                                 return (
                                     <Col xs={12} md={8} key={idx} className="panel panel-default item-div"
-                                            onClick={this.handleClickProduct.bind(this, item["NO"])}>
+                                         onClick={this.handleClickProduct.bind(this, item["NO"])}>
                                         <div><img className="bank-logo-img"
                                                   src={`/images/bank_logos/${item["FIN_CO_NO"]}.png`}/></div>
                                         <div className="clear-div-1"/>

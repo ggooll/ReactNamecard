@@ -31,14 +31,10 @@ export default class ExistCustomer extends React.Component {
         this.handleAuthSuccess = this.handleAuthSuccess.bind(this);
     }
 
-    componentWillMount(){
-        this.setState(this.defaultState);
-    }
-
     handleDownMenuShow() {
         // localStorage말고 세션을 검사하게끔 한다.
         axios.post('/api/auth/isExistSession', {}).then((exist) => {
-            if(exist.data !== false){
+            if (exist.data !== false) {
                 this.setState({
                     downVisible: this.state.downVisible === 'down-menu' ? 'down-menu visible' : 'down-menu'
                 });
@@ -62,7 +58,6 @@ export default class ExistCustomer extends React.Component {
         this.setState({
             modalVisible: false
         });
-        window.history.pushState('forward', null, './');
     }
 
     handleAuthSuccess() {
@@ -70,12 +65,11 @@ export default class ExistCustomer extends React.Component {
             modalVisible: false,
             downVisible: this.state.downVisible === 'down-menu' ? 'down-menu visible' : 'down-menu'
         });
-        window.history.pushState('forward', null, './');
     }
 
     handleLinkMenu(linkUri) {
         // this.setState(this.defaultState);
-        history.push(`/${this.state.empCode}/private/${linkUri}`);
+        history.push(`/${this.state.empCode}/${linkUri}`);
     }
 
     render() {
@@ -85,11 +79,9 @@ export default class ExistCustomer extends React.Component {
                 <div className="namecard-bottom-itemdiv" onClick={this.handleDownMenuShow}>
                     <span className="bottom-item-titlespan">
                         {this.props.menuTitle}
-                        {
-                            this.state.downVisible === 'down-menu' ?
-                                <i className="fa fa-chevron-down" aria-hidden="true"/> :
-                                <i className="fa fa-chevron-up" aria-hidden="true"/>
-                        }
+                        {this.state.downVisible === 'down-menu' ?
+                            <i className="fa fa-chevron-down" aria-hidden="true"/> :
+                            <i className="fa fa-chevron-up" aria-hidden="true"/>}
                     </span>
                 </div>
 
@@ -119,8 +111,8 @@ export default class ExistCustomer extends React.Component {
                 <Rodal
                     visible={this.state.modalVisible}
                     onClose={this.handleModalClose}
-                    customStyles={{height: 'auto', width: 'auto', margin: 0}}
-                    closeOnEsc={true}
+                    customStyles={{height: '100vh', width: '100vw', margin: 0}}
+                    closeOnEsc={false}
                     animation={this.state.animation}
                     duration={300}
                     showCloseButton={false}>
