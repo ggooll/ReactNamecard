@@ -21,7 +21,7 @@ router.post('/overall', (req, res) => {
                     MTRT_INT,
                     JOIN_MEMBER FROM ${searchTable}`;
 
-    if(selectedCode !== undefined && selectedCode !== ""){
+    if (selectedCode !== undefined && selectedCode !== "") {
         statement += ` WHERE FIN_CO_NO = :fin_co_no`;
         params.push(selectedCode);
     }
@@ -121,7 +121,6 @@ export default router;
 //     rsrv_type: 'N',                                                       //  적립 유형
 //     rsrv_type_nm: 'rsrv_type_nm 0'                                       //  적립 유형명
 // };
-
 
 //
 //

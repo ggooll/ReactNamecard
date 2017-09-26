@@ -11,8 +11,12 @@ export default class NameCard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            empCode : location.pathname.replace(/\//g, '')
+            empCode: location.pathname.replace(/\//g, '')
         }
+    }
+
+    componentDidMount() {
+        window.scrollTo(0, 1);
     }
 
     render() {

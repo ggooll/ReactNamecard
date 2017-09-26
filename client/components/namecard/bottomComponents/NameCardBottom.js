@@ -16,10 +16,6 @@ export default class NameCardBottom extends React.Component {
 
         this.bottomItemTitles = ["상품보기", "기존고객", "새로운고객"];
 
-        this.downMenus = [
-            ["전체상품보기", "인기상품 골라보기"], ["내상담내역", "상품정보", "평가"], []
-        ];
-
         this.state = {
             empCode: this.props.name
         };
@@ -33,12 +29,10 @@ export default class NameCardBottom extends React.Component {
 
                 <PopularProduct index={0}
                                 menuTitle={this.bottomItemTitles[0]}
-                                downMenus={this.downMenus[0]}
                                 name={this.state.empCode}/>
 
                 <ExistCustomer index={1}
                                menuTitle={this.bottomItemTitles[1]}
-                               downMenus={this.downMenus[1]}
                                name={this.state.empCode}/>
 
                 <NewCustomer index={2}

@@ -5,6 +5,7 @@
 import React from 'react';
 import axios from 'axios';
 import async from 'async';
+import history from '../../history';
 import {Grid, Row, Col} from 'react-bootstrap';
 import './css/page.css';
 import './css/ConsultDetail.css';
@@ -15,35 +16,34 @@ export default class ConsultDetail extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            consultNo: '',
             consult: {},
             deposits: [],
             savings: []
-        }
+        };
+
+        this.handleClickInquire = this.handleClickInquire.bind(this);
     }
 
-    componentWillMount() {
-        let consultNo = location.pathname.split('/')[5];
+    componentDidMount() {
+        let consultNo = location.pathname.split('/')[3];
+        let component = this;
 
         let tasks = [
-            async.apply(this.getConsultData, this, consultNo),
+            async.apply(this.getConsultData, consultNo),
             this.getConsultCommodities
         ];
 
         async.waterfall(tasks, function (err, result) {
-            console.log(err);
-            console.log(result);
+            component.setState(result);
+            window.scrollTo(0, 1);
         });
-        window.scrollTo(0, 1);
     }
 
-    getConsultData(component, consultNo, callback) {
+    getConsultData(consultNo, callback) {
         axios.get(`/api/consult/findOne/${consultNo}`, {}).then((consult) => {
-            console.log(consult);
             if ((typeof consult.data[0]) !== 'string') {
-                component.setState({
-                    consult: consult.data[0]
-                });
-                callback(null, component, consultNo);
+                callback(null, consult.data[0]);
             } else {
                 history.push(`/fail`);
             }
@@ -52,21 +52,28 @@ export default class ConsultDetail extends React.Component {
         });
     }
 
-    getConsultCommodities(component, consultNo, callback) {
-        axios.get(`/api/consult/findProducts/${consultNo}`, {}).then((commoditySet) => {
-            console.log(commoditySet);
-            component.setState({
+    getConsultCommodities(consult, callback) {
+        axios.get(`/api/consult/findProducts/${consult["NO"]}`, {}).then((commoditySet) => {
+            let result = {
+                consultNo: consult["NO"],
+                consult: consult,
                 deposits: commoditySet.data["depositProducts"],
                 savings: commoditySet.data["savingsProducts"]
-            });
+            };
+            callback(null, result);
         }).catch((error) => {
             console.log(error);
         });
-        callback();
     }
 
-    handleClickLink(productNo, category){
-        window.alert(productNo + " " + category);
+    handleClickInquire() {
+        window.alert('문의는 불가');
+    }
+
+    handleClickLink(productNo, category) {
+        let option = category === '예금' ? 'deposit_info' : 'savings_info';
+        let empCode = location.pathname.split('/')[1];
+        history.push(`/${empCode}/consult/${option}/${productNo}`)
     }
 
     renderConsult() {
@@ -86,8 +93,6 @@ export default class ConsultDetail extends React.Component {
 
                 <div className="consult-content-div">
                     {this.state.consult["CONTENT"]}
-
-                    {`내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
                     내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
                     내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
                     내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
@@ -102,14 +107,6 @@ export default class ConsultDetail extends React.Component {
                     내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
                     내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
                     내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
-                    내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
-                    내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
-                    내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
-                    내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
-                    내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
-                    내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
-                    내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
-                    내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용`}
                 </div>
             </Col>
         );
@@ -117,7 +114,7 @@ export default class ConsultDetail extends React.Component {
 
     renderProducts(category, products) {
         if (products.length !== 0) {
-            let linkStyle = category ==='예금' ? 'deposit-link' : 'savings-link';
+            let linkStyle = category === '예금' ? 'deposit-link' : 'savings-link';
             linkStyle += ' consult-product-link-div';
 
             return (
@@ -126,8 +123,8 @@ export default class ConsultDetail extends React.Component {
                     <div className="clear-div-2"/>
                     {products.map((product, idx) => {
                         return (
-                            <Col>
-                                <div className="consult-div" key={idx}>
+                            <Col key={idx}>
+                                <div className="consult-div">
                                     <div className="consult-product-div">
                                         <div className="consult-product-intro">
                                             <span>{product["KOR_CO_NM"]}</span>
@@ -137,7 +134,8 @@ export default class ConsultDetail extends React.Component {
                                         </div>
                                     </div>
 
-                                    <div className={linkStyle} onClick={this.handleClickLink.bind(this, product["NO"], category)}>
+                                    <div className={linkStyle}
+                                         onClick={this.handleClickLink.bind(this, product["NO"], category)}>
                                         {'상세보기'}
                                     </div>
                                 </div>
@@ -168,13 +166,13 @@ export default class ConsultDetail extends React.Component {
                             <div className="clear-div-2"/>
                             {this.renderProducts('예금', this.state.deposits)}
                             {this.renderProducts('적금', this.state.savings)}
-
-                            <div>이 상담내용에 대해 문의하기</div>
                         </Row>
                     </Grid>
                 </div>
 
-                <div className="clear-div-2"/>
+                <div className="consult-inquire-div" onClick={this.handleClickInquire}>
+                    {`이 상담내용에 대해 문의하기`}
+                </div>
             </div>
         );
     }

@@ -15,7 +15,6 @@ export default class Consult extends React.Component {
 
     constructor(props) {
         super(props);
-
         this.state = {
             consults: [],
             searchValue: '',
@@ -26,8 +25,12 @@ export default class Consult extends React.Component {
         this.handleChange = this.handleChange.bind(this);
     }
 
-    componentWillMount() {
-        // window.scrollTo(0, 1);
+    componentWillReceiveProps() {
+        console.log('will receive props');
+        console.log(this.props.match);
+    }
+
+    componentDidMount() {
         let empCode = location.pathname.split('/')[1];
         let userNo = cookie.load('user');
 
@@ -38,6 +41,7 @@ export default class Consult extends React.Component {
                 this.setState({
                     consults: consults.data
                 });
+                window.scrollTo(0, 1);
             } else {
                 // 등록된 상품이 없거나, 잘못 접근함 -> redirect
                 history.push(`/fail`);
@@ -94,7 +98,7 @@ export default class Consult extends React.Component {
     handleClickCard(consultNo) {
         let urlParse = location.pathname.split('/');
         let empCode = urlParse[1];
-        history.push(`/${empCode}/private/consult/detail/${consultNo}`);
+        history.push(`/${empCode}/consult/${consultNo}`);
     }
 
     getIcon() {
@@ -118,15 +122,16 @@ export default class Consult extends React.Component {
         return (
             <div className="item-whole-div">
                 <TopNavigator title="내 상담기록"/>
-                <div className="clear-div-2"/>
-
                 <div className="search-div">
-                    <select onChange={this.handleSortSelect} value={this.state.sorting}>
-                        <option value="desc">{'최근부터'}</option>
-                        <option value="asc">{'처음부터'}</option>
-                    </select>
-
-                    <input type="text" name="searchValue" value={this.state.searchValue} onChange={this.handleChange}/>
+                    <div>
+                        <select onChange={this.handleSortSelect} value={this.state.sorting}>
+                            <option value="desc">{'최근부터'}</option>
+                            <option value="asc">{'처음부터'}</option>
+                        </select>
+                    </div>
+                    <div>
+                        <input type="text" name="searchValue" value={this.state.searchValue} onChange={this.handleChange}/>
+                    </div>
                 </div>
                 <div className="clear-div-2"/>
 
@@ -152,9 +157,7 @@ export default class Consult extends React.Component {
                             }
                         })}
                     </Timeline>
-
                 </div>
-
                 <div className="clear-div-4">{''}</div>
             </div>
         );

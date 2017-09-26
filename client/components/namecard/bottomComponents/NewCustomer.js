@@ -5,8 +5,6 @@
 import React from 'react';
 import NewCustomerModal from '../../modal/NewCustomerModal';
 import Rodal from 'rodal';
-import history from '../../../history';
-
 import 'rodal/lib/rodal.css';
 import './css/BottomItem.css';
 import './css/NameCardBottom.css';
@@ -26,7 +24,7 @@ export default class NewCustomer extends React.Component {
         this.handleModalShow = this.handleModalShow.bind(this);
     }
 
-    handleModalShow(){
+    handleModalShow() {
         this.setState({
             modalVisiable: true
         });
@@ -40,7 +38,6 @@ export default class NewCustomer extends React.Component {
         this.setState({
             modalVisiable: false
         });
-        window.history.pushState('forward', null, './');
     }
 
     // rendering
@@ -55,7 +52,7 @@ export default class NewCustomer extends React.Component {
                     visible={this.state.modalVisiable}
                     onClose={this.handleModalHide}
                     customStyles={{height: 'auto', width: 'auto', margin: 0}}
-                    closeOnEsc={true}
+                    closeOnEsc={false}
                     animation={this.state.animation}
                     duration={300}
                     showCloseButton={false}>

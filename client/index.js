@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import App from './App';
 
 window.detectingHistory = {
-    isModal : false,
-    modalFunc : undefined
+    isModal: false,
+    modalFunc: undefined
 };
 
 let rootElement = document.getElementById('root');

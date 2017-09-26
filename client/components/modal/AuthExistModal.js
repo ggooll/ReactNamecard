@@ -32,8 +32,13 @@ export default class AuthExistModal extends React.Component {
         this.handleClose = this.handleClose.bind(this);
     }
 
+    componentDidMount() {
+        window.scrollTo(0, 1);
+    }
+
     handleClose() {
-        this.setState(this.defaultState);
+        // this.setState(this.defaultState);
+        window.history.pushState('forward', null, './');
         this.props.closeModal();
     }
 
@@ -93,7 +98,8 @@ export default class AuthExistModal extends React.Component {
             inputNum: inputAuthNumber, refSaltedNumber: this.state.refSaltedNumber
         }).then((success) => {
             if (success.data) {
-                this.setState(this.defaultState);
+                // this.setState(this.defaultState);
+                window.history.pushState('forward', null, './');
                 this.props.authSuccess();
             } else {
                 window.alert('잘못된 번호입니다');
@@ -111,6 +117,7 @@ export default class AuthExistModal extends React.Component {
                     <div className="modal-logo-div">
                         {'something'}
                     </div>
+
                     <div className="clear-div-2"/>
 
                     <div>

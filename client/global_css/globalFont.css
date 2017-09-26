@@ -43,23 +43,23 @@
     font-family: 'Hana M';
     font-style: normal;
     font-weight: 400;
-    src:local(※), url('fonts/HanaM.woff') format('woff')
+    src: local(※), url('fonts/HanaM.woff') format('woff')
 }
 
 @font-face {
     font-family: 'Hana L';
     font-style: normal;
     font-weight: 400;
-    src:local(※), url('fonts/HanaL.woff') format('woff')
+    src: local(※), url('fonts/HanaL.woff') format('woff')
 }
 
 @font-face {
     font-family: 'Hana UL';
     font-style: normal;
     font-weight: 400;
-    src:local(※), url('fonts/HanaUL.woff') format('woff')
+    src: local(※), url('fonts/HanaUL.woff') format('woff')
 }
 
-:global(*){
-    font-family : 'Hana L';
+:global(*) {
+    font-family: 'Hana L';
 }
