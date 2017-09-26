@@ -13,6 +13,12 @@ import ConsultDetail from './components/page/ConsultDetail';
 import NoMatch from './NoMatch';
 import './global_css/globalFont.css';
 import './global_css/transition-group.css';
+import ReactGA from 'react-ga';
+
+ReactGA.initialize('UA-107048577-1');
+function fireTracking() {
+    ReactGA.pageview(window.location.hash);
+}
 
 function getHistoryAction() {
     history.listen((location, action) => {

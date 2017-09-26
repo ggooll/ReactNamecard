@@ -1,6 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
+import Ga from 'react-ga';
+
+Ga.initialize('UA-107048577-1');
 
 window.detectingHistory = {
     isModal: false,
