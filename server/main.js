@@ -9,6 +9,7 @@ import employee from './routes/employee';
 import auth from './routes/auth';
 import commodity from './routes/commodity';
 import consult from './routes/consult';
+import chat from './routes/chat';
 import flash from 'connect-flash';
 import path from 'path';
 //import fs from 'fs';
@@ -69,6 +70,7 @@ app.use('/api/employee', employee);
 app.use('/api/auth', auth);
 app.use('/api/commodity', commodity);
 app.use('/api/consult', consult);
+app.use('/api/chat',chat);
 
 /**
  * static

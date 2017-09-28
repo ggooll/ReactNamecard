@@ -10,15 +10,16 @@ import Consult from './components/page/Consult';
 import Survey from './components/page/Survey';
 import CommodityDetail from './components/page/CommodityDetail';
 import ConsultDetail from './components/page/ConsultDetail';
+import ChatBot from './components/page/ChatBot';
 import NoMatch from './NoMatch';
 import './global_css/globalFont.css';
 import './global_css/transition-group.css';
-import ReactGA from 'react-ga';
+//import ReactGA from 'react-ga';
 
-ReactGA.initialize('UA-107048577-1');
-function fireTracking() {
-    ReactGA.pageview(window.location.hash);
-}
+// ReactGA.initialize('UA-107048577-1');
+// function fireTracking() {
+//     ReactGA.pageview(window.location.hash);
+// }
 
 function getHistoryAction() {
     history.listen((location, action) => {
@@ -49,7 +50,7 @@ export default class App extends React.Component {
 
     render() {
         return (
-            <Router onUpdate={fireTracking} history={history}>
+            <Router history={history}>
                 <Route render={({location}) =>
                     <ReactCSSTransitionGroup
                         transitionName={getHistoryAction()}
@@ -84,6 +85,10 @@ export default class App extends React.Component {
                             <Route name="consultInfo"
                                    exact path={`/:empcode/consult`}
                                    component={Consult}/>
+
+                            <Route name="chatBot"
+                                   exact path={`/:empcode/chatbot`}
+                                   component={ChatBot}/>
 
 
 

@@ -8,13 +8,14 @@ import '../../../global_css/global.css';
 import PopularProduct from './PopularProduct';
 import ExistCustomer from './ExistCustomer';
 import NewCustomer from './NewCustomer';
+import Chat from './Chat';
 
 export default class NameCardBottom extends React.Component {
 
     constructor(props) {
         super(props);
 
-        this.bottomItemTitles = ["상품보기", "기존고객", "새로운고객"];
+        this.bottomItemTitles = ["상품보기", "기존고객", "새로운고객", "챗봇"];
 
         this.state = {
             empCode: this.props.name
@@ -37,6 +38,10 @@ export default class NameCardBottom extends React.Component {
 
                 <NewCustomer index={2}
                              menuTitle={this.bottomItemTitles[2]}
+                             name={this.state.empCode}/>
+
+                <Chat index={3}
+                             menuTitle={this.bottomItemTitles[3]}
                              name={this.state.empCode}/>
 
                 <div className="namecard-bottom-itemdiv">
