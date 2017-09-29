@@ -36,6 +36,7 @@ router.post('/overall', (req, res) => {
  * detail
  */
 router.post('/search/detail', (req, res) => {
+
     let searchTable = req.body.category;
     let no = req.body.paramNo;
     let statement = `SELECT 

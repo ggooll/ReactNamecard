@@ -3,35 +3,43 @@ import Bot from 'react-simple-chatbot';
 import './css/page.css';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import history from '../../history';
 
 class Review extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
+            items : [],
             type: '',
             deposit_period: '',
             deposit_amount: '',
             join_way:'',
-            commodity: {
-                NO: '',
-                DCLS_MONTH: '',
-                FIN_CO_NO: '',
-                KOR_CO_NM: '',
-                FIN_PRDT_CD: '',
-                FIN_PRDT_NM: '',
-                JOIN_WAY: '',
-                MTRT_INT: '',
-                SPCL_CND: '',
-                JOIN_DENY: '',
-                JOIN_MEMBER: '',
-                ETC_NOTE: '',
-                MAX_LIMIT: '',
-                DCLS_STRT_DAY: '',
-                DCLS_END_DAY: '',
-                FIN_CO_SUBM_DAY: ''
-            },
-            option: [{},]
+            // NO:'',
+            // KOR_CO_NM:'',
+            // FIN_PRDT_NM:'',
+            // SPCL_CND:'',
+            // INTR_RATE:'',
+            // INTR_RATE2:'',
+            // commodity: {
+            //     NO: '',
+            //     DCLS_MONTH: '',
+            //     FIN_CO_NO: '',
+            //     KOR_CO_NM: '',
+            //     FIN_PRDT_CD: '',
+            //     FIN_PRDT_NM: '',
+            //     JOIN_WAY: '',
+            //     MTRT_INT: '',
+            //     SPCL_CND: '',
+            //     JOIN_DENY: '',
+            //     JOIN_MEMBER: '',
+            //     ETC_NOTE: '',
+            //     MAX_LIMIT: '',
+            //     DCLS_STRT_DAY: '',
+            //     DCLS_END_DAY: '',
+            //     FIN_CO_SUBM_DAY: ''
+            // },
+            // option: [{},]
         };
     }
 
@@ -45,58 +53,139 @@ class Review extends React.Component {
     componentDidMount(){
         console.log('==========');
         console.dir(this.state);
+
+        axios.post(`/api/chat/recommend`, {data: this.state}).then((items) => {
+            console.log("return");
+            console.dir(items.data);
+            this.setState({
+                // NO: items.data.NO,
+                // KOR_CO_NM:items.data.KOR_CO_NM,
+                // FIN_PRDT_NM:items.data.FIN_PRDT_NM,
+                // SPCL_CND:items.data.SPCL_CND,
+                // INTR_RATE:items.data.INTR_RATE,
+                // INTR_RATE2:items.data.INTR_RATE2,
+                items: items.data
+            });
+            console.log(this.state.items);
+            //callback();
+        }).catch((error) => {
+            console.log(error);
+        });
     }
 
-    getRecommendData(component, callback) {
-        axios.post(`/api/chat/recommend`, {data:this.state}).then((items) => {
-            component.setState({
-                commodity: items.data,
-            });
-            callback();
-        }).catch((error) => {
-            console.log(error);
-        });
+    // getCommodityOptions(component, commodity, category, callback) {
+    //     axios.post(`/api/commodity/search/option`, {
+    //         category: resource.getOptionName(category),
+    //         commodity: commodity
+    //     }).then((option) => {
+    //         component.setState({
+    //             option: option
+    //         });
+    //     }).catch((error) => {
+    //         console.log(error);
+    //     });
+    //     callback();
+    // }
+
+    handleClickBaroLink(productNo){
+        let empcode = location.pathname.split('/')[1];
+        let option = 'deposit_info';
+        let no = productNo;
+        history.push(`/${empcode}/products/${option}/${no}`);
     }
-    getCommodityOptions(component, commodity, category, callback) {
-        axios.post(`/api/commodity/search/option`, {
-            category: resource.getOptionName(category),
-            commodity: commodity
-        }).then((option) => {
-            component.setState({
-                option: option
-            });
-        }).catch((error) => {
-            console.log(error);
+
+    renderFirstProduct(){
+        let index = 0;
+        let filteredItems = this.state.items.filter((item)=>{
+            if(item["NO"] === 171){
+                return item;
+            }
         });
-        callback();
+       // console.dir(this.state.items);
+        console.dir(filteredItems);
+        //let intr_rate = filteredItems[0]["INTR_RATE"];
+        //let intr_rate2 = filteredItems[0]["INTR_RATE2"].toFixed(2);
+
+        return (filteredItems.length !== 0 ?
+            <div>
+                <p>[{filteredItems[0]["KOR_CO_NM"]}] </p>
+                <p> {filteredItems[0]["FIN_PRDT_NM"]}상품이 딱이네요!</p>
+                <ul>
+                    {<li> 기본금리 : {filteredItems[0]["INTR_RATE"]}</li>}
+                    {<li> 최대금리 : {filteredItems[0]["INTR_RATE2"]}</li>}
+                    <li> 우대조건 : {filteredItems[0]["SPCL_CND"]}</li>
+                </ul>
+                <p>해당 상품을 {this.state.deposit_period.value}동안 {this.state.deposit_amount.value}원을 예치시 총 {this.state.deposit_amount.value*filteredItems[0]["INTR_RATE"]/100}원 이자가 붙는다</p>
+                <a onClick={this.handleClickBaroLink.bind(this, filteredItems[0]["NO"])}>바로가기</a>
+            </div>
+            : undefined);
     }
+
 
     render() {
-        const { type, deposit_period, deposit_amount, join_way } = this.state;
+        const { type, deposit_period, deposit_amount, join_way, items } = this.state;
         return (
             <div style={{ width: '100%' }}>
-                <h3>Summary</h3>
-                <table>
-                    <tbody>
-                    <tr>
-                        <td>type</td>
-                        <td>{type.value}</td>
-                    </tr>
-                    <tr>
-                        <td>deposit_period</td>
-                        <td>{deposit_period.value}</td>
-                    </tr>
-                    <tr>
-                        <td>deposit_amount</td>
-                        <td>{deposit_amount.value}</td>
-                    </tr>
-                    <tr>
-                        <td>join_way</td>
-                        <td>{join_way.value}</td>
-                    </tr>
-                    </tbody>
-                </table>
+                <h3>추천상품</h3>
+                <div>
+                    {this.renderFirstProduct()}
+                </div>
+
+                {/*<table>*/}
+                    {/*<tbody>*/}
+                    {/*<tr>*/}
+                        {/*<td>type</td>*/}
+                        {/*<td>{type.value}</td>*/}
+                    {/*</tr>*/}
+                    {/*<tr>*/}
+                        {/*<td>deposit_period</td>*/}
+                        {/*<td>{deposit_period.value}</td>*/}
+                    {/*</tr>*/}
+                    {/*<tr>*/}
+                        {/*<td>deposit_amount</td>*/}
+                        {/*<td>{deposit_amount.value}</td>*/}
+                    {/*</tr>*/}
+                    {/*<tr>*/}
+                        {/*<td>join_way</td>*/}
+                        {/*<td>{join_way.value}</td>*/}
+                    {/*</tr>*/}
+                    {/*/!*<tr>*!/*/}
+                        {/*/!*<td>join_way</td>*!/*/}
+                        {/*/!*<td>{item !== 'undefined' ? item["NO"] : 'T_T'}</td>*!/*/}
+                    {/*/!*</tr>*!/*/}
+                    {/*<tr>*/}
+                        {/*<td>join_way</td>*/}
+                        {/*<td>{this.renderFirstProduct()}</td>*/}
+                    {/*</tr>*/}
+
+                    {/*/!*<tr>*!/*/}
+                        {/*/!*<td>NO</td>*!/*/}
+                        {/*/!*<td>{items[0].NO.value}</td>*!/*/}
+                    {/*/!*</tr>*!/*/}
+                    {/*/!*<tr>*!/*/}
+                        {/*/!*<td>FIN_PRDT_NM</td>*!/*/}
+                        {/*/!*<td>{items[0].FIN_PRDT_NM}</td>*!/*/}
+                    {/*/!*</tr>*!/*/}
+                    {/*/!*<tr>*!/*/}
+                        {/*/!*<td>KOR_CO_NM</td>*!/*/}
+                        {/*/!*<td>{items[0].KOR_CO_NM}</td>*!/*/}
+                    {/*/!*</tr>*!/*/}
+                    {/*/!*<tr>*!/*/}
+                        {/*/!*<td>SPCL_CND</td>*!/*/}
+                        {/*/!*<td>{items[0].SPCL_CND}</td>*!/*/}
+                    {/*/!*</tr>*!/*/}
+                    {/*/!*<tr>*!/*/}
+                        {/*/!*<td>INTR_RATE</td>*!/*/}
+                        {/*/!*<td>{items[0].INTR_RATE}</td>*!/*/}
+                    {/*/!*</tr>*!/*/}
+                    {/*/!*<tr>*!/*/}
+                        {/*/!*<td>INTR_RATE2</td>*!/*/}
+                        {/*/!*<td>{items[0].INTR_RATE2}</td>*!/*/}
+                    {/*/!*</tr>*!/*/}
+                    {/*</tbody>*/}
+                {/*</table>*/}
             </div>
+
         );
     }
 }
@@ -115,7 +204,8 @@ export default class ChatBot extends React.Component{
     handleEnd({ steps, values }) {
         console.log("step:"+steps);
         console.log("value: "+values);
-        alert(`Chat handleEnd callback! Number: ${values[0]}`);
+        console.log(`Chat handleEnd callback! Number: ${values[0]}`);
+        console.log(this.state);
     }
     render() {
         return (
@@ -255,7 +345,6 @@ export default class ChatBot extends React.Component{
                         {
                             id:'final',
                             component: <Review />,
-                            trigger:'end-message',
                             end:true
                         },
                     ]}
