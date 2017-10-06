@@ -12,7 +12,7 @@ router.post('/recommend', (req, res) => {
     let params = [type,saveTrm];
 
     console.log(data);
-    let statement = `select info.no, kor_co_nm, fin_prdt_nm, spcl_cnd, intr_rate, intr_rate2
+    let statement = `select info.no, kor_co_nm, fin_prdt_nm, spcl_cnd, intr_rate, intr_rate2, opt.intr_rate_type
                     from
                         (select product_no as no, count(*), type
                         from consult_product

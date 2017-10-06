@@ -111,17 +111,30 @@ class Review extends React.Component {
                 <p>[{filteredItems[0]["KOR_CO_NM"]}] </p>
                 <p> {filteredItems[0]["FIN_PRDT_NM"]}상품이 딱이네요!</p>
                 <ul>
-                    {<li> 기본금리 : {filteredItems[0]["INTR_RATE"]}</li>}
-                    {<li> 최대금리 : {filteredItems[0]["INTR_RATE2"]}</li>}
+                    {<li> 기본금리 : {filteredItems[0]["INTR_RATE"]}%</li>}
+                    {<li> 최대금리 : {filteredItems[0]["INTR_RATE2"]}%</li>}
                     <li> 우대조건 : {filteredItems[0]["SPCL_CND"]}</li>
                 </ul>
-                <p>해당 상품을 {this.state.deposit_period.value}동안 {this.state.deposit_amount.value}원을 예치시 총 {this.state.deposit_amount.value*filteredItems[0]["INTR_RATE"]/100}원 이자가 붙는다</p>
+
+                <p>해당 상품을 {this.state.deposit_period.value}개월동안 {this.state.deposit_amount.value}원을 예치시 세전 실수령액은 총
+                    {(()=>{
+                        let intr_rate = Number(filteredItems[0]["INTR_RATE"]);
+                        let deposit_amount = Number(this.state.deposit_amount.value);
+                        let deposit_period = Number(this.state.deposit_period.value);
+                        if(filteredItems[0]["INTR_RATE_TYPE"]!=='S'){
+                            //단리(單利): 원금*(1+r*n/12)
+                            console.log('단리');
+                          return (deposit_amount*(1+intr_rate*0.01*deposit_period/12)).toFixed(0);
+                        }else{
+                            //매월 복리: 원금*(1+r/12)(n×12/12)
+                            console.log('복리');
+                            return (deposit_amount*(1+intr_rate*0.01/12)**(deposit_period*12/12)).toFixed(0);
+                        }
+                    })()}원 입니다</p>
                 <a onClick={this.handleClickBaroLink.bind(this, filteredItems[0]["NO"])}>바로가기</a>
             </div>
             : undefined);
     }
-
-
     render() {
         const { type, deposit_period, deposit_amount, join_way, items } = this.state;
         return (
@@ -249,14 +262,32 @@ export default class ChatBot extends React.Component{
                             trigger:'deposit_period',
                         },
                         {
+                            id: 'savings',
+                            message: '적금을 선택하셨군요. 가입기간을 선택해 주세요.',
+                            trigger:'deposit_period',
+                        },
+                        {
                             id: 'deposit_period',
                             options: [
-                                { value: '3', label: '3개월이하', trigger: '5' },
-                                { value: '6', label: '6개월 ', trigger: '5' },
-                                { value: '12', label: '1년', trigger: '5' },
-                                { value: '24', label: '2년', trigger: '5' },
-                                { value: '36', label: '3년', trigger: '5' },
-                                { value: '60', label: '5년이상', trigger: '5' },
+                                {value: '3', label: '3개월이하', trigger: '5'},
+                                {value: '6', label: '6개월 ', trigger: '5'},
+                                {value: '12', label: '1년', trigger: '5'},
+                                {value: '24', label: '2년', trigger: '5'},
+                                {value: '36', label: '3년', trigger: '5'},
+                                {value: '60', label: '5년이상', trigger: '5'},
+                                {value: '8', label: '이전', trigger: '3'},
+                                {value: '9', label: '처음', trigger: '1'},
+                            ],
+                        },
+                        {
+                            id: 'savings_period',
+                            options: [
+                                { value: '3', label: '3개월이하', trigger: '21' },
+                                { value: '6', label: '6개월 ', trigger: '21' },
+                                { value: '12', label: '1년', trigger: '21' },
+                                { value: '24', label: '2년', trigger: '21' },
+                                { value: '36', label: '3년', trigger: '21' },
+                                { value: '60', label: '5년이상', trigger: '21' },
                                 { value: '8', label: '이전', trigger: '3' },
                                 { value: '9', label: '처음', trigger: '1' },
                             ],
@@ -265,6 +296,11 @@ export default class ChatBot extends React.Component{
                             id: '5',
                             message: '{previousValue}개월을 선택하셨군요. 예치금액을 선택해 주세요.',
                             trigger:'deposit_amount',
+                        },
+                        {
+                            id: '21',
+                            message: '{previousValue}개월을 선택하셨군요. 월저금액을 선택해 주세요.',
+                            trigger:'savings_amount',
                         },
                         {
                             id: 'deposit_amount',
@@ -277,6 +313,20 @@ export default class ChatBot extends React.Component{
                                 { value: '100000000', label: '일억원', trigger: '7' },
                                 { value: '8', label: '직접입력', trigger: '6' },
                                 { value: '9', label: '이전', trigger: 'deposit' },
+                                { value: '10', label: '처음', trigger: '1' },
+                            ],
+                        },
+                        {
+                            id: 'savings_amount',
+                            options: [
+                                { value: '10000', label: '만원', trigger: '7' },
+                                { value: '50000', label: '오만원', trigger: '7' },
+                                { value: '100000', label: '십만원', trigger: '7' },
+                                { value: '300000', label: '삽십만원', trigger: '7' },
+                                { value: '500000', label: '오십만원', trigger: '7' },
+                                { value: '1000000', label: '백만원', trigger: '7' },
+                                { value: '8', label: '직접입력', trigger: '6' },
+                                { value: '9', label: '이전', trigger: 'savings' },
                                 { value: '10', label: '처음', trigger: '1' },
                             ],
                         },
@@ -305,43 +355,10 @@ export default class ChatBot extends React.Component{
                                 {value:'인터넷',label:'인터넷',trigger:'final'},
                                 {value:'스마트폰',label:'스마트폰',trigger:'final'},
                                 {value:'영업점',label:'영업점',trigger:'final'},
-                                {value:'8',label:'이전',trigger:'deposit_amount'},
+                                {value:'8',label:'이전',trigger:'3'},
                                 {value:'9',label:'처음',trigger:'1'},
                             ],
                         },
-
-                        {
-                            id: 'savings',
-                            message: '적금을 선택하셨군요. 가입기간을 선택해 주세요.',
-                            trigger:'21',
-                        },
-                        // {
-                        //     id: '21',
-                        //     options: [
-                        //         { value: '1', label: '3개월이하', trigger: '22' },
-                        //         { value: '2', label: '6개월 ', trigger: '23' },
-                        //         { value: '3', label: '1년', trigger: '24' },
-                        //         { value: '5', label: '2년', trigger: '25' },
-                        //         { value: '6', label: '3년', trigger: '26' },
-                        //         { value: '7', label: '5년이상', trigger: '27' },
-                        //         { value: '8', label: '이전', trigger: '3' },
-                        //         { value: '9', label: '처음', trigger: '1' },
-                        //     ],
-                        // },
-                        {
-                            id: '21',
-                            options: [
-                                { value: '1', label: '3개월이하', trigger: '1' },
-                                { value: '2', label: '6개월 ', trigger: '1' },
-                                { value: '3', label: '1년', trigger: '1' },
-                                { value: '5', label: '2년', trigger: '1' },
-                                { value: '6', label: '3년', trigger: '1' },
-                                { value: '7', label: '5년이상', trigger: '1' },
-                                { value: '8', label: '이전', trigger: '1' },
-                                { value: '9', label: '처음', trigger: '1' },
-                            ],
-                        },
-
                         {
                             id:'final',
                             component: <Review />,
