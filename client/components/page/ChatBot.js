@@ -12,8 +12,10 @@ class Review extends React.Component {
         this.state = {
             items : [],
             type: '',
-            deposit_period: '',
-            deposit_amount: '',
+            period: '',
+            amount: '',
+            // deposit_period: '',
+            // deposit_amount: '',
             join_way:'',
             // NO:'',
             // KOR_CO_NM:'',
@@ -45,9 +47,15 @@ class Review extends React.Component {
 
     componentWillMount() {
         const { steps } = this.props;
-        const { type, deposit_period, deposit_amount, join_way } = steps;
-
-        this.setState({ type, deposit_period, deposit_amount, join_way });
+        console.dir("willMount : "+{steps});
+        if(steps.type.value==1){
+            const { type, deposit_period, deposit_amount, join_way } = steps;
+            this.setState({ type:type, period:deposit_period, amount:deposit_amount, join_way:join_way });
+        }else{
+            const { type, savings_period, savings_amount, join_way } = steps;
+            this.setState({ type:type, period:savings_period, amount:savings_amount, join_way:join_way });
+        }
+        // this.setState({ type, deposit_period, deposit_amount, join_way });
 
     }
     componentDidMount(){
@@ -87,9 +95,14 @@ class Review extends React.Component {
     //     callback();
     // }
 
-    handleClickBaroLink(productNo){
+    handleClickBaroLink(productNo, type){
         let empcode = location.pathname.split('/')[1];
-        let option = 'deposit_info';
+        let option ='';
+        if(type==1){
+            option='deposit_info';
+        }else{
+            option='savings_info';
+        }
         let no = productNo;
         history.push(`/${empcode}/products/${option}/${no}`);
     }
@@ -97,46 +110,98 @@ class Review extends React.Component {
     renderFirstProduct(){
         let index = 0;
         let filteredItems = this.state.items.filter((item)=>{
-            if(item["NO"] === 171){
-                return item;
-            }
+            // if(item["NO"] === 171){
+            //     return item;
+            // }
+            return item;
         });
        // console.dir(this.state.items);
-        console.dir(filteredItems);
+        console.dir(filteredItems[0]);
         //let intr_rate = filteredItems[0]["INTR_RATE"];
+        // let temp = (()=>{
+        //     let intr_rate = Number(filteredItems[0]["INTR_RATE"]);
+        //     let amount = Number(this.state.amount.value);
+        //     let period = Number(this.state.period.value);
+        //     if(filteredItems[0]["INTR_RATE_TYPE"]==='S'){
+        //         //월납 적금 만기수령액(세전) = 적립 원금 + 이자
+        //         //적립 원금: 월납입금 * n(개월수)
+        //         //이자(단리): 월납입금 * n(n+1)/2 * r/12
+        //         console.log('단리');
+        //         return (amount*period)+(amount*period(period+1)/2*intr_rate*0.01/12);
+        //     }else{
+        //         //매월 복리: 원금*(1+r/12)(n×12/12)
+        //         console.log('복리');
+        //         return 0;//(deposit_amount*(1+intr_rate*0.01/12)**(deposit_period*12/12)).toFixed(0);
+        //     }
+        // })();
         //let intr_rate2 = filteredItems[0]["INTR_RATE2"].toFixed(2);
 
-        return (filteredItems.length !== 0 ?
-            <div>
-                <p>[{filteredItems[0]["KOR_CO_NM"]}] </p>
-                <p> {filteredItems[0]["FIN_PRDT_NM"]}상품이 딱이네요!</p>
-                <ul>
-                    {<li> 기본금리 : {filteredItems[0]["INTR_RATE"]}%</li>}
-                    {<li> 최대금리 : {filteredItems[0]["INTR_RATE2"]}%</li>}
-                    <li> 우대조건 : {filteredItems[0]["SPCL_CND"]}</li>
-                </ul>
+        //let str = '해당 상품을'+ this.state.period.value+'개월동안 월'+this.state.amount.value+'원을 저금시 세전 실수령액은 총'+temp+'원입니다';
+        //console.log('========'+str);
+        if(this.state.type.value==1){
+            return (filteredItems.length !== 0 ?
+                <div>
+                    <p>[{filteredItems[0]["KOR_CO_NM"]}] </p>
+                    <p> {filteredItems[0]["FIN_PRDT_NM"]}상품이 딱이네요!</p>
+                    <ul>
+                        {<li> 기본금리 : {(filteredItems[0]["INTR_RATE"]).toFixed(2)}%</li>}
+                        {<li> 최대금리 : {(filteredItems[0]["INTR_RATE2"]).toFixed(2)}%</li>}
+                        <li> 우대조건 : {filteredItems[0]["SPCL_CND"]}</li>
+                    </ul>
 
-                <p>해당 상품을 {this.state.deposit_period.value}개월동안 {this.state.deposit_amount.value}원을 예치시 세전 실수령액은 총
-                    {(()=>{
-                        let intr_rate = Number(filteredItems[0]["INTR_RATE"]);
-                        let deposit_amount = Number(this.state.deposit_amount.value);
-                        let deposit_period = Number(this.state.deposit_period.value);
-                        if(filteredItems[0]["INTR_RATE_TYPE"]!=='S'){
-                            //단리(單利): 원금*(1+r*n/12)
-                            console.log('단리');
-                          return (deposit_amount*(1+intr_rate*0.01*deposit_period/12)).toFixed(0);
-                        }else{
-                            //매월 복리: 원금*(1+r/12)(n×12/12)
-                            console.log('복리');
-                            return (deposit_amount*(1+intr_rate*0.01/12)**(deposit_period*12/12)).toFixed(0);
-                        }
-                    })()}원 입니다</p>
-                <a onClick={this.handleClickBaroLink.bind(this, filteredItems[0]["NO"])}>바로가기</a>
-            </div>
-            : undefined);
+                    <p>해당 상품을 {this.state.period.value}개월동안 {this.state.amount.value}원을 예치시 세전 실수령액은 총
+                        {(()=>{
+                            let intr_rate = Number(filteredItems[0]["INTR_RATE"]);
+                            let deposit_amount = Number(this.state.amount.value);
+                            let deposit_period = Number(this.state.period.value);
+                            if(filteredItems[0]["INTR_RATE_TYPE"]==='S'){
+                                //단리(單利): 원금*(1+r*n/12)
+                                console.log('단리');
+                                return (deposit_amount*(1+intr_rate*0.01*deposit_period/12)).toFixed(0);
+                            }else{
+                                //매월 복리: 원금*(1+r/12)(n×12/12)
+                                console.log('복리');
+                                return (deposit_amount*(1+intr_rate*0.01/12)**(deposit_period*12/12)).toFixed(0);
+                            }
+                        })()}원 입니다</p>
+                    <a onClick={this.handleClickBaroLink.bind(this, filteredItems[0]["NO"], this.state.type.value)}>바로가기</a>
+                </div>
+                : undefined);
+        }else{
+            return (filteredItems.length !== 0 ?
+                <div>
+                    <p>[{filteredItems[0]["KOR_CO_NM"]}] </p>
+                    <p> {filteredItems[0]["FIN_PRDT_NM"]}상품이 딱이네요!</p>
+                    <ul>
+                        {<li> 기본금리 : {(filteredItems[0]["INTR_RATE"]).toFixed(2)}%</li>}
+                        {<li> 최대금리 : {(filteredItems[0]["INTR_RATE2"]).toFixed(2)}%</li>}
+                        <li> 우대조건 : {filteredItems[0]["SPCL_CND"]}</li>
+                    </ul>
+
+                    <p>해당 상품을 {this.state.period.value}개월동안 월{this.state.amount.value}원을 저금시 세전 실수령액은 총
+                        {(()=>{
+                            let intr_rate = Number(filteredItems[0]["INTR_RATE"]);
+                            let amount = Number(this.state.amount.value);
+                            let period = Number(this.state.period.value);
+                            if(filteredItems[0]["INTR_RATE_TYPE"]==='S'){
+                                //월납 적금 만기수령액(세전) = 적립 원금 + 이자
+                                //적립 원금: 월납입금 * n(개월수)
+                                //이자(단리): 월납입금 * n(n+1)/2 * r/12
+                                console.log('단리');
+                                return (amount*period)+(amount*period(period+1)/2*intr_rate*0.01/12);
+                            }else{
+                                //매월 복리: 원금*(1+r/12)(n×12/12)
+                                console.log('복리');
+                                return 0;//(deposit_amount*(1+intr_rate*0.01/12)**(deposit_period*12/12)).toFixed(0);
+                            }
+                        })()}원 입니다</p>
+                    <a onClick={this.handleClickBaroLink.bind(this, filteredItems[0]["NO"], this.state.type.value)}>바로가기</a>
+                </div>
+                : undefined);
+        }
     }
     render() {
-        const { type, deposit_period, deposit_amount, join_way, items } = this.state;
+        //const { type, deposit_period, deposit_amount, join_way, items } = this.state;
         return (
             <div style={{ width: '100%' }}>
                 <h3>추천상품</h3>
@@ -251,8 +316,8 @@ export default class ChatBot extends React.Component{
                         {
                             id: 'type',
                             options: [
-                                { value: '예금', label: '예금', trigger: 'deposit' },
-                                { value: '적금', label: '적금 ', trigger: 'savings' },
+                                { value: '1', label: '예금', trigger: 'deposit' },
+                                { value: '2', label: '적금 ', trigger: 'savings' },
                                 { value: '3', label: '이전', trigger: '1' },
                             ],
                         },
@@ -264,7 +329,7 @@ export default class ChatBot extends React.Component{
                         {
                             id: 'savings',
                             message: '적금을 선택하셨군요. 가입기간을 선택해 주세요.',
-                            trigger:'deposit_period',
+                            trigger:'savings_period',
                         },
                         {
                             id: 'deposit_period',
