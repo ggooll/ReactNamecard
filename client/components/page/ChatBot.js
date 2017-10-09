@@ -4,6 +4,7 @@ import './css/page.css';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import history from '../../history';
+import async from 'async';
 
 class Review extends React.Component {
     constructor(props) {
@@ -47,7 +48,7 @@ class Review extends React.Component {
 
     componentWillMount() {
         const { steps } = this.props;
-        console.dir("willMount : "+{steps});
+        console.dir("willMount : "+steps);
         if(steps.type.value==1){
             const { type, deposit_period, deposit_amount, join_way } = steps;
             this.setState({ type:type, period:deposit_period, amount:deposit_amount, join_way:join_way });
@@ -56,6 +57,23 @@ class Review extends React.Component {
             this.setState({ type:type, period:savings_period, amount:savings_amount, join_way:join_way });
         }
         // this.setState({ type, deposit_period, deposit_amount, join_way });
+        axios.post(`/api/chat/recommend`, {data: this.state}).then((items) => {
+            console.log("return");
+            console.dir(items.data);
+            this.setState({
+                // NO: items.data.NO,
+                // KOR_CO_NM:items.data.KOR_CO_NM,
+                // FIN_PRDT_NM:items.data.FIN_PRDT_NM,
+                // SPCL_CND:items.data.SPCL_CND,
+                // INTR_RATE:items.data.INTR_RATE,
+                // INTR_RATE2:items.data.INTR_RATE2,
+                items: items.data
+            });
+            console.log(this.state.items);
+            //callback();
+        }).catch((error) => {
+            console.log(error);
+        });
 
     }
     componentDidMount(){
@@ -115,29 +133,40 @@ class Review extends React.Component {
             // }
             return item;
         });
-       // console.dir(this.state.items);
-        console.dir(filteredItems[0]);
-        //let intr_rate = filteredItems[0]["INTR_RATE"];
-        // let temp = (()=>{
-        //     let intr_rate = Number(filteredItems[0]["INTR_RATE"]);
-        //     let amount = Number(this.state.amount.value);
-        //     let period = Number(this.state.period.value);
-        //     if(filteredItems[0]["INTR_RATE_TYPE"]==='S'){
-        //         //월납 적금 만기수령액(세전) = 적립 원금 + 이자
-        //         //적립 원금: 월납입금 * n(개월수)
-        //         //이자(단리): 월납입금 * n(n+1)/2 * r/12
-        //         console.log('단리');
-        //         return (amount*period)+(amount*period(period+1)/2*intr_rate*0.01/12);
-        //     }else{
-        //         //매월 복리: 원금*(1+r/12)(n×12/12)
-        //         console.log('복리');
-        //         return 0;//(deposit_amount*(1+intr_rate*0.01/12)**(deposit_period*12/12)).toFixed(0);
-        //     }
-        // })();
-        //let intr_rate2 = filteredItems[0]["INTR_RATE2"].toFixed(2);
 
-        //let str = '해당 상품을'+ this.state.period.value+'개월동안 월'+this.state.amount.value+'원을 저금시 세전 실수령액은 총'+temp+'원입니다';
-        //console.log('========'+str);
+        // async.waterfall([
+        //     function(callback){
+        //     console.log(tt);
+        //         filteredItems = this.state.items.filter((item)=>{
+        //             // if(item["NO"] === 171){
+        //             //     return item;
+        //             // }
+        //             return item;
+        //         });
+        //         callback(null,filteredItems);
+        //     }],
+        //     function(err,result){
+        //         let intr_rate = result[0]["INTR_RATE"];
+        //         let temp = (()=>{
+        //             let intr_rate = Number(result[0]["INTR_RATE"]);
+        //             let amount = Number(this.state.amount.value);
+        //             let period = Number(this.state.period.value);
+        //             if(result[0]["INTR_RATE_TYPE"]==='S'){
+        //                 //월납 적금 만기수령액(세전) = 적립 원금 + 이자
+        //                 //적립 원금: 월납입금 * n(개월수)
+        //                 //이자(단리): 월납입금 * n(n+1)/2 * r/12
+        //                 console.log('단리');
+        //                 return (amount*period)+(amount*period(period+1)/2*intr_rate*0.01/12);
+        //             }else{
+        //                 //매월 복리: 원금*(1+r/12)(n×12/12)
+        //                 console.log('복리');
+        //                 return 0;//(deposit_amount*(1+intr_rate*0.01/12)**(deposit_period*12/12)).toFixed(0);
+        //             }
+        //         })();
+        //         let intr_rate2 = result[0]["INTR_RATE2"].toFixed(2);
+        //         str = '해당 상품을'+ this.state.period.value+'개월동안 월'+this.state.amount.value+'원을 저금시 세전 실수령액은 총'+temp+'원입니다';
+        //     });
+
         if(this.state.type.value==1){
             return (filteredItems.length !== 0 ?
                 <div>
@@ -166,7 +195,7 @@ class Review extends React.Component {
                         })()}원 입니다</p>
                     <a onClick={this.handleClickBaroLink.bind(this, filteredItems[0]["NO"], this.state.type.value)}>바로가기</a>
                 </div>
-                : undefined);
+                : <div><p>상품이 없습니다.</p></div>);
         }else{
             return (filteredItems.length !== 0 ?
                 <div>
@@ -188,7 +217,7 @@ class Review extends React.Component {
                                 //적립 원금: 월납입금 * n(개월수)
                                 //이자(단리): 월납입금 * n(n+1)/2 * r/12
                                 console.log('단리');
-                                return (amount*period)+(amount*period(period+1)/2*intr_rate*0.01/12);
+                                return (amount*period)+(amount*period*(period+1)/2*intr_rate*0.01/12);
                             }else{
                                 //매월 복리: 원금*(1+r/12)(n×12/12)
                                 console.log('복리');
@@ -197,7 +226,7 @@ class Review extends React.Component {
                         })()}원 입니다</p>
                     <a onClick={this.handleClickBaroLink.bind(this, filteredItems[0]["NO"], this.state.type.value)}>바로가기</a>
                 </div>
-                : undefined);
+                :  <div><p>상품이 없습니다.</p></div>);
         }
     }
     render() {
