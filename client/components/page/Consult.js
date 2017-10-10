@@ -8,6 +8,7 @@ import history from '../../history';
 import cookie from 'react-cookies';
 import {Timeline, TimelineEvent} from 'react-event-timeline';
 import TopNavigator from '../common/TopNavigator';
+import staticResource from './StaticResource';
 import './css/Consult.css';
 import './css/page.css';
 
@@ -23,11 +24,6 @@ export default class Consult extends React.Component {
 
         this.handleSortSelect = this.handleSortSelect.bind(this);
         this.handleChange = this.handleChange.bind(this);
-    }
-
-    componentWillReceiveProps() {
-        console.log('will receive props');
-        console.log(this.props.match);
     }
 
     componentDidMount() {
@@ -51,20 +47,6 @@ export default class Consult extends React.Component {
         });
     }
 
-    dateDescSort(a, b) {
-        if (a["REG_DATE"] === b["REG_DATE"]) {
-            return 0
-        }
-        return a["REG_DATE"] < b["REG_DATE"] ? 1 : -1;
-    }
-
-    dateAscSort(a, b) {
-        if (a["REG_DATE"] === b["REG_DATE"]) {
-            return 0
-        }
-        return a["REG_DATE"] > b["REG_DATE"] ? 1 : -1;
-    }
-
     handleChange(event) {
         let filterToken = event.target.value;
         let filteredConsults = this.state.consults.map((consult) => {
@@ -86,7 +68,7 @@ export default class Consult extends React.Component {
         let selected = event.target.value;
         console.log(selected);
         if (this.state.sorting !== selected) {
-            let sortFunc = selected === 'desc' ? this.dateDescSort : this.dateAscSort;
+            let sortFunc = selected === 'desc' ? staticResource.dateDescSort : staticResource.dateAscSort;
             let sortedConsults = this.state.consults.sort(sortFunc);
             this.setState({
                 consults: sortedConsults,
@@ -102,26 +84,30 @@ export default class Consult extends React.Component {
     }
 
     getIcon() {
-        return <i className="fa fa-commenting fa-lg" aria-hidden="true"/>
+        // fa-sticky-note
+        return <i className="fa fa-tasks fa-lg" aria-hidden="true"/>
     }
 
     render() {
         let headerStyle = {
-            backgroundColor: "#FCFCFC",
+            backgroundColor: "#d2dee4",
             color: "#030303",
-            height: "6vh",
-            maxHeight: "6vh"
+            minHeight: "6vh",
         };
         let contentStyle = {
-            backgroundColor: "#D3D3D3",
+            backgroundColor: "#f9f9f9",
             color: "#030303",
-            maxHeight: "6vh",
+            minHeight: "6vh",
             overflow: "hidden"
         };
 
         return (
             <div className="item-whole-div">
                 <TopNavigator title="내 상담기록"/>
+
+                <div className="consult-background-div"/>
+                <div className="consult-introduce-div">테스트세트스테스</div>
+
                 <div className="search-div">
                     <div>
                         <select onChange={this.handleSortSelect} value={this.state.sorting}>
@@ -141,16 +127,16 @@ export default class Consult extends React.Component {
                             if (consult["VISIBLE"] === 1) {
                                 return (
                                     <TimelineEvent
-                                        title=""
+                                        title={consult["TITLE"]}
                                         createdAt={consult["REG_DATE"]}
-                                        iconColor="#D40B3A"
+                                        iconColor="#4a6875"
                                         container="card"
                                         key={idx}
                                         icon={this.getIcon()}
                                         cardHeaderStyle={headerStyle}
                                         contentStyle={contentStyle}
                                         onClick={this.handleClickCard.bind(this, consult["NO"])}>
-                                        {consult["TITLE"]}
+                                        {consult["CONTENT"]}
                                     </TimelineEvent>);
                             } else {
                                 return undefined;

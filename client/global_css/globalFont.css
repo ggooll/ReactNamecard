@@ -8,28 +8,12 @@
     src: url('https://cdn.jsdelivr.net/korean-webfonts/1/orgs/othrs/kywa/Youth/Youth.woff2') format('woff2'), url('https://cdn.jsdelivr.net/korean-webfonts/1/orgs/othrs/kywa/Youth/Youth.woff') format('woff');
 }
 
-/* 바른돋움체 */
-@font-face {
-    font-family: 'BareunDotum';
-    font-style: normal;
-    font-weight: 300;
-    src: url('https://cdn.jsdelivr.net/korean-webfonts/1/orgs/othrs/kpa/BareunDotum/BareunDotumOTFPro2.woff2') format('woff2'), url('https://cdn.jsdelivr.net/korean-webfonts/1/orgs/othrs/kpa/BareunDotum/BareunDotumOTFPro2.woff') format('woff');
-}
-
 /* 고도체 */
 @font-face {
     font-family: 'Godo';
     font-style: normal;
     font-weight: 400;
     src: url('https://cdn.jsdelivr.net/korean-webfonts/1/corps/godo/Godo/GodoM.woff2') format('woff2'), url('https://cdn.jsdelivr.net/korean-webfonts/1/corps/godo/Godo/GodoM.woff') format('woff');
-}
-
-/* 제주고딕 */
-@font-face {
-    font-family: 'Jeju Gothic';
-    font-style: normal;
-    font-weight: 400;
-    src: url('https://cdn.jsdelivr.net/korean-webfonts/1/orgs/govs/jeju/JejuGothic/JejuGothic.woff2') format('woff2'), url('https://cdn.jsdelivr.net/korean-webfonts/1/orgs/govs/jeju/JejuGothic/JejuGothic.woff') format('woff');
 }
 
 @font-face {
@@ -40,26 +24,13 @@
 }
 
 @font-face {
-    font-family: 'Hana M';
-    font-style: normal;
-    font-weight: 400;
-    src: local(※), url('fonts/HanaM.woff') format('woff')
-}
-
-@font-face {
     font-family: 'Hana L';
     font-style: normal;
     font-weight: 400;
     src: local(※), url('fonts/HanaL.woff') format('woff')
 }
 
-@font-face {
-    font-family: 'Hana UL';
-    font-style: normal;
-    font-weight: 400;
-    src: local(※), url('fonts/HanaUL.woff') format('woff')
-}
-
 :global(*) {
-    font-family: 'Hana L';
+    /*font-family: 'Nanum Barun Gothic';*/
+    font-family: 'Youth', 'Godo';
 }

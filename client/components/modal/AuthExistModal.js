@@ -37,7 +37,7 @@ export default class AuthExistModal extends React.Component {
     }
 
     handleClose() {
-        // this.setState(this.defaultState);
+        this.setState(this.defaultState);
         window.history.pushState('forward', null, './');
         this.props.closeModal();
     }
@@ -52,9 +52,9 @@ export default class AuthExistModal extends React.Component {
         const phoneRegex = /(\d{3}).*(\d{3}).*(\d{4})/;
         if (!phoneRegex.test(component.state.phone)) {
             component.setState({
-                inputValue: 'modal-error-input',
+                inputValue: 'modal-input modal-error-input',
                 errorToggleDiv: 'form-error-check',
-                errorMessage: '올바르지 않은 입력입니다'
+                errorMessage: '올바르지 않은 번호형식입니다'
             });
         } else {
             component.setState({
@@ -113,22 +113,36 @@ export default class AuthExistModal extends React.Component {
     render() {
         return (
             <div>
-                <div className="modal-container">
-                    <div className="modal-logo-div">
-                        {'something'}
+
+                <div className="modal-whole_container">
+                    <div className="modal-top-layout">
+                        {'고객 인증'}
                     </div>
 
-                    <div className="clear-div-2"/>
+                    <div className="modal-form-div">
+                        <div className="clear-div-2"/>
 
-                    <div>
-                        {/* #  1 */}
                         <div className={this.state.checkPhoneDiv}>
+                            <div className="send-notice-div before-send panel col-md-6">
+                                <div className="notice-icon-div">
+                                    <img src="/images/crm.png"/>
+                                </div>
+                                <div className="notice-para-div">
+                                    <div>{'이미 상담받으셨나요?'}</div>
+                                    <div>{'상담시 기재한 핸드폰번호로 확인 가능합니다.'}</div>
+                                </div>
+                            </div>
+
                             <div className="modal-input-div">
-                                <input type="number" name="phone" minLength={10} maxLength={11}
+                                <div>
+                                    <input type="tel" name="phone" minLength={10} maxLength={11}
                                        className={this.state.inputValue}
-                                       placeholder="-를 뺀 숫자만 입력해주세요"
+                                       placeholder="-를 뺀 숫자만 입력"
                                        value={this.state.phone} onChange={this.handleChange}/>
-                                <button className="modal-btn" onClick={this.checkPhoneNum}>인증번호 전송</button>
+                                </div>
+                                <div>
+                                    <button className="modal-btn" onClick={this.checkPhoneNum}>{'인증번호 전송'}</button>
+                                </div>
                             </div>
 
                             <div className={this.state.errorToggleDiv}>
@@ -136,38 +150,37 @@ export default class AuthExistModal extends React.Component {
                             </div>
                         </div>
 
-                        <div className="clear-div-2"/>
-                        {/* #  2 */}
                         <div className={this.state.checkSMSMessageDiv}>
                             <div className="send-notice-div panel col-md-6">
                                 <div className="notice-icon-div">
-                                    <img src="/images/SMS2.png"/>
+                                    <img src="/images/sms.png"/>
                                 </div>
                                 <div className="notice-para-div">
-                                    {/* notice */}
-                                    <p>요청하신 번호로 </p>
-                                    <p>인증번호가 발송되었습니다.</p>
+                                    <div>{'요청하신 번호로'}</div>
+                                    <div>{'인증번호가 발송되었습니다.'}</div>
                                 </div>
                             </div>
 
                             <div className="modal-input-div">
-                                <input type="text" name="inputNumber" maxLength={10}
+                                <div>
+                                    <input type="tel" name="inputNumber" maxLength={10}
                                        className={this.state.inputValue}
                                        value={this.state.inputNumber} onChange={this.handleChange}/>
-                                <button className="modal-btn" onClick={this.checkAuthNum}>인증번호 확인</button>
+                                </div>
+                                <div>
+                                    <button className="modal-btn" onClick={this.checkAuthNum}>인증번호 확인</button>
+                                </div>
 
                                 {/*<div className={this.state.authTimer}>*/}
                                 {/*<span>{''}</span>*/}
                                 {/*</div>*/}
                             </div>
                         </div>
-                        <div className="clear-div-2"/>
-
-                        <div className="modal-button-div">
-                            <button className="btn" onClick={this.handleClose}>닫기</button>
-                        </div>
                     </div>
 
+                    <div className="modal-close-fixed" onClick={this.handleClose}>
+                        {'닫기'}
+                    </div>
                 </div>
             </div>
         )

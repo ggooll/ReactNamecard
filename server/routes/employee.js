@@ -7,9 +7,10 @@ const oracledb = require('oracledb-autoreconnect');
 
 router.get('/:empcode', (req, res) => {
 
-    let statement = "SELECT id, name, email, phone, sns, fax, dept_no, region_no, position " +
-        "FROM EMPLOYEE " +
-        "WHERE code = :empcode";
+    let statement = `SELECT id, EMPLOYEE.name, email, phone, sns, fax, department.name dept_name, dept_no, region.name region_name, region_no, position
+                        FROM EMPLOYEE, department, region
+                        WHERE employee.code = :empcode and employee.dept_no = department.no and employee.region_no = region.no`;
+
     let param = [req.params.empcode];
     oracledb.query(statement, param).then(function (dbResult) {
         let employee = oracledb.transformToAssociated(dbResult);

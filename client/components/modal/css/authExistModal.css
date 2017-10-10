@@ -1,6 +1,11 @@
 .modal-input-div {
     margin: 1vh auto;
-    vertical-align: middle;
+    text-align: center;
+    height: 6vh;
+}
+
+.modal-input-div > div {
+    display: inline-block;
 }
 
 .modal-input-div .form-control {
@@ -8,32 +13,39 @@
 }
 
 .modal-input-div .modal-btn {
-    font-size: 1.0rem;
-    line-height: 3vh;
+    font-size: 1.15rem;
     margin-left: 2vh;
-    height: 5vh;
+    height: 6vh;
     border: 1px solid #026e6f;
     background-color: #008485;
     color: white;
     width: 25vw;
-    border-radius: 4px;
+    display: inline-block;
+    padding: 0;
 }
 
 .modal-input {
-    height: 5vh;
-    line-height: 3vh;
-    font-size: 1.0rem;
+    height: 6vh;
+    font-size: 1.3rem;
     width: 55vw;
     border: 1px solid #008485;
-    border-radius: 4px;
+    padding-left: 2vw;
+    font-weight: bolder;
+    letter-spacing: 1px;
+    word-spacing: normal;
+    cursor: pointer;
+    background: white;
+    border-radius: 0;
+}
+
+.modal-input:focus {
+    color: transparent;
+    text-shadow: 0 0 0 #666;
+    border: 2px solid #048cbf;
 }
 
 .modal-error-input {
-    height: 5vh;
-    line-height: 3vh;
-    font-size: 1.0rem;
-    width: 55vw;
-    border: 1px solid #D70033;
+    border: 1px solid #D70033 !important;
 }
 
 .modal-button-div button {
@@ -44,7 +56,7 @@
 }
 
 .form-error-check {
-    margin: 2vh auto;
+    margin: 0 6vw;
     color: #D70033;
 }
 
@@ -52,15 +64,18 @@
     display: none;
 }
 
-.input-phone-div {
-    margin-bottom: 2vh;
-}
-
 .send-notice-div {
     display: table;
     height: 10vh;
-    padding-top: 2vh;
-    padding-bottom: 2vh;
+    padding-top: 3vh;
+    padding-bottom: 3vh;
+    margin: 7vh auto;
+    background: #e26b81;
+    border-radius: 0;
+}
+
+.before-send {
+    background: #8db9a4 !important;
 }
 
 .notice-icon-div {
@@ -81,7 +96,42 @@
     vertical-align: middle;
 }
 
-.notice-para-div p {
-    margin-left: 2vw;
-    color: gray;
+.notice-para-div > div {
+    margin-left: 6vw;
+    color: #ffffff;
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.modal-whole_container {
+    margin-top: 5vh;
+    margin-bottom: 20vh;
+    min-height: 64vh;
+    background-color: #ececec;
+}
+
+.modal-top-layout {
+    min-height: 7vh;
+    background: #028f90;
+    text-align: center;
+    line-height: 7vh;
+    color: white;
+    font-size: 1.5rem;
+}
+
+.modal-form-div {
+    min-height: 48vh;
+    height: 48vh;
+    background: #ececec;
+}
+
+.modal-close-fixed {
+    height: 7vh;
+    background: #848484;
+    width: inherit;
+    line-height: 7vh;
+    text-align: center;
+    color: white;
+    border: 2px solid #848484;
+    font-size: 1.5rem;
 }

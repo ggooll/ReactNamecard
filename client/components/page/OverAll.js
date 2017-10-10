@@ -30,10 +30,6 @@ export default class OverAll extends React.Component {
         this.handleChangeBank = this.handleChangeBank.bind(this);
     }
 
-    componentWillUnmount() {
-        this.setState(this.defaultState);
-    }
-
     componentDidMount() {
         let searchParam = this.state.selectedProducts;
         this.getCommodityData(this, {selectedItem: searchParam});
@@ -95,7 +91,6 @@ export default class OverAll extends React.Component {
                 </div>
 
                 <div className="item-section-div">
-
                     <div className="clear-div-1"/>
                     <div>
                         <select className="form-control" onChange={this.handleChangeItem}
@@ -121,6 +116,7 @@ export default class OverAll extends React.Component {
                                 return (
                                     <Col xs={12} md={8} key={idx} className="panel panel-default item-div"
                                          onClick={this.handleClickProduct.bind(this, item["NO"])}>
+                                        <div className="clear-div-1" />
                                         <div><img className="bank-logo-img"
                                                   src={`/images/bank_logos/${item["FIN_CO_NO"]}.png`}/></div>
                                         <div className="clear-div-1"/>
@@ -129,24 +125,48 @@ export default class OverAll extends React.Component {
                                             <h4>{item["FIN_PRDT_NM"]}</h4>
                                         </div>
                                         <hr/>
-                                        <div>
-                                            <div>
-                                                {item["MTRT_INT"].split('\n').map((item, key) => {
-                                                    if (item !== '')
-                                                        return <span key={key}>{item}<br/></span>
-                                                })}
-                                            </div>
-                                        </div>
-                                        <hr/>
-                                        <div>
-                                            <h5>가입대상</h5>
-                                            <div>
+                                        <div className="clear-div-1" />
+
+                                        <div className="item-separate-div">
+                                            <div>가입대상</div>
+                                            <span>
                                                 {item["JOIN_MEMBER"].split('\n').map((item, key) => {
                                                     if (item !== '')
-                                                        return <span key={key}>{item}<br/></span>
+                                                        return <span key={key}>{`${item}`}<br/></span>
                                                 })}
-                                            </div>
+                                            </span>
                                         </div>
+
+                                        <div className="item-separate-div">
+                                            <div>이자방식</div>
+                                            <span>{item["INTR_RATE_TYPE"] === 'S' ? '단리' : '복리'}</span>
+                                        </div>
+
+                                        <div className="item-separate-div">
+                                            <div>가입경로</div>
+                                            <span>{item["JOIN_WAY"]}</span>
+                                        </div>
+
+                                        <div className="item-separate-div">
+                                            <div>{this.state.selectedProducts === 'deposit_info' ? '최대예치금액': '월 최대 납입금액'}</div>
+                                            <span>{(item["MAX_LIMIT"] <= 0) ? '제한없음' :`${resource.moneyWithComma(item["MAX_LIMIT"])} 원`}</span>
+                                        </div>
+
+                                        {/*
+                                            적금의 경우 적금 방식 추가
+                                        */}
+
+                                        {/*<hr/>*/}
+                                        {/*<div>*/}
+                                            {/*<div>*/}
+                                                {/*{item["MTRT_INT"].split('\n').map((item, key) => {*/}
+                                                    {/*if (item !== '')*/}
+                                                        {/*return <span key={key}>{item}<br/></span>*/}
+                                                {/*})}*/}
+                                            {/*</div>*/}
+                                        {/*</div>*/}
+
+
                                     </Col>
                                 );
                             })}

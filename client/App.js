@@ -5,11 +5,14 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 import NameCard from './components/namecard/NameCard';
 import OnDemand from './components/page/OnDemand';
+import OnDemandResult from './components/page/OnDemandResult';
 import OverAll from './components/page/OverAll';
 import Consult from './components/page/Consult';
 import Survey from './components/page/Survey';
 import CommodityDetail from './components/page/CommodityDetail';
 import ConsultDetail from './components/page/ConsultDetail';
+import FundCalculator from './components/page/FundCalculator';
+import ChatBot from './components/page/ChatBot';
 import NoMatch from './NoMatch';
 import './global_css/globalFont.css';
 import './global_css/transition-group.css';
@@ -79,12 +82,21 @@ export default class App extends React.Component {
                                    exact path={`/:empcode/consult`}
                                    component={Consult}/>
 
+                            <Route name="FundCalculator"
+                                   exact path={`/:empcode/fundCalculator`}
+                                   component={FundCalculator}/>
 
+                            <Route name="chatBot"
+                                   exact path={`/:empcode/chatbot`}
+                                   component={ChatBot}/>
 
-                            {/*         */}
-                            <Route name="ageGroup"
+                            <Route name="onDemand"
                                    exact path={`/:empcode/onDemand`}
                                    component={OnDemand}/>
+
+                            <Route name="onDemandResult"
+                                   exact path={`/:empcode/onDemand/result`}
+                                   component={OnDemandResult}/>
 
                             {/* 상담 관련 상품 정보 보기 추가 */}
                             <Route name="survey"

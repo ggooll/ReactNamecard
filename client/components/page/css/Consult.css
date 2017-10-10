@@ -1,6 +1,37 @@
+.consult-background-div {
+    height: 37vh;
+    background: url("https://image.shutterstock.com/z/stock-photo-business-partners-taking-notes-at-seminar-101562343.jpg");
+    background-size: cover;
+    -webkit-filter: blur(2px) brightness(0.4);
+    -moz-filter: blur(2px) brightness(0.4);
+    -o-filter: blur(2px) brightness(0.4);
+    filter: blur(2px) brightness(0.4);
+}
+
+.consult-introduce-div {
+    position: absolute;
+    top: 6.5vh;
+    text-align: center;
+    width: 100vw;
+    height: 37vh;
+    line-height: 37vh;
+    font-size: 2.3rem;
+    color: white;
+    font-family: Hana L;
+}
+
+.consult-introduce-div > div {
+    z-index: 200;
+
+}
+
+.consult-introduce-div img {
+    width: 100%;
+    height: auto;
+}
+
 .item-section-div section {
     font-size: 90% !important;
-    font-weight: bold !important;
     width: inherit !important;
     padding: 0;
 }
@@ -10,11 +41,11 @@
     text-align: center;
     width: 100vw;
     height: 10vh;
-    background-color: lightgray;
+    background-color: #e6e6e6;
     display: table;
 }
 
-.search-div > div{
+.search-div > div {
     display: table-cell;
     vertical-align: middle;
 }

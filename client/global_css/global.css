@@ -2,14 +2,20 @@ html, body {
     height: 101vh;
     margin: 0 !important;
     padding: 0 !important;
+    background-color : #f9f9f9;
 }
 
 hr {
     background-color: #488680;
-    margin: 0;
+    margin: 3vh;
+    height: 2px;
 }
 
 button:focus,
 input:focus {
     outline: none !important;
+}
+
+input[type=checkbox] {
+    transform: scale(1.5);
 }

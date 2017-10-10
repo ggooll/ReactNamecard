@@ -1,5 +1,7 @@
 .bottom-item-titlespan {
     margin-left: 2.5vmax;
+    font-family: Hana L;
+    font-weight: 600;
 }
 
 .bottom-item-titlespan i {
@@ -26,11 +28,14 @@
     line-height: 8vmax;
     font-size: 1.4rem;
     border-bottom: 1px solid white;
+    font-family: Hana L;
 }
 
 .down-menu-span {
     margin-left: 4vmax;
     color: white;
+    font-family: Hana L;
+    font-weight: 600;
 }
 
 .down-menu-span i {

@@ -111,7 +111,7 @@ export default class ExistCustomer extends React.Component {
                 <Rodal
                     visible={this.state.modalVisible}
                     onClose={this.handleModalClose}
-                    customStyles={{height: '100vh', width: '100vw', margin: 0}}
+                    customStyles={{height: '100vh', width: '100vw', margin: 0, background: '#f9f9f9'}}
                     closeOnEsc={false}
                     animation={this.state.animation}
                     duration={300}

@@ -43,7 +43,9 @@ export default class Introduce extends React.Component {
                     sns: emp.data["SNS"],
                     fax: emp.data["FAX"],
                     dept_no: emp.data["DEPT_NO"],
+                    dept_name: emp.data["DEPT_NAME"],
                     region_no: emp.data["REGION_NO"],
+                    region_name: emp.data["REGION_NAME"],
                     position: emp.data["POSITION"]
                 });
 
@@ -104,13 +106,13 @@ export default class Introduce extends React.Component {
                         {/* vertical slide div - 상세정보 */}
                         <div className="detail-introduce-div">
                             <p>{this.getMarkedStrongTitle('회사')} : 하나금융티아이</p>
-                            <p>{this.getMarkedStrongTitle('부서')} : {this.state.dept_no} </p>
+                            <p>{this.getMarkedStrongTitle('부서')} : {this.state.dept_name} </p>
                             <p>{this.getMarkedStrongTitle('직급')} : {this.state.position} </p>
-                            <p>{this.getMarkedStrongTitle('주소')} : 청라... </p>
-                            <p>{this.getMarkedStrongTitle('phone')} : {this.state.phone} </p>
-                            <p>{this.getMarkedStrongTitle('email')} : {this.state.email} </p>
+                            <p>{this.getMarkedStrongTitle('지역')} : {this.state.region_name}</p>
+                            <p>{this.getMarkedStrongTitle('phone')} : <a href={`tel:${this.state.phone}`}>{this.state.phone}</a></p>
+                            <p>{this.getMarkedStrongTitle('email')} : <a href={`mailto:${this.state.email}?subject=문의입니다`}>{this.state.email}</a></p>
                             <p>{this.getMarkedStrongTitle('fax')} : {this.state.fax} </p>
-                            <p>{this.getMarkedStrongTitle('sns')} : {this.state.sns} </p>
+                            <p>{this.getMarkedStrongTitle('sns')} : <a href={`${this.state.sns}`}>{this.state.sns}</a> </p>
                         </div>
                     </div>
 

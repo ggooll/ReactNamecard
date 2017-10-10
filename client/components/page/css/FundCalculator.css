@@ -1,0 +1,33 @@
+.fund-intro-div {
+    background: url('https://image.shutterstock.com/z/stock-photo-money-coins-calculator-and-some-stationery-on-wood-table-top-view-with-copy-space-financial-519363958.jpg');
+    height: 32vh;
+    background-size: cover;
+    filter: blur(1px) brightness(0.5);
+}
+
+.fund-intro-title {
+    position: absolute;
+    top: 5vh;
+    width: 100vw;
+    padding: 5vh 5vw;
+}
+
+.fund-intro-title > span {
+    display: block;
+    margin: 1vh auto;
+    text-align: center;
+    color: white;
+    font-size: 2rem;
+    width: 80vw;
+}
+
+.fund-section-div {
+    min-height: 70vh;
+    margin: 2vw;
+}
+
+.fund-div3 {
+    margin: 2vh 1vw;
+    min-height: 30vh;
+    background: deepskyblue;
+}

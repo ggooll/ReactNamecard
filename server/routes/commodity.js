@@ -4,6 +4,8 @@
 import express from 'express';
 const router = express.Router();
 const oracledb = require('oracledb-autoreconnect');
+const originDb = oracledb.oracledb;
+const dbConfig = require('../database/config');
 
 /**
  * selected Products..
@@ -18,6 +20,9 @@ router.post('/overall', (req, res) => {
                     FIN_CO_NO,
                     KOR_CO_NM,
                     FIN_PRDT_NM,
+                    INTR_RATE_TYPE,
+                    JOIN_WAY,
+                    MAX_LIMIT,
                     MTRT_INT,
                     JOIN_MEMBER FROM ${searchTable}`;
 
@@ -93,47 +98,79 @@ router.post('/search/option', (req, res) => {
     });
 });
 
+router.post('/search/processedInfo', (req, res) => {
+    let category = req.body.category;
+    let searchTable = category === 'deposit_info' ? 'deposit_processed' : 'savings_processed';
+    let productNo = req.body.commodity["NO"];
+    let productColumn = category === 'deposit_info' ? 'deposit_no' : 'savings_no';
+
+    let statement = `SELECT * 
+                     FROM ${searchTable}
+                     WHERE ${productColumn} = :productNo`;
+
+    oracledb.query(statement, [productNo]).then(function (dbResult) {
+        let processedInfo = oracledb.transformToAssociated(dbResult);
+        res.send(processedInfo);
+    });
+});
+
+router.post('/search/special', (req, res) => {
+    let category = req.body.category;
+    let searchTable = category === 'deposit_info' ? 'deposit_special' : 'savings_special';
+    let productNo = req.body.commodity["NO"];
+    let productColumn = category === 'deposit_info' ? 'deposit_no' : 'savings_no';
+
+    let statement = `SELECT *
+                    FROM ${searchTable}
+                    WHERE ${productColumn} = :productNo`;
+    oracledb.query(statement, [productNo]).then(function (dbResult) {
+        let special = oracledb.transformToAssociated(dbResult);
+        res.send(special);
+    });
+});
+
+function doRelease(conn) {
+    conn.close(function (err) {
+        if (err)
+            console.error(err.message);
+    });
+}
+
+// originDb
+router.post('/insert/visitLog', (req, res) => {
+    let ipv6 = req.headers["X-Forwarded-For"] || req.connection.remoteAddress;
+
+    let depositStatement = `insert into deposit_log 
+                            (select :deposit_no, :ipv6, sysdate from dual where not exists 
+                            (select * from deposit_log 
+                            where deposit_no = :deposit_no and ipv6 = :ipv6 and to_char(reg_date, 'yyyy/mm/dd') = to_char(sysdate,'yyyy/mm/dd')))`;
+    let savingsStatement = `insert into savgins_log 
+                            (select :savings_no, :ipv6, sysdate from dual where not exists 
+                            (select * from savings_log 
+                            where savings_no = :savings_no and ipv6 = :ipv6 and to_char(reg_date, 'yyyy/mm/dd') = to_char(sysdate,'yyyy/mm/dd')))`;
+
+    // req deposit_no, ip를 받아와 넣음
+    let category = req.body.category;
+    let productNo = req.body.paramNo;
+    let statement = category === 'deposit_info' ? depositStatement : savingsStatement;
+    let param = [productNo, ipv6, productNo, ipv6];
+
+    originDb.getConnection(dbConfig, function (err, connection) {
+        if (err) {
+            console.error(err.message);
+            return;
+        }
+        connection.execute(statement, param, {autoCommit: true},
+            function (err, result) {
+                if (err) {
+                    console.error(err.message);
+                    doRelease(connection);
+                    return;
+                }
+                doRelease(connection);
+                res.send(result);
+            });
+    });
+});
+
 export default router;
-
-//
-// let commodityObj = {
-//     no: 1,
-//     dcls_month: '2017-09-12 08:42:10',                                    //  공시 제출월 [YYYYMM]
-//     fin_co_no: 1,                                                         //  금융회사 코드
-//     kor_co_nm: '하나은행',                                             //  금융회사명
-//     fin_prdt_cd: '3355443',                                         //  금융상품 코드
-//     fin_prdt_nm: '정기예금테스트',                                         //  금융 상품명
-//     join_way: '나를 통해서',                                                //  가입 방법
-//     mtrt_int: '100%',                                              //  만기 후 이자율
-//     spcl_cnd: '돈 많으면',                                               //  우대조건
-//     join_deny: 1,                                                         //  가입제한 Ex) 1:제한없음, 2:서민전용, 3:일부제한
-//     join_member: '50대 이하',                                         //  가입대상
-//     etc_note: '유의사항 없음',                                               //  기타 유의사항
-//     max_limit: 1,                                                         //  최고한도
-//     dcls_strt_day: '2017-09-12 08:42:10',                                 //  공시 시작일
-//     dcls_end_day: '2017-09-12 08:42:10',                                  //  공시 종료일
-//     fin_co_subm_day: '2017-09-12 08:42:10',                               //  금융회사 제출일 [YYYYMMDDHH24MI]
-//     intr_rate_type: '복리',                                                  //  저축 금리 유형(s:단리 m:복리)
-//     intr_rate_type_nm: 'intr_rate_type_nm 0',                             //  저축 금리 유형명
-//     save_trm: 1,                                                          //  저축 기간 [단위: 개월]
-//     intr_rate: 1,                                                         //  저축 금리 [소수점 2자리]
-//     intr_rate2: 1,                                                        //  최고 우대금리 [소수점 2자리]
-//     rsrv_type: 'N',                                                       //  적립 유형
-//     rsrv_type_nm: 'rsrv_type_nm 0'                                       //  적립 유형명
-// };
-
-//
-//
-// /**
-//  * 연령대별...
-//  */
-// router.post('/ageGroup', (req, res) => {
-//     let searchParam = req.body.selectedItem;
-//     console.log("overall search : " + searchParam);
-//
-//     let testItems = [
-//         {searchParam: 'searchParam'}, {}, {}, {}, {}, {}, {}, {}, {}, {}
-//     ];
-//     // 고객 키
-//     res.send(testItems);
-// });

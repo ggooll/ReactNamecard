@@ -119,14 +119,14 @@ export default class ConsultDetail extends React.Component {
 
             return (
                 <div>
-                    <div>다음 {category} 상품에 대해 상담받았습니다.</div>
+                    <div className="category-intro">{`다음 ${category} 상품에 대해 상담받았습니다.`}</div>
                     <div className="clear-div-2"/>
                     {products.map((product, idx) => {
                         return (
                             <Col key={idx}>
                                 <div className="consult-div">
                                     <div className="consult-product-div">
-                                        <div className="consult-product-intro">
+                                        <div className="consult-product-name">
                                             <span>{product["KOR_CO_NM"]}</span>
                                         </div>
                                         <div className="consult-product-intro">
@@ -158,7 +158,7 @@ export default class ConsultDetail extends React.Component {
                         {this.renderConsult()}
                     </Row>
                 </Grid>
-                <hr />
+                <hr/>
 
                 <div className="item-section-div">
                     <Grid>

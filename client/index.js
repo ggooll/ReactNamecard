@@ -9,7 +9,3 @@ window.detectingHistory = {
 
 let rootElement = document.getElementById('root');
 ReactDOM.render(<App location={location}/>, rootElement);
-
-if (module.hot) {
-    module.hot.accept();
-}

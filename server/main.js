@@ -9,6 +9,9 @@ import employee from './routes/employee';
 import auth from './routes/auth';
 import commodity from './routes/commodity';
 import consult from './routes/consult';
+import ondemand from './routes/ondemand';
+import chat from './routes/chat';
+
 import flash from 'connect-flash';
 import path from 'path';
 import fs from 'fs';
@@ -25,6 +28,7 @@ const port = 3000;
 const devPort = 3001;
 const sslPort = 3002;
 const db = require('oracledb-autoreconnect');
+db.oracledb.maxRows = 300;
 const dbConfig = require('./database/config');
 
 /**
@@ -61,6 +65,13 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(flash());
+app.use(function(req, res, next) {
+    res.setHeader("Access-Control-Allow-Headers","*");
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    next();
+});
 
 /**
  * api
@@ -69,6 +80,8 @@ app.use('/api/employee', employee);
 app.use('/api/auth', auth);
 app.use('/api/commodity', commodity);
 app.use('/api/consult', consult);
+app.use('/api/ondemand', ondemand);
+app.use('/api/chat', chat);
 
 /**
  * static

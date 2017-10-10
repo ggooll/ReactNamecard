@@ -1,6 +1,5 @@
-.top-introduce-frame {
-    height: 20vh;
-    background-color: aquamarine;
+.ondemand-selected-product {
+    margin: 2vh 5vw;
 }
 
 .list-demand {
@@ -10,15 +9,36 @@
 }
 
 .list-input-demand {
-    margin: 3vh auto;
-    background-color: lightcyan;
+    margin: 1vh auto;
+    background-color: white;
     height: auto;
     padding: 3vw;
 }
 
+.period-button-div {
+    height: 6vh;
+}
+
+.period-button-div > div {
+    width: 15vw;
+    height: 5vh;
+    border: 2px solid lightgray;
+    background: white;
+    float: right;
+    margin: 0 0.5vw;
+    text-align: center;
+    line-height: 5vh;
+    color: gray;
+}
+
+.period-button-div > div:active {
+    border: 2px solid #008485;
+    color: #008485;
+}
+
 .some-div {
     margin-top: 1.5vh;
-    margin-bottom: 10vh;
+    margin-bottom: 7vh;
     padding-top: 1vh;
     padding-bottom: 1vh;
 }
@@ -31,38 +51,62 @@
 }
 
 .list-input-div input {
-    height: 4vh;
-    line-height: 4vh;
+    height: 5vh;
+    line-height: 5vh;
     text-align: right;
     width: 60vw;
     margin-left: 3vw;
-    font-size: 1.5rem;
+    font-size: 2rem;
+    color: #008485;
+    border: 0;
+    outline: none;
+}
+
+::-webkit-input-placeholder { /* Chrome */
+    color: gray;
+    opacity: 0.5;
+}
+
+:-ms-input-placeholder { /* IE 10+ */
+    color: gray;
+    opacity: 0.5;
 }
 
 .list-input-div div {
     display: inline-block;
     float: right;
-    margin-right: 5vw;
+    margin-right: 2vw;
     font-size: 1.5rem;
 }
 
 .gender-div {
-    width: 30vw;
+    width: 25vw;
     height: 7vh;
     line-height: 7vh;
     border: 2px solid lightgray;
-    float: left !important;
+    float: right !important;
     text-align: -webkit-center;
     margin-left: 3.5vw;
-    margin-right: 3.5vw !important;
+}
+
+.gender-div:active {
+    top: 1px;
+    border: 2px solid #00bebf;
+    color: #00bebf;
+}
+
+.gender-selected {
+    border: 2px solid #008485;
+    color: #008485;
+    font-weight: bolder;
 }
 
 .search-ondemand-commodities {
-    position: fixed;
+    position: sticky;
     bottom: 0;
     margin: 0 auto;
     width: 100vw;
-    background-color: #008485;
+    background-color: rgb(25, 132, 133);
     height: 8vh;
     line-height: 8vh;
     font-size: 1.5rem;
@@ -70,3 +114,107 @@
     color: white;
 }
 
+.top-introduce-frame {
+    font-size: 2.5rem;
+    height: 35vh;
+    color: white;
+    line-height: 25vh;
+    background: #005657;
+    background: -webkit-linear-gradient(left top, #008485, #ffa4a4);
+    background: -o-linear-gradient(bottom right, #008485, #ffa4a4);
+    background: -moz-linear-gradient(bottom right, #008485, #ffa4a4);
+    background: linear-gradient(to bottom right, #008485, #ffa4a4);
+}
+
+.top-introduce-frame > div{
+    font-family: Hana L;
+}
+
+.selectBox {
+    position: relative;
+    width: 100%;
+    font-size: 1.75rem;
+    border: 2px solid lightgray;
+    border-radius: 4px;
+    height: 7vh;
+    line-height: 7vh;
+    text-align: center;
+    color: black;
+}
+
+.selectBox > select{
+    width: 100%;
+    height: 100%;
+    border: 0;
+    outline: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.overSelect {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.checkboxes.visible {
+    height: 30vh;
+    border: 1px #dadada solid;
+}
+
+.checkboxes {
+    transition: height 0.5s ease;
+    overflow: auto;
+    height: 0;
+}
+
+.checkboxes label {
+    display: block;
+    height: 6vh;
+    line-height: 6vh;
+    font-size: 1.5rem;
+    font-weight: 400 !important;
+}
+
+.checkboxes input[type=checkbox] {
+    margin: 2vh 4vw 1vh 4vw !important;
+    vertical-align: top;
+}
+
+.checkboxes label:active {
+    background-color: #008485;
+    opacity: 0.5;
+}
+
+.rsrv-type-button-div {
+    height: 8vh;
+}
+
+.rsrv-type-button-div > div {
+    width: 25vw;
+    height: 7vh;
+    line-height: 7vh;
+    border: 2px solid lightgray;
+    float: right !important;
+    text-align: -webkit-center;
+    margin-left: 3.5vw;
+}
+
+.rsrvType-selected {
+    border: 2px solid #008485 !important;
+    color: #008485;
+    font-weight: bolder;
+}
+
+.decoy-div {
+    height: 0;
+    display: none;
+}
+
+.decoy-div.visible {
+    display: block;
+    height: 10vh;
+    transition: height 0.5s ease;
+}
