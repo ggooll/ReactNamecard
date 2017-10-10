@@ -13,9 +13,12 @@ import CommodityDetail from './components/page/CommodityDetail';
 import ConsultDetail from './components/page/ConsultDetail';
 import FundCalculator from './components/page/FundCalculator';
 import ChatBot from './components/page/ChatBot';
+import ReservationList from './components/page/ReservationList';
+import Reservation from './components/page/Reservation';
 import NoMatch from './NoMatch';
 import './global_css/globalFont.css';
 import './global_css/transition-group.css';
+import 'moment/locale/fr-ca';
 
 function getHistoryAction() {
     history.listen((location, action) => {
@@ -97,6 +100,14 @@ export default class App extends React.Component {
                             <Route name="onDemandResult"
                                    exact path={`/:empcode/onDemand/result`}
                                    component={OnDemandResult}/>
+
+                            <Route name="ReservationList"
+                                   exact path={`/:empcode/reservationlist`}
+                                   component={ReservationList}/>
+
+                            <Route name="Reservation"
+                                   exact path={`/:empcode/reservation`}
+                                   component={Reservation}/>
 
                             {/* 상담 관련 상품 정보 보기 추가 */}
                             <Route name="survey"
