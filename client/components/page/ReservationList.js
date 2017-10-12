@@ -14,7 +14,7 @@ export default class Reservation extends React.Component{
     }
     componentDidMount() {
         let empCode = location.pathname.split('/')[1];
-        let userNo = cookie.load('user');
+        let userNo = 68;//cookie.load('user');
 
         // axios -> array로 받아옴
         // 신청내역조회

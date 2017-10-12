@@ -16,7 +16,8 @@ export default class ReservationMenu extends React.Component {
             empCode: this.props.name,
             modalVisible: false,
             downVisible: 'down-menu',
-            isAuthorized: false,
+            //isAuthorized: false,
+            isAuthorized: true,
             animation: 'slideUp'
         };
 
@@ -28,24 +29,27 @@ export default class ReservationMenu extends React.Component {
     }
     handleDownMenuShow() {
         // localStorage말고 세션을 검사하게끔 한다.
-        axios.post('/api/auth/isExistSession', {}).then((exist) => {
-            if (exist.data !== false) {
-                this.setState({
-                    downVisible: this.state.downVisible === 'down-menu' ? 'down-menu visible' : 'down-menu'
-                });
-            } else {
-                // 인증이 필요한 경우
-                this.setState({
-                    modalVisible: true
-                });
-
-                window.detectingHistory.isModal = true;
-                window.detectingHistory.modalFunc = this.handleModalClose;
-                window.history.pushState('forward', null, './existAuth');
-                return false;
-            }
-        }).catch((error) => {
-            console.log(error);
+        // axios.post('/api/auth/isExistSession', {}).then((exist) => {
+        //     if (exist.data !== false) {
+        //         this.setState({
+        //             downVisible: this.state.downVisible === 'down-menu' ? 'down-menu visible' : 'down-menu'
+        //         });
+        //     } else {
+        //         // 인증이 필요한 경우
+        //         this.setState({
+        //             modalVisible: true
+        //         });
+        //
+        //         window.detectingHistory.isModal = true;
+        //         window.detectingHistory.modalFunc = this.handleModalClose;
+        //         window.history.pushState('forward', null, './existAuth');
+        //         return false;
+        //     }
+        // }).catch((error) => {
+        //     console.log(error);
+        // });
+        this.setState({
+            downVisible: this.state.downVisible === 'down-menu' ? 'down-menu visible' : 'down-menu'
         });
     }
 

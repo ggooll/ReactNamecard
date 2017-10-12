@@ -1,5 +1,5 @@
 .react-datepicker {
-    font-size: 1em !important;
+    font-size: 1.5em !important;
 }
 .react-datepicker__header {
     padding-top: 0.8em !important;
@@ -22,12 +22,9 @@
 }
 .react-datepicker__navigation--previous {
     border-right-color: #ccc !important;
-    left: 1em !important;
+    left: 0.5em !important;
 }
 .react-datepicker__navigation--next {
     border-left-color: #ccc !important;
-    right: 1em !important;
-}
-.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list{
-    width: 100% !important;
+    right: 0.5em !important;
 }
