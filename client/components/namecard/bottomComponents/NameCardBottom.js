@@ -35,14 +35,13 @@ export default class NameCardBottom extends React.Component {
                                menuTitle={this.bottomItemTitles[1]}
                                name={this.state.empCode}/>
 
-                <FundCalMenu index={2}
-                             menuTitle={this.bottomItemTitles[2]}
-                             name={this.state.empCode}/>
+                <div className="namecard-bottom-itemdiv">
+                    <span className="bottom-item-titlespan">{'상담예약'}</span>
+                </div>
 
                 <Chat index={3}
                       menuTitle={this.bottomItemTitles[3]}
                       name={this.state.empCode}/>
-
                 <ReservationMenu index={4}
                       menuTitle={this.bottomItemTitles[4]}
                       name={this.state.empCode}/>
@@ -50,7 +49,6 @@ export default class NameCardBottom extends React.Component {
                 <div className="namecard-bottom-itemdiv">
                     <span className="bottom-item-titlespan">{'empty'}</span>
                 </div>
-
 
                 {/*<Link to="ranking"><BottomItem/></Link>*/}
             </div>

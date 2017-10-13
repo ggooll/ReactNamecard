@@ -12,9 +12,7 @@ const dbConfig = require('../database/config');
  */
 router.post('/overall', (req, res) => {
     let searchTable = req.body.selectedItem;
-    let selectedCode = req.body.selectedBankCode;
     let params = [];
-
     let statement = `SELECT 
                     NO,
                     FIN_CO_NO,
@@ -24,12 +22,18 @@ router.post('/overall', (req, res) => {
                     JOIN_WAY,
                     MAX_LIMIT,
                     MTRT_INT,
-                    JOIN_MEMBER FROM ${searchTable}`;
+                    (select 1 from dual) VISIBLE,
+                    JOIN_MEMBER,`;
 
-    if (selectedCode !== undefined && selectedCode !== "") {
-        statement += ` WHERE FIN_CO_NO = :fin_co_no`;
-        params.push(selectedCode);
-    }
+    let depositStatement = `(select count(product_no) from consult_product where type = 1 and product_no = di.NO group by(product_no)) product_count, 
+                            (select count(deposit_no) from deposit_log where deposit_no = di.NO group by(deposit_no)) deposit_count
+                            FROM deposit_info di
+                            order by di.no`;
+    let savingsStatement = `(select count(product_no) from consult_product where type = 1 and product_no = si.NO group by(product_no)) product_count, 
+                            (select count(savings_no) from savings_log where savings_no = si.NO group by(savings_no)) savings_count
+                            FROM savings_info si
+                            order by si.no`;
+    statement += (searchTable === 'deposit_info' ? depositStatement : savingsStatement);
 
     oracledb.query(statement, params).then(function (dbResult) {
         let commodities = oracledb.transformToAssociated(dbResult);
@@ -139,21 +143,24 @@ function doRelease(conn) {
 // originDb
 router.post('/insert/visitLog', (req, res) => {
     let ipv6 = req.headers["X-Forwarded-For"] || req.connection.remoteAddress;
+    let empCode = req.body.empCode;
+    console.log('insert ' + empCode);
 
     let depositStatement = `insert into deposit_log 
-                            (select :deposit_no, :ipv6, sysdate from dual where not exists 
+                            (select :deposit_no, :ipv6, sysdate, :empCode from dual where not exists 
                             (select * from deposit_log 
-                            where deposit_no = :deposit_no and ipv6 = :ipv6 and to_char(reg_date, 'yyyy/mm/dd') = to_char(sysdate,'yyyy/mm/dd')))`;
-    let savingsStatement = `insert into savgins_log 
-                            (select :savings_no, :ipv6, sysdate from dual where not exists 
+                            where deposit_no = :deposit_no and ipv6 = :ipv6 and empcode = :empCode and to_char(reg_date, 'yyyy/mm/dd') = to_char(sysdate,'yyyy/mm/dd')))`;
+
+    let savingsStatement = `insert into savings_log 
+                            (select :savings_no, :ipv6, sysdate, :empCode from dual where not exists 
                             (select * from savings_log 
-                            where savings_no = :savings_no and ipv6 = :ipv6 and to_char(reg_date, 'yyyy/mm/dd') = to_char(sysdate,'yyyy/mm/dd')))`;
+                            where savings_no = :savings_no and ipv6 = :ipv6 and empcode = :empCode and to_char(reg_date, 'yyyy/mm/dd') = to_char(sysdate,'yyyy/mm/dd')))`;
 
     // req deposit_no, ip를 받아와 넣음
     let category = req.body.category;
     let productNo = req.body.paramNo;
     let statement = category === 'deposit_info' ? depositStatement : savingsStatement;
-    let param = [productNo, ipv6, productNo, ipv6];
+    let param = [productNo, ipv6, empCode, productNo, ipv6, empCode];
 
     originDb.getConnection(dbConfig, function (err, connection) {
         if (err) {

@@ -4,11 +4,10 @@
 
 import React from 'react';
 import history from '../../../history';
-import 'rodal/lib/rodal.css';
 import './css/BottomItem.css';
 import './css/NameCardBottom.css';
 
-export default class NewCustomer extends React.Component {
+export default class FundCalMenu extends React.Component {
 
     constructor(props) {
         super(props);

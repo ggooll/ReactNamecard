@@ -38,6 +38,15 @@ export default class OnDemand extends React.Component {
         this.makeNoneComma = this.makeNoneComma.bind(this);
     }
 
+    componentWillMount() {
+        let preSelected = window.localStorage.getItem('userOnDemand');
+        if (preSelected !== null) {
+            let preObject = JSON.parse(preSelected);
+            preObject.checkboxToggler = 'checkboxes';
+            this.setState(preObject);
+        }
+    }
+
     componentDidMount() {
         window.scrollTo(0, 1);
     }
@@ -96,7 +105,7 @@ export default class OnDemand extends React.Component {
         let numberRegex = /^[0-9]*$/;
         let value = event.target.value;
 
-        if(numberRegex.test(value)){
+        if (numberRegex.test(value)) {
             let result = {};
             result[event.target.name] = event.target.value;
             this.setState(result);
@@ -149,7 +158,7 @@ export default class OnDemand extends React.Component {
             };
 
             if (this.state.selectedProducts === 'deposit_info') {
-                passParam.money = this.state.depositMoney.replace(/\,/g,'');
+                passParam.money = this.state.depositMoney.replace(/\,/g, '');
             } else {
                 let typeS = this.state.rsrvTypeS;
                 let typeF = this.state.rsrvTypeF;
@@ -158,9 +167,10 @@ export default class OnDemand extends React.Component {
                     paramType = typeS !== '' ? 'S' : 'F';
                 }
                 passParam.type = paramType;
-                passParam.money = this.state.savingMoney.replace(/\,/g,'');
+                passParam.money = this.state.savingMoney.replace(/\,/g, '');
             }
 
+            window.localStorage.setItem('userOnDemand', JSON.stringify(this.state));
             history.push({
                 pathname: '/ggooll/onDemand/result',
                 state: {passParam: passParam}
@@ -186,14 +196,14 @@ export default class OnDemand extends React.Component {
         );
     }
 
-    makeNoneComma(event){
+    makeNoneComma(event) {
         let result = {};
         let value = event.target.value;
-        result[event.target.name] = value.replace(/\,/g,'');
+        result[event.target.name] = value.replace(/\,/g, '');
         this.setState(result);
     }
 
-    makeComma(event){
+    makeComma(event) {
         let result = {};
         result[event.target.name] = resource.moneyWithComma(event.target.value);
         this.setState(result);
@@ -207,7 +217,8 @@ export default class OnDemand extends React.Component {
                 <div className="list-input-div">
                     {
                         readOnly === undefined ?
-                            <input type="text" pattern="[0-9]*" onFocus={this.makeNoneComma} onBlur={this.makeComma} name={params.targetName} placeholder={`ex) ${params.defaultValue}`}
+                            <input type="text" pattern="[0-9]*" onFocus={this.makeNoneComma} onBlur={this.makeComma}
+                                   name={params.targetName} placeholder={`ex) ${params.defaultValue}`}
                                    value={states}
                                    onChange={this.handleChangeInput}/> :
                             <input type="text" placeholder={params.defaultValue} value={states} {...readOnly}/>
@@ -345,7 +356,6 @@ export default class OnDemand extends React.Component {
                                         </div>
                                         <div className="clear-div-2"/>
                                     </li>
-
                                 </ul>
                             </Col>
                         </Row>
