@@ -26,7 +26,8 @@ module.exports = {
 
     plugins: [
         new webpack.optimize.OccurrenceOrderPlugin(),
-        new webpack.NoEmitOnErrorsPlugin()
+        new webpack.NoEmitOnErrorsPlugin(),
+        new webpack.ContextReplacementPlugin(/moment[\\\/]locale$/, /^\.\/(en)$/)
     ],
 
     module: {

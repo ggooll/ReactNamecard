@@ -17,7 +17,7 @@ moment.locale('en-ca');
 export default class Reservation extends React.Component{
     constructor(props) {
         super(props);
-        this.state={
+        this.defaultState={
             selectCall: 'gender-div',
             selectMeeting: 'gender-div',
             name:'',
@@ -33,11 +33,31 @@ export default class Reservation extends React.Component{
             start_date:'',
             type:'',
         };
+        this.state = this.defaultState;
         this.handleChange = this.handleChange.bind(this);
         this.handleClickType = this.handleClickType.bind(this);
         this.handleRequest = this.handleRequest.bind(this);
+        this.handleChangeInput = this.handleChangeInput.bind(this);
     }
 
+    componentWillMount(){
+        console.log('will');
+        let userNo = cookie.load('user');
+        console.log(userNo);
+        if(userNo!=undefined){
+            axios.post(`/api/reservation/user`, {data:userNo}).then((result)=>{
+                console.log(result);
+                this.setState({
+                    name:result.data[0].NAME,
+                    phone:result.data[0].PHONE});
+                console.log(this.state);
+            }).catch((error) => {
+                console.log(error);
+            });
+        }else{
+            console.log('유저없음');
+        }
+    }
     getItems(param, callback) {
         console.log('getItems');
         console.log(param);
@@ -109,9 +129,11 @@ export default class Reservation extends React.Component{
             start_date : this.state.start_date,
             start_time : this.state.start_time,
             empCode : location.pathname.split('/')[1],
-            customer_no : 68,//cookie.load('user'),
+            customer_no : cookie.load('user'),
             msg : this.state.msg,
             location : this.state.location,
+            name : this.state.name,
+            phone : this.state.phone,
         }
         console.log(param);
         axios.post(`/api/reservation/request`, {data:param}).then((result) => {
@@ -123,6 +145,71 @@ export default class Reservation extends React.Component{
             console.log(error);
         });
     }
+    ///
+    handleChangeInput(event) {
+        let value = event.target.value;
+        console.log('========')
+        console.log(value);
+        //this.setState(evnet.value)
+        // if(numberRegex.test(value)){
+             let result = {};
+             result[event.target.name] = event.target.value;
+             this.setState(result);
+        // }
+        console.log(this.state);
+    }
+    //renderInputInfo(params, states(this.state.age), readOnly) {
+    renderInputInfo() {
+        return (
+            <div>
+                <div className="clear-div-2"/>
+                <div className="list-input-div">
+                    이름:{
+                    cookie.load('user') == undefined ?
+                    //    this.state.name == "" ?
+                            <input type="text" name="name"
+                                   value={this.state.name}
+                                   onChange={this.handleChangeInput}/> :
+                            <input type="text" value={this.state.name}/>
+                    }
+                </div>
+                <div className="clear-div-2"/>
+                <div className="list-input-div">
+                    연락처 :{
+                        //this.state.phone == "" ?
+                    cookie.load('user') == undefined ?
+                            <input type="text" name="phone"
+                                   value={this.state.phone}
+                                   onChange={this.handleChangeInput}/> :
+                            <input type="text" value={this.state.phone}/>
+                    }
+                </div>
+                <div className="clear-div-2"/>
+                <div className="list-input-div">
+                    장소 :{
+                        <input type="text" name="location"
+                               value={this.state.location}
+                               onChange={this.handleChangeInput}/>
+                     }
+                </div>
+                <div className="clear-div-2"/>
+                <div className="list-input-div">
+                    메세지 :{
+                        <input type="text" name="msg"
+                               value={this.state.msg}
+                               onChange={this.handleChangeInput}/>
+                     }
+                </div>
+            </div>
+        );
+    }
+///
+//     const ageParams = {
+//         title: '나이',
+//         right: '세 ',
+//         defaultValue: '20',
+//         targetName: 'age'
+//     };
     render() {
         let myStyle = {
             border:'1px solid'
@@ -130,10 +217,11 @@ export default class Reservation extends React.Component{
         return (
             <div className="item-whole-div">
                 <TopNavigator title="상담예약"/>
-
-                <div>
-                    <p>예약하기</p>
+                <div className="list-input-demand">
+                    {/*{this.renderInputInfo(ageParams, this.state.name)}*/}
+                    {this.renderInputInfo(this)}
                 </div>
+
                 <div>
                     <div className={this.state.selectCall}
                          onClick={this.handleClickType.bind(this, 'Call')}>
@@ -165,7 +253,7 @@ export default class Reservation extends React.Component{
                         })}
                     </div>
                 </div>
-                <div onClick={this.handleRequest.bind(this)}>
+                <div style={myStyle} onClick={this.handleRequest.bind(this)}>
                     예약
                 </div>
             </div>

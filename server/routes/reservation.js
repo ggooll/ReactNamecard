@@ -1,4 +1,5 @@
 import express from 'express';
+import async from 'async';
 const router = express.Router();
 const oracledb = require('oracledb-autoreconnect');
 const originDb = oracledb.oracledb;
@@ -16,8 +17,8 @@ router.get('/:empCode/:customerNo', (req, res) => {
                             LOCATION,
                             TYPE,
                             MSG,
-                            TO_CHAR(START_DATE, 'yyyy-mm-dd') START_DATE,
-                            TO_CHAR(END_DATE, 'yyyy-mm-dd') END_DATE,
+                            TO_CHAR(START_DATE, 'yyyy-mm-dd HH24:MI') START_DATE,
+                            TO_CHAR(END_DATE, 'yyyy-mm-dd HH24:MI') END_DATE,
                             STATUS,
                             COMMENTS
                      FROM RESERVATION 
@@ -57,6 +58,22 @@ router.get('/check/:empCode/:day/:type',(req,res)=>{
     });
 
 });
+
+router.post('/user',(req,res)=>{
+    console.log('user');
+    let customerNo = req.body.data;//req.params.userNo;
+    console.log('=====');
+    console.log(customerNo);
+    let params = [customerNo];
+    let statement=`select name, phone from customer where no=:customerNo`;
+    console.log(params);
+
+    oracledb.query(statement, params).then(function (dbResult) {
+        let result = oracledb.transformToAssociated(dbResult);
+        console.log(result);
+        res.send(result);
+    });
+});
 //insert into reservation
 // values(reservation_seq.nextval, 1, 68, '임고객', '01099899444', '서울시 강남구', 'Meeting', '상담신청', to_date('2017/10/11 17:00','yyyy/MM/dd hh24:mi'),
 // to_date('2017/10/11 16:00','yyyy/MM/dd hh24:mi')+ 0.5/24,'D',sysdate,'');
@@ -64,61 +81,117 @@ router.post('/request', (req,res)=>{
     console.log('request');
     console.log(req.body);
     const session = req.session;
-    console.log(session.authUser);
+    //console.log(session.authUser);
 
     let empCode = req.body.data.empCode;
     let start_date = req.body.data.start_date;
     let start_time = req.body.data.start_time;
     let t_date = start_date+' '+start_time;
     let type = req.body.data.type;
-    let customerNo = req.body.data.customer_no;
-    let location = "서울시 서초구";//req.body.data.location;
+    //let customerNo = req.body.data.customer_no;
+    let location = req.body.data.location;
     let msg = req.body.data.msg == undefined ? "" : req.body.data.msg;
 
-    let name = session.authUser==undefined ? req.body.data.name : session.authUser.NAME;
-    let phone = session.authUser==undefined ? req.body.data.phone : session.authUser.PHONE;
+    let name = req.body.data.name;      //session.authUser==undefined ? req.body.data.name : session.authUser.NAME;
+    let phone = req.body.data.phone;    //session.authUser==undefined ? req.body.data.phone : session.authUser.PHONE;
 
     let range = type =='Meeting' ? 1/24 : 0.5/24;
     let comments = "";
 
-    let params = [empCode, customerNo, name, phone, location, type, msg, t_date, t_date ,comments];
-    console.log(params);
-    let statement =`INSERT INTO RESERVATION
+    //let params = [empCode, customerNo, name, phone, location, type, msg, t_date, t_date ,range ,comments];
+    //console.log(params);
+
+    //세션체크 후 세션이 없으면 name, phone으로 유저 가입 후 일정잡기
+    async.waterfall([
+        function(callback){
+            if(session.authUser==undefined) {
+                let params = [name, phone, empCode];
+                console.log(params);
+                let statement = `insert into customer(no, name, phone, employee_no, grade, reg_date) 
+                                 values(customer_seq.nextval, :name , :phone, (select no from employee where code=:empCode), '잠재', sysdate)`;
+                originDb.getConnection(dbConfig, function (err, connection) {
+                    if (err) {
+                        console.error(err.message);
+                        return;
+                    }
+                    connection.execute(statement, params, {autoCommit: true},
+                        function (err, result) {
+                            if (err) {
+                                console.error(err.message);
+                                doRelease(connection);
+                                res.send({msg: "fail"});
+                            }
+                            doRelease(connection);
+                            //res.send({msg:"success"});
+                            callback(null,true);
+                        });
+                });
+            }else
+                callback(null,false);
+            //callback(null);
+        },
+        function(arg, callback){
+            if(arg==true){
+                let params = [phone];
+                console.log(params);
+                let statement = `SELECT NO,
+                            NAME,
+                            BIRTH_DATE,
+                            PHONE,
+                            EMPLOYEE_NO,
+                            COMMENTS,
+                            GRADE,
+                            POST,
+                            ADDRESS,
+                            REG_DATE FROM CUSTOMER WHERE PHONE = :phone`;
+                oracledb.query(statement, params).then(function (dbResult) {
+                    let auth = oracledb.transformToAssociated(dbResult);
+                    req.session.authUser = auth[0];
+                    callback(null);
+                });
+            }else{
+                console.log('else');
+                callback(null);
+            }
+
+        },
+        function(callback){
+            console.log(req.session.authUser);
+            let customerNo = req.session.authUser["NO"];
+            let params = [empCode, customerNo, name, phone, location, type, msg, t_date, t_date ,range ,comments];
+            console.log(params);
+            let statement =`INSERT INTO RESERVATION
                     VALUES(RESERVATION_SEQ.NEXTVAL, (select no from employee where code=:empCode), :customerNo, :name, :phone, :location, :type, :msg, 
                     to_date(:t_date, 'yyyy/MM/dd hh24:mi'), (to_date(:t_date, 'yyyy/MM/dd hh24:mi')+:range), 'D', sysdate, :comments)`;
-
-    // oracledb.query(statement,params).then(function (dbResult) {
-    //     // if(err){
-    //     //     console.log('err');
-    //     //     res.send({msg:"fail"});
-    //     // }
-    //     let cnt = oracledb.transformToAssociated(dbResult);
-    //     console.log('cnt: '+cnt);
-    //     let result = {msg:"success"};
-    //     // if(cnt>0){
-    //     //     result = {msg:"success"};
-    //     // }else
-    //     //     result = {msg:"fail"};
-    //     res.send(result);
-    // });
-
-    //
-    originDb.getConnection(dbConfig, function (err, connection) {
-        if (err) {
-            console.error(err.message);
-            return;
-        }
-        connection.execute(statement, params, {autoCommit: true},
-            function (err, result) {
+            originDb.getConnection(dbConfig, function (err, connection) {
                 if (err) {
                     console.error(err.message);
-                    doRelease(connection);
-                    res.send({msg:"fail"});
+                    return;
                 }
-                doRelease(connection);
-                res.send({msg:"success"});
+                connection.execute(statement, params, {autoCommit: true},
+                    function (err, result) {
+                        if (err) {
+                            console.error(err.message);
+                            doRelease(connection);
+                            res.send({msg:"fail"});
+                        }
+                        doRelease(connection);
+                        //res.send({msg:"success"});
+                        callback(null);
+                    });
             });
+            //callback(null,b);
+        }
+    ],function(err, result){
+        if(err){
+            console.log(err);
+            res.send({msg:"fail"});
+        }
+        res.cookie('user', req.session.authUser["NO"]);
+        res.send({msg:"success"});
+
     });
+
 });
 
 function doRelease(conn) {

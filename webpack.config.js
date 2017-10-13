@@ -8,7 +8,10 @@ module.exports = {
         path: __dirname + '/public',
         filename: 'bundle.js'
     },
-
+    plugins: [
+        //new webpack.ContextReplacementPlugin(/moment[\\\/]locale$/, /^\.\/(en)$/)
+        new webpack.ContextReplacementPlugin(/moment[\\\/]locale$/, /^\.\/en$/)
+    ],
     module: {
         loaders: [
             {
