@@ -47876,7 +47876,6 @@ var Introduce = function (_React$Component) {
             position: ''
         };
 
-        // state object로 변경
         _this.state = _this.defaultState;
         return _this;
     }
@@ -53672,6 +53671,14 @@ var OnDemand = function (_React$Component) {
             });
         }
     }, {
+        key: 'handleClickMoneyButton',
+        value: function handleClickMoneyButton(money) {
+            var type = this.state.selectedProducts;
+            var preInputMoney = type === 'deposit_info' ? this.state.depositMoney : this.state.savingMoney;
+            var plusMoney = _StaticResource2.default.moneyWithComma(Number(preInputMoney.replace(/\,/g, '')) + Number(money));
+            type === 'deposit_info' ? this.setState({ depositMoney: plusMoney }) : this.setState({ savingMoney: plusMoney });
+        }
+    }, {
         key: 'handleToggleCheckBoxes',
         value: function handleToggleCheckBoxes() {
             var toggle = this.state.checkboxToggler === 'checkboxes' ? 'checkboxes visible' : 'checkboxes';
@@ -53934,7 +53941,31 @@ var OnDemand = function (_React$Component) {
                                     _react2.default.createElement(
                                         'li',
                                         { className: 'list-input-demand' },
-                                        this.state.selectedProducts === 'deposit_info' ? this.renderInputDemand(depositMoneyParams, this.state.depositMoney) : this.renderInputDemand(savingMoneyParams, this.state.savingMoney)
+                                        this.state.selectedProducts === 'deposit_info' ? this.renderInputDemand(depositMoneyParams, this.state.depositMoney) : this.renderInputDemand(savingMoneyParams, this.state.savingMoney),
+                                        _react2.default.createElement(
+                                            'div',
+                                            { className: 'plus-money-button-div' },
+                                            _react2.default.createElement(
+                                                'div',
+                                                { onClick: this.handleClickMoneyButton.bind(this, '100000') },
+                                                '+\uC2ED\uB9CC\uC6D0'
+                                            ),
+                                            _react2.default.createElement(
+                                                'div',
+                                                { onClick: this.handleClickMoneyButton.bind(this, '1000000') },
+                                                '+\uBC31\uB9CC\uC6D0'
+                                            ),
+                                            _react2.default.createElement(
+                                                'div',
+                                                { onClick: this.handleClickMoneyButton.bind(this, '10000000') },
+                                                '+\uCC9C\uB9CC\uC6D0'
+                                            ),
+                                            _react2.default.createElement(
+                                                'div',
+                                                { onClick: this.handleClickMoneyButton.bind(this, '100000000') },
+                                                '+1\uC5B5\uC6D0'
+                                            )
+                                        )
                                     ),
                                     _react2.default.createElement(
                                         'li',
@@ -65082,7 +65113,7 @@ exports = module.exports = __webpack_require__(11)(undefined);
 
 
 // module
-exports.push([module.i, ".ondemand-selected-product {\n    margin: 2vh 5vw;\n}\n\n.list-demand {\n    list-style-type: none;\n    margin: 0;\n    padding: 0;\n}\n\n.list-input-demand {\n    margin: 1vh auto;\n    background-color: white;\n    height: auto;\n    padding: 3vw;\n}\n\n.period-button-div {\n    height: 6vh;\n}\n\n.period-button-div > div {\n    width: 15vw;\n    height: 5vh;\n    border: 2px solid lightgray;\n    background: white;\n    float: right;\n    margin: 0 0.5vw;\n    text-align: center;\n    line-height: 5vh;\n    color: gray;\n}\n\n.period-button-div > div:active {\n    border: 2px solid #008485;\n    color: #008485;\n}\n\n.some-div {\n    margin-top: 1.5vh;\n    margin-bottom: 7vh;\n    padding-top: 1vh;\n    padding-bottom: 1vh;\n}\n\n.list-input-div {\n    border-bottom: 2px solid #008485;\n    height: 6vh;\n    line-height: 6vh;\n    margin: 1vh auto;\n}\n\n.list-input-div input {\n    height: 5vh;\n    line-height: 5vh;\n    text-align: right;\n    width: 60vw;\n    margin-left: 3vw;\n    font-size: 2rem;\n    color: #008485;\n    border: 0;\n    outline: none;\n}\n\n::-webkit-input-placeholder { /* Chrome */\n    color: gray;\n    opacity: 0.5;\n}\n\n:-ms-input-placeholder { /* IE 10+ */\n    color: gray;\n    opacity: 0.5;\n}\n\n.list-input-div div {\n    display: inline-block;\n    float: right;\n    margin-right: 2vw;\n    font-size: 1.5rem;\n}\n\n.gender-div {\n    width: 25vw;\n    height: 7vh;\n    line-height: 7vh;\n    border: 2px solid lightgray;\n    float: right !important;\n    text-align: -webkit-center;\n    margin-left: 3.5vw;\n}\n\n.gender-div:active {\n    top: 1px;\n    border: 2px solid #00bebf;\n    color: #00bebf;\n}\n\n.gender-selected {\n    border: 2px solid #008485;\n    color: #008485;\n    font-weight: bolder;\n}\n\n.search-ondemand-commodities {\n    position: sticky;\n    bottom: 0;\n    margin: 0 auto;\n    width: 100vw;\n    background-color: rgb(25, 132, 133);\n    height: 8vh;\n    line-height: 8vh;\n    font-size: 1.5rem;\n    text-align: center;\n    color: white;\n}\n\n.top-introduce-frame {\n    font-size: 2.5rem;\n    height: 35vh;\n    color: white;\n    line-height: 25vh;\n    background: #005657;\n    background: -webkit-linear-gradient(left top, #008485, #ffa4a4);\n    background: -o-linear-gradient(bottom right, #008485, #ffa4a4);\n    background: -moz-linear-gradient(bottom right, #008485, #ffa4a4);\n    background: linear-gradient(to bottom right, #008485, #ffa4a4);\n}\n\n.top-introduce-frame > div{\n    font-family: Hana L;\n}\n\n.selectBox {\n    position: relative;\n    width: 100%;\n    font-size: 1.75rem;\n    border: 2px solid lightgray;\n    border-radius: 4px;\n    height: 7vh;\n    line-height: 7vh;\n    text-align: center;\n    color: black;\n}\n\n.selectBox > select{\n    width: 100%;\n    height: 100%;\n    border: 0;\n    outline: 0;\n    margin: 0;\n    padding: 0;\n}\n\n.overSelect {\n    position: absolute;\n    left: 0;\n    right: 0;\n    top: 0;\n    bottom: 0;\n}\n\n.checkboxes.visible {\n    height: 30vh;\n    border: 1px #dadada solid;\n}\n\n.checkboxes {\n    transition: height 0.5s ease;\n    overflow: auto;\n    height: 0;\n}\n\n.checkboxes label {\n    display: block;\n    height: 6vh;\n    line-height: 6vh;\n    font-size: 1.5rem;\n    font-weight: 400 !important;\n}\n\n.checkboxes input[type=checkbox] {\n    margin: 2vh 4vw 1vh 4vw !important;\n    vertical-align: top;\n}\n\n.checkboxes label:active {\n    background-color: #008485;\n    opacity: 0.5;\n}\n\n.rsrv-type-button-div {\n    height: 8vh;\n}\n\n.rsrv-type-button-div > div {\n    width: 25vw;\n    height: 7vh;\n    line-height: 7vh;\n    border: 2px solid lightgray;\n    float: right !important;\n    text-align: -webkit-center;\n    margin-left: 3.5vw;\n}\n\n.rsrvType-selected {\n    border: 2px solid #008485 !important;\n    color: #008485;\n    font-weight: bolder;\n}\n\n.decoy-div {\n    height: 0;\n    display: none;\n}\n\n.decoy-div.visible {\n    display: block;\n    height: 10vh;\n    transition: height 0.5s ease;\n}\n", ""]);
+exports.push([module.i, ".ondemand-selected-product {\n    margin: 2vh 5vw;\n}\n\n.list-demand {\n    list-style-type: none;\n    margin: 0;\n    padding: 0;\n}\n\n.list-input-demand {\n    margin: 1vh auto;\n    background-color: white;\n    height: auto;\n    padding: 3vw;\n}\n\n.plus-money-button-div, .period-button-div {\n    height: 6vh;\n}\n\n.plus-money-button-div > div, .period-button-div > div {\n    width: 15vw;\n    height: 5vh;\n    border: 2px solid lightgray;\n    background: white;\n    float: right;\n    margin: 0 0.5vw;\n    text-align: center;\n    line-height: 5vh;\n    color: gray;\n}\n\n.plus-money-button-div > div:active, .period-button-div > div:active {\n    border: 2px solid #008485;\n    color: #008485;\n}\n\n.some-div {\n    margin-top: 1.5vh;\n    margin-bottom: 7vh;\n    padding-top: 1vh;\n    padding-bottom: 1vh;\n}\n\n.list-input-div {\n    border-bottom: 2px solid #008485;\n    height: 6vh;\n    line-height: 6vh;\n    margin: 1vh auto;\n}\n\n.list-input-div input {\n    height: 5vh;\n    line-height: 5vh;\n    text-align: right;\n    width: 60vw;\n    margin-left: 3vw;\n    font-size: 2rem;\n    color: #008485;\n    border: 0;\n    outline: none;\n}\n\n::-webkit-input-placeholder { /* Chrome */\n    color: gray;\n    opacity: 0.5;\n}\n\n:-ms-input-placeholder { /* IE 10+ */\n    color: gray;\n    opacity: 0.5;\n}\n\n.list-input-div div {\n    display: inline-block;\n    float: right;\n    margin-right: 2vw;\n    font-size: 1.5rem;\n}\n\n.gender-div {\n    width: 25vw;\n    height: 7vh;\n    line-height: 7vh;\n    border: 2px solid lightgray;\n    float: right !important;\n    text-align: -webkit-center;\n    margin-left: 3.5vw;\n}\n\n.gender-div:active {\n    top: 1px;\n    border: 2px solid #00bebf;\n    color: #00bebf;\n}\n\n.gender-selected {\n    border: 2px solid #008485;\n    color: #008485;\n    font-weight: bolder;\n}\n\n.search-ondemand-commodities {\n    position: sticky;\n    bottom: 0;\n    margin: 0 auto;\n    width: 100vw;\n    background-color: rgb(25, 132, 133);\n    height: 8vh;\n    line-height: 8vh;\n    font-size: 1.5rem;\n    text-align: center;\n    color: white;\n}\n\n.top-introduce-frame {\n    font-size: 2.5rem;\n    height: 35vh;\n    color: white;\n    line-height: 25vh;\n    background: #005657;\n    background: -webkit-linear-gradient(left top, #008485, #ffa4a4);\n    background: -o-linear-gradient(bottom right, #008485, #ffa4a4);\n    background: -moz-linear-gradient(bottom right, #008485, #ffa4a4);\n    background: linear-gradient(to bottom right, #008485, #ffa4a4);\n}\n\n.top-introduce-frame > div{\n    font-family: Hana L;\n}\n\n.selectBox {\n    position: relative;\n    width: 100%;\n    font-size: 1.75rem;\n    border: 2px solid lightgray;\n    border-radius: 4px;\n    height: 7vh;\n    line-height: 7vh;\n    text-align: center;\n    color: black;\n}\n\n.selectBox > select{\n    width: 100%;\n    height: 100%;\n    border: 0;\n    outline: 0;\n    margin: 0;\n    padding: 0;\n}\n\n.overSelect {\n    position: absolute;\n    left: 0;\n    right: 0;\n    top: 0;\n    bottom: 0;\n}\n\n.checkboxes.visible {\n    height: 30vh;\n    border: 1px #dadada solid;\n}\n\n.checkboxes {\n    transition: height 0.5s ease;\n    overflow: auto;\n    height: 0;\n}\n\n.checkboxes label {\n    display: block;\n    height: 6vh;\n    line-height: 6vh;\n    font-size: 1.5rem;\n    font-weight: 400 !important;\n}\n\n.checkboxes input[type=checkbox] {\n    margin: 2vh 4vw 1vh 4vw !important;\n    vertical-align: top;\n}\n\n.checkboxes label:active {\n    background-color: #008485;\n    opacity: 0.5;\n}\n\n.rsrv-type-button-div {\n    height: 8vh;\n}\n\n.rsrv-type-button-div > div {\n    width: 25vw;\n    height: 7vh;\n    line-height: 7vh;\n    border: 2px solid lightgray;\n    float: right !important;\n    text-align: -webkit-center;\n    margin-left: 3.5vw;\n}\n\n.rsrvType-selected {\n    border: 2px solid #008485 !important;\n    color: #008485;\n    font-weight: bolder;\n}\n\n.decoy-div {\n    height: 0;\n    display: none;\n}\n\n.decoy-div.visible {\n    display: block;\n    height: 10vh;\n    transition: height 0.5s ease;\n}\n", ""]);
 
 // exports
 
@@ -66396,6 +66427,8 @@ var OverAll = function (_React$Component) {
                     selectedBanksIndex: selected,
                     overAllItems: overAllItems
                 });
+
+                // async??;;
                 window.localStorage.setItem('overAllQuery', JSON.stringify(this.state));
             }
         }

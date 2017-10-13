@@ -28,7 +28,6 @@ export default class Introduce extends React.Component {
             position: ''
         };
 
-        // state object로 변경
         this.state = this.defaultState;
     }
 

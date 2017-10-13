@@ -118,6 +118,13 @@ export default class OnDemand extends React.Component {
         });
     }
 
+    handleClickMoneyButton(money){
+        let type = this.state.selectedProducts;
+        let preInputMoney = type === 'deposit_info' ? this.state.depositMoney : this.state.savingMoney;
+        let plusMoney = resource.moneyWithComma(Number(preInputMoney.replace(/\,/g, '')) + Number(money));
+        type === 'deposit_info' ? this.setState({depositMoney: plusMoney}) : this.setState({savingMoney: plusMoney});
+    }
+
     handleToggleCheckBoxes() {
         let toggle = this.state.checkboxToggler === 'checkboxes' ? 'checkboxes visible' : 'checkboxes';
         if (toggle !== 'checkboxes') {
@@ -315,6 +322,12 @@ export default class OnDemand extends React.Component {
                                         {this.state.selectedProducts === 'deposit_info' ?
                                             this.renderInputDemand(depositMoneyParams, this.state.depositMoney) :
                                             this.renderInputDemand(savingMoneyParams, this.state.savingMoney)}
+                                        <div className="plus-money-button-div">
+                                            <div onClick={this.handleClickMoneyButton.bind(this, '100000')}>+십만원</div>
+                                            <div onClick={this.handleClickMoneyButton.bind(this, '1000000')}>+백만원</div>
+                                            <div onClick={this.handleClickMoneyButton.bind(this, '10000000')}>+천만원</div>
+                                            <div onClick={this.handleClickMoneyButton.bind(this, '100000000')}>+1억원</div>
+                                        </div>
                                     </li>
 
                                     <li className="list-input-demand">

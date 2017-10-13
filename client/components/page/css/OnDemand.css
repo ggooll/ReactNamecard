@@ -15,11 +15,11 @@
     padding: 3vw;
 }
 
-.period-button-div {
+.plus-money-button-div, .period-button-div {
     height: 6vh;
 }
 
-.period-button-div > div {
+.plus-money-button-div > div, .period-button-div > div {
     width: 15vw;
     height: 5vh;
     border: 2px solid lightgray;
@@ -31,7 +31,7 @@
     color: gray;
 }
 
-.period-button-div > div:active {
+.plus-money-button-div > div:active, .period-button-div > div:active {
     border: 2px solid #008485;
     color: #008485;
 }
