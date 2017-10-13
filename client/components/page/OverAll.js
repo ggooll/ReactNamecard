@@ -3,6 +3,7 @@
  */
 import React from 'react';
 import {Grid, Row, Col} from 'react-bootstrap';
+import Loader from 'react-loader';
 import axios from 'axios';
 import IntroduceImages from './StaticResource';
 import TopNavigator from '../common/TopNavigator';
@@ -16,6 +17,7 @@ export default class OverAll extends React.Component {
         super(props);
 
         this.defaultState = {
+            loaded: false,
             empCode: location.pathname.split('/')[1],
             selectedProducts: 'deposit_info',
             selectedImage: IntroduceImages.deposit_info[0],
@@ -30,54 +32,83 @@ export default class OverAll extends React.Component {
         this.handleChangeBank = this.handleChangeBank.bind(this);
     }
 
-    componentDidMount() {
-        let searchParam = this.state.selectedProducts;
-        this.getCommodityData(this, {selectedItem: searchParam});
-        window.scrollTo(0, 1);
+    componentWillMount() {
+        console.log('will mount');
+        let preSelectedQuery = window.localStorage.getItem('overAllQuery');
+        if (preSelectedQuery !== null) {
+            let queryObject = JSON.parse(preSelectedQuery);
+            console.log(queryObject);
+            this.setState(queryObject);
+        }
     }
 
-    getCommodityData(component, param) {
-        axios.post(`/api/commodity/overall`, param).then((items) => {
-            component.setState({
-                overAllItems: items.data,
-            });
-        }).catch((error) => {
-            console.log(error);
-        });
+    componentDidMount() {
+        console.log('did mount');
+        let searchParam = this.state.selectedProducts;
+        if (this.state.overAllItems.length === 0) {
+            setTimeout(function () {
+                axios.post(`/api/commodity/overall`, {selectedItem: searchParam}).then((items) => {
+                    this.setState({
+                        overAllItems: items.data,
+                        loaded: true
+                    });
+                }).catch((error) => {
+                    console.log(error);
+                });
+            }.bind(this), 700);
+        }
+        window.scrollTo(0, 1);
     }
 
     handleChangeItem(event) {
         let selected = event.target.value;
-
         if (selected !== this.state.selectedProducts) {
-            let bankCode = resource.bankCodes[this.state.selectedBanksIndex];
-            this.getCommodityData(this, {
-                selectedItem: selected, selectedBankCode: bankCode
+            this.setState({
+                loaded: false
             });
+            setTimeout(function () {
+                axios.post(`/api/commodity/overall`, {selectedItem: selected}).then((items) => {
+                    this.setState({
+                        selectedBanksIndex: 0,
+                        overAllItems: items.data,
+                        loaded: true,
+                        selectedProducts: selected,
+                        selectedImage: IntroduceImages[`${selected}`][0]
+                    });
+                }).catch((error) => {
+                    console.log(error);
+                });
+            }.bind(this), 700);
+            window.localStorage.setItem('overAllQuery', JSON.stringify(this.state));
         }
-
-        this.setState({
-            selectedProducts: selected,
-            selectedImage: IntroduceImages[`${selected}`][0]
-        });
     }
 
     handleChangeBank(event) {
         let selected = event.target.value;
-        let params = {
-            selectedItem: this.state.selectedProducts
-        };
+        if (this.state.selectedBanksIndex !== selected) {
+            let selectedBankCode = resource.bankCodes[selected];
+            let nonFilteredItems = this.state.overAllItems;
 
-        if (selected !== 0) {
-            params.selectedBankCode = resource.bankCodes[selected];
+            let overAllItems = selectedBankCode !== '' ? nonFilteredItems.map((item) => {
+                item['VISIBLE'] = item['FIN_CO_NO'] === selectedBankCode ? 1 : 0;
+                return item;
+            }) : nonFilteredItems.map((item) => {
+                item['VISIBLE'] = 1;
+                return item;
+            });
+
+            this.setState({
+                selectedBanksIndex: selected,
+                overAllItems: overAllItems
+            });
+
+            // async??;;
+            window.localStorage.setItem('overAllQuery', JSON.stringify(this.state));
         }
-        this.getCommodityData(this, params);
-        this.setState({
-            selectedBanksIndex: selected
-        });
     }
 
     handleClickProduct(productNo) {
+        window.localStorage.setItem('overAllQuery', JSON.stringify(this.state));
         history.push(`/${this.state.empCode}/products/${this.state.selectedProducts}/${productNo}`);
     }
 
@@ -111,67 +142,71 @@ export default class OverAll extends React.Component {
                     <div className="clear-div-1"/>
 
                     <Grid>
-                        <Row className="show-grid">
-                            {this.state.overAllItems.map((item, idx) => {
-                                return (
-                                    <Col xs={12} md={8} key={idx} className="panel panel-default item-div"
-                                         onClick={this.handleClickProduct.bind(this, item["NO"])}>
-                                        <div className="clear-div-1" />
-                                        <div><img className="bank-logo-img"
-                                                  src={`/images/bank_logos/${item["FIN_CO_NO"]}.png`}/></div>
-                                        <div className="clear-div-1"/>
+                        <Loader loaded={this.state.loaded} color="#008485" length={10} width={1} radius={10}
+                                shadow={true} hwaccel={true} top="70%">
+                            <Row className="show-grid">
+                                {this.state.overAllItems.map((item, idx) => {
+                                    if (item['VISIBLE'] === 1) {
+                                        return (
+                                            <Col xs={12} md={8} key={idx} className="panel panel-default item-div"
+                                                 onClick={this.handleClickProduct.bind(this, item["NO"])}>
+                                                <div className="commodity-popular-desc">
+                                                    {item['PRODUCT_COUNT'] !== null ? <span>
+                                                        <div className="popular-product-count"/>
+                                                        {`${item['PRODUCT_COUNT']}명이 상담`}
+                                                    </span> : undefined}
+                                                    {item['DEPOSIT_COUNT'] !== null ? <span>
+                                                        <div className="popular-click-count"/>
+                                                        {`${item['DEPOSIT_COUNT']}명이 관심`}
+                                                    </span> : undefined}
+                                                </div>
 
-                                        <div>
-                                            <h4>{item["FIN_PRDT_NM"]}</h4>
-                                        </div>
-                                        <hr/>
-                                        <div className="clear-div-1" />
-
-                                        <div className="item-separate-div">
-                                            <div>가입대상</div>
-                                            <span>
-                                                {item["JOIN_MEMBER"].split('\n').map((item, key) => {
-                                                    if (item !== '')
-                                                        return <span key={key}>{`${item}`}<br/></span>
-                                                })}
-                                            </span>
-                                        </div>
-
-                                        <div className="item-separate-div">
-                                            <div>이자방식</div>
-                                            <span>{item["INTR_RATE_TYPE"] === 'S' ? '단리' : '복리'}</span>
-                                        </div>
-
-                                        <div className="item-separate-div">
-                                            <div>가입경로</div>
-                                            <span>{item["JOIN_WAY"]}</span>
-                                        </div>
-
-                                        <div className="item-separate-div">
-                                            <div>{this.state.selectedProducts === 'deposit_info' ? '최대예치금액': '월 최대 납입금액'}</div>
-                                            <span>{(item["MAX_LIMIT"] <= 0) ? '제한없음' :`${resource.moneyWithComma(item["MAX_LIMIT"])} 원`}</span>
-                                        </div>
-
-                                        {/*
-                                            적금의 경우 적금 방식 추가
-                                        */}
-
-                                        {/*<hr/>*/}
-                                        {/*<div>*/}
-                                            {/*<div>*/}
-                                                {/*{item["MTRT_INT"].split('\n').map((item, key) => {*/}
-                                                    {/*if (item !== '')*/}
-                                                        {/*return <span key={key}>{item}<br/></span>*/}
-                                                {/*})}*/}
-                                            {/*</div>*/}
-                                        {/*</div>*/}
+                                                <div className="clear-div-1"/>
 
 
-                                    </Col>
-                                );
-                            })}
-                        </Row>
-                        {this.state.overAllItems.length === 0 ? <h5>조회하신 데이터가 없습니다</h5> : undefined}
+                                                <div><img className="bank-logo-img"
+                                                          src={`/images/bank_logos/${item["FIN_CO_NO"]}.png`}/></div>
+                                                <div className="clear-div-1"/>
+
+                                                <div>
+                                                    <h4>{item["FIN_PRDT_NM"]}</h4>
+                                                </div>
+                                                <hr/>
+                                                <div className="clear-div-1"/>
+
+                                                <div className="item-separate-div">
+                                                    <div>가입대상</div>
+                                                    <span>
+                                                    {item["JOIN_MEMBER"].split('\n').map((item, key) => {
+                                                        if (item !== '')
+                                                            return <span key={key}>{`${item}`}<br/></span>
+                                                    })}
+                                                </span>
+                                                </div>
+
+                                                <div className="item-separate-div">
+                                                    <div>이자방식</div>
+                                                    <span>{item["INTR_RATE_TYPE"] === 'S' ? '단리' : '복리'}</span>
+                                                </div>
+
+                                                <div className="item-separate-div">
+                                                    <div>가입경로</div>
+                                                    <span>{item["JOIN_WAY"]}</span>
+                                                </div>
+
+                                                <div className="item-separate-div">
+                                                    <div>{this.state.selectedProducts === 'deposit_info' ? '최대예치금액' : '월 최대 납입금액'}</div>
+                                                    <span>{(item["MAX_LIMIT"] <= 0) ? '제한없음' : `${resource.moneyWithComma(item["MAX_LIMIT"])} 원`}</span>
+                                                </div>
+                                            </Col>
+                                        );
+                                    } else {
+                                        return undefined;
+                                    }
+                                })}
+                            </Row>
+                            {this.state.overAllItems.length === 0 ? <h5>조회하신 데이터가 없습니다</h5> : undefined}
+                        </Loader>
                     </Grid>
                 </div>
                 <div className="clear-div-4">{''}</div>
@@ -179,47 +214,3 @@ export default class OverAll extends React.Component {
         );
     }
 }
-//
-
-// item["MTRT_INT"]
-
-//
-// NO
-// DCLS_MONTH	공시 제출월 [YYYYMM]
-// FIN_CO_NO	금융회사 코드
-// KOR_CO_NM	금융회사명
-// FIN_PRDT_CD	금융상품 코드
-// FIN_PRDT_NM	금융 상품명
-// JOIN_WAY	가입 방법
-// MTRT_INT	만기 후 이자율
-// SPCL_CND	우대조건
-// JOIN_DENY	가입제한 Ex) 1:제한없음, 2:서민전용, 3:일부제한
-// JOIN_MEMBER	가입대상
-// ETC_NOTE	기타 유의사항
-// MAX_LIMIT	최고한도
-// DCLS_STRT_DAY	공시 시작일
-// DCLS_END_DAY	공시 종료일
-// FIN_CO_SUBM_DAY	금융회사 제출일 [YYYYMMDDHH24MI]
-//
-
-//
-// NO
-// DCLS_MONTH	공시제출월
-// FIN_CO_NO	금융회사코드
-// FIN_PRDT_CD	금융상품코드
-// INTR_RATE_TYPE	저축금리유형
-// INTR_RATE_TYPE_NM	저축금리유형명
-// SAVE_TRM	저축 기간[개월]
-// INTR_RATE	저축 금리소수점2자리]
-// INTR_RATE2	최고 우대금리
-//
-
-// {/* listItem 사용시 */}
-// {/*<div className="item-fs-div">*/}
-// {/*<ul className="list-group">*/}
-// {/*<li className="list-group-item">{'test1'}</li>*/}
-// {/*<li className="list-group-item">{'test2'}</li>*/}
-// {/*<li className="list-group-item">{'test3'}</li>*/}
-// {/*<li className="list-group-item">{'test4'}</li>*/}
-// {/*</ul>*/}
-// {/*</div>*/}

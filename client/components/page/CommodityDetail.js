@@ -99,15 +99,10 @@ export default class CommodityDetail extends React.Component {
     componentDidMount() {
         let parseUrl = window.location.pathname.split('/');
         let param = {
+            empCode: parseUrl[1],
             category: parseUrl[3],
             paramNo: parseUrl[4]
         };
-
-        // axios.post('//freegeoip.net/json/', {}).then((location)=>{
-        //     console.log(location);
-        // }).catch((error)=>{
-        //     console.log(error);
-        // });
 
         let tasks = [
             async.apply(this.getCommodityDetail, param),
@@ -140,7 +135,7 @@ export default class CommodityDetail extends React.Component {
         }
         return (
             <div className="commodity-detail-sub-div">
-                <div className="commodity-lined-title"><strong>{title}</strong></div>
+                <div className="commodity-lined-title">{title}</div>
                 <div className="commodity-multiple-lined-div">
                     {multiLineValue.split('\n').map((item, key) => {
                         if (item !== '')
@@ -165,34 +160,34 @@ export default class CommodityDetail extends React.Component {
 
         return (
             <div className="item-whole-div">
-                <div className="commodity-main-background" />
                 <div className="commodity-detail-main-title-div">
-                    <div className="nav-icon-div detail-back" onClick={this.handleClickBack}>
-                        <i className="fa fa-chevron-left fa-lg" aria-hidden="true"/>
-                    </div>
+                    <div className="commodity-top-layout">
+                        <div className="nav-icon-div detail-back" onClick={this.handleClickBack}>
+                            <i className="fa fa-chevron-left fa-lg" aria-hidden="true"/>
+                        </div>
+                        <div className="commodity-detail-bank-title">
+                            {this.state.commodity['KOR_CO_NM']}
+                        </div>
+                        <div className="commodity-detail-product-title">
+                            {`< ${this.state.commodity['FIN_PRDT_NM']} >`}
+                        </div>
 
-                    <div className="commodity-detail-bank-title">
-                        {this.state.commodity['KOR_CO_NM']}
-                    </div>
-                    <div className="commodity-detail-product-title">
-                        {`< ${this.state.commodity['FIN_PRDT_NM']} >`}
-                    </div>
-
-                    <div className="clear-div-3"/>
-                    <div className="title-min-money">
-                        {`${this.state.category === 'savings_info' ? '월 ' : ''}
-                        최소 ${this.state.processedInfo['MIN_MONEY'] === null ?
-                        '1,000원' : (resource.moneyWithComma(this.state.processedInfo['MIN_MONEY']) + "원")}부터 ~`}
-                    </div>
-                    <div className="title-max-money">
-                        {`최대 ${this.state.processedInfo['MAX_MONEY'] === null ?
-                        '제한없이' : (resource.moneyWithComma(this.state.processedInfo['MAX_MONEY']) + "원까지")}
-                        ${this.state.category === 'savings_info' ? '적립' : '예치'}가능`}
-                    </div>
-                    <div className="title-intr-type">
-                        {`이 상품은
-                        ${this.state.commodity['INTR_RATE_TYPE'] !== 'M' ? '단리' : '복리'}
-                         방식입니다.`}
+                        <div className="clear-div-3"/>
+                        <div className="title-min-money">
+                            {`${this.state.category === 'savings_info' ? '월 ' : ''}
+                            최소 ${this.state.processedInfo['MIN_MONEY'] === null ?
+                            '1,000원' : (resource.moneyWithComma(this.state.processedInfo['MIN_MONEY']) + "원")}부터 ~`}
+                        </div>
+                        <div className="title-max-money">
+                            {`최대 ${this.state.processedInfo['MAX_MONEY'] === null ?
+                            '제한없이' : (resource.moneyWithComma(this.state.processedInfo['MAX_MONEY']) + "원까지")}
+                            ${this.state.category === 'savings_info' ? '적립' : '예치'}가능`}
+                        </div>
+                        <div className="title-intr-type">
+                            {`이 상품은
+                            ${this.state.commodity['INTR_RATE_TYPE'] !== 'M' ? '단리' : '복리'}
+                             방식입니다.`}
+                        </div>
                     </div>
 
                     <div className="item-section-div commodity-section">
@@ -264,7 +259,7 @@ export default class CommodityDetail extends React.Component {
                                         <tr>
                                             <td colSpan="2">
                                                 <strong>{`이 상품의 최대금리는 `}
-                                                    <mark>{this.state.special[0]['MAX_INTR']}</mark>
+                                                    <mark>{resource.getRoundThirdDecimalPlace(this.state.special[0]['MAX_INTR'])}</mark>
                                                     {`%입니다`}</strong>
                                             </td>
                                         </tr>

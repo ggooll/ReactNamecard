@@ -1,0 +1,87 @@
+.rsc {
+    height: 100vh !important;
+}
+
+.bxslzG {
+    height: 83vh !important;
+}
+
+.byHcWR {
+    bottom: 0 !important;
+    position: absolute !important;
+    width: 100% !important;
+}
+
+.kdZMGe {
+    border-radius: 0 !important;
+}
+
+.lilvWF {
+    border-radius: 0 !important;
+}
+
+.gnJESh, .kFPviT {
+    font-size: 1.3rem !important;
+    max-width: 60% !important;
+}
+
+.hgbITp {
+    height: 8vh !important;
+}
+
+.kstQCZ {
+    font-size: 1.5rem !important;
+    margin: 0 2vw !important;
+}
+
+.daZCMV {
+    font-size: 1.2rem !important;
+}
+
+.jKLQUD {
+    margin-top: 2vh !important;
+    border: 2px solid #008485 !important;
+}
+
+/**
+
+ */
+
+.result-bank-title {
+    font-size: 2.3rem;
+    margin: 1vh auto;
+}
+
+.result-product-title {
+    font-size: 1.6rem;
+}
+
+.result-special-exp ul {
+    padding: 5vw;
+}
+
+.result-detail-exp {
+    min-height: 1vh;
+}
+
+.result-detail-exp > div {
+    height: 5vh;
+    line-height: 5vh;
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+.result-detail-exp span {
+    color: #008485;
+    font-size: 1.8rem;
+}
+
+.result-baro-link {
+    /*background-color: #337ab7;*/
+    background-color: #c73c56;
+    height: 7vh;
+    line-height: 7vh;
+    text-align: center;
+    margin: 2vh auto 0 auto;
+    color: white;
+}

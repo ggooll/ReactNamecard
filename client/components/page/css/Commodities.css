@@ -1,30 +1,28 @@
-.commodity-main-background{
-    background: url(https://image.shutterstock.com/z/stock-photo-euro-coins-and-bills-detailed-close-up-shot-269505779.jpg);
+.commodity-top-layout{
+    border-bottom: 5px solid #f9f9f9;
+    margin-bottom: 3vh;
+    background: url('https://image.freepik.com/free-vector/colorful-background-with-flat-geometric-shapes_1201-669.jpg');
     background-size: cover;
-    filter: blur(5px) brightness(0.7);
-    min-height: 200vmax;
 }
 
 .commodity-detail-main-title-div {
     min-height: 70vh;
     padding: 1vw;
-    color: whitesmoke;
-    position: absolute;
-    top: 0;
+    color: black;
     width: 100vw;
 }
 
 .main-sub-title {
-    height: 7vh;
-    line-height: 7vh;
+    height: 5vh;
+    line-height: 5vh;
     text-align: center;
     font-size: 1.5rem;
     color: whitesmoke;
-    background: rgba(255, 0, 48, 0.65);
-    background: -webkit-linear-gradient(left top, #d07373, #8a0000);
-    background: -o-linear-gradient(bottom right, #d07373, #8a0000);
-    background: -moz-linear-gradient(bottom right, #d07373,  #8a0000);
-    background: linear-gradient(to bottom right, #d07373, #8a0000);
+    background: rgba(210, 147, 159, 0.65);
+    /* background: -webkit-linear-gradient(left top, #d07373, #8a0000); */
+    /*background: -o-linear-gradient(bottom right, #d07373, #8a0000);*/
+    /*background: -moz-linear-gradient(bottom right, #d07373, #8a0000);*/
+    /* background: linear-gradient(to bottom right, #d07373, #8a0000); */
     font-family: Hana L;
 }
 
@@ -43,16 +41,18 @@
     height: 10vh;
     line-height: 15vh;
     font-size: 3rem;
-    color: white;
-    padding-left: 4vw;
+    color: black;
+    padding-left: 3vw;
+    margin-top: 11vh;
 }
 
 .commodity-detail-product-title {
     height: 10vh;
-    line-height: 10vh;
-    color: white;
+    line-height: 8vh;
+    color: black;
     font-size: 1.85rem;
     padding-left: 5vw;
+    font-weight: bold;
 }
 
 .commodity-detail-main-sub-div {
@@ -72,14 +72,11 @@
 }
 
 .commodity-detail-sub-div > div {
+    min-height: 5vh;
+    line-height: 5vh;
     font-size: 1.5rem;
     text-align: center;
-    padding: 2vh;
-    background-color: #4f7e80;
-    background: -webkit-linear-gradient(left top, #72b0b3, #4f7e80);
-    background: -o-linear-gradient(bottom right, #72b0b3, #4f7e80);
-    background: -moz-linear-gradient(bottom right, #72b0b3, #4f7e80);
-    background: linear-gradient(to bottom right, #72b0b3, #4f7e80);
+    background-color: #cbd0d0;
     color: whitesmoke;
     font-family: Hana L;
 }
@@ -90,7 +87,6 @@
     font-size: 1.5rem !important;
     background: white !important;
     color: black !important;
-    padding: 1vh !important;
     border: 2px solid rgba(169, 169, 169, 0.7);
     font-family: inherit !important;
 }
@@ -113,7 +109,6 @@ thead > td{
     background-color: white;
     text-align: center;
     color: black;
-    padding: 1.5vh;
     font-size: 1.5rem;
 }
 
@@ -128,6 +123,10 @@ thead > td{
     font-weight: 400 !important;
     font-size: 1.3rem !important;
     border: 2px solid lightgray;
+    height: auto !important;
+    line-height: 4vh !important;
+    padding-left: 2vw;
+    font-family: inherit !important;
 }
 
 
@@ -135,14 +134,12 @@ thead > td{
     text-align: left;
     font-size: 2rem;
     padding-left: 5vw;
-    font-weight: bold;
 }
 
 .title-max-money{
     font-size: 2rem;
     text-align: right;
     padding-right: 5vw;
-    font-weight: bold;
 }
 
 .title-intr-type{
@@ -150,7 +147,6 @@ thead > td{
     text-align: left;
     padding-left: 5vw;
     margin: 5vh auto;
-    font-weight: bold;
 }
 
 .detail-back{

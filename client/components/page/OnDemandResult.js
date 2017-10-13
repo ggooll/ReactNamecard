@@ -6,8 +6,9 @@ import React from 'react';
 import axios from 'axios';
 import async from 'async';
 import {Grid, Row, Col} from 'react-bootstrap';
+import Loader from 'react-loader';
 import TopNavigator from '../common/TopNavigator';
-import staticResource from './StaticResource';
+import resource from './StaticResource';
 import history from '../../history';
 import './css/OnDemandResult.css';
 
@@ -19,13 +20,18 @@ export default class OnDemandResult extends React.Component {
             param: this.props.location.state.passParam,
             commodities: [],
             processedCommodities: [],
+            selectedLength: 0,
             sortingValue: 'byMaxRate',
             commoditiesDetailToggle: [],
             childElement: [],
-            specialOptions: []
+            specialOptions: [],
+            loaded: false,
+            bankCodes: resource.bankCodes,
+            bankNames: resource.bankNames
         };
 
         this.handleChangeSelectSort = this.handleChangeSelectSort.bind(this);
+        this.handleChangeSelectBank = this.handleChangeSelectBank.bind(this);
     }
 
     handleClickProductLink(product){
@@ -35,11 +41,44 @@ export default class OnDemandResult extends React.Component {
         history.push(`/${parseUrl[1]}/products/${this.state.param.product}/${product[`${field}`]}`);
     }
 
+    handleChangeSelectBank(event){
+        let selected = event.target.value;
+        let commodities = this.state.processedCommodities;
+        let bankCode = resource.bankCodes[selected];
+        let selectedCount = 0;
+
+        if(bankCode === ''){
+            commodities = commodities.map((commodity)=>{
+                commodity['visible'] = 1;
+                selectedCount++;
+                return commodity;
+            })
+        } else {
+            commodities = commodities.map((commodity)=>{
+                if(commodity['FIN_CO_NO'] === bankCode){
+                    commodity['visible'] = 1;
+                    selectedCount++;
+                } else {
+                    commodity['visible'] = 0;
+                }
+                return commodity;
+            })
+        }
+
+        console.log(selectedCount);
+        console.log(commodities);
+
+        this.setState({
+            processedCommodities : commodities,
+            selectedLength : selectedCount
+        })
+    }
+
     handleChangeSelectSort(event) {
         let selected = event.target.value;
 
         let commodities = this.state.processedCommodities;
-        let sortFunc = selected === 'byMinRate' ? staticResource.minRateSort : staticResource.maxRateSort;
+        let sortFunc = selected === 'byMinRate' ? resource.minRateSort : resource.maxRateSort;
         commodities.sort(sortFunc);
         this.setState({
             sortingValue: selected,
@@ -50,7 +89,13 @@ export default class OnDemandResult extends React.Component {
     // db select
     getCommodities(param, callback) {
         axios.post('/api/ondemand/getResult', {passParam: param}).then((results) => {
-            callback(null, param, results.data);
+
+            let commodities = results.data.map((result)=>{
+                result['visible'] = 1;
+                return result;
+            });
+
+            callback(null, param, commodities);
         }).catch((error) => {
             console.log(error);
         });
@@ -115,7 +160,6 @@ export default class OnDemandResult extends React.Component {
                         }
                     });
                 }
-
                 return commodity;
             });
             callback(null, param, appliedSpecialCommodities);
@@ -183,9 +227,10 @@ export default class OnDemandResult extends React.Component {
         ];
 
         async.waterfall(tasks, (err, result) => {
-            result.sort(staticResource.maxRateSort);
+            result.sort(resource.maxRateSort);
             this.setState({
                 processedCommodities: result,
+                selectedLength: result.length
             });
             let array = new Array(result.length);
             let childArr = new Array(result.length);
@@ -193,10 +238,14 @@ export default class OnDemandResult extends React.Component {
                 array[i] = 'grid-detail-div';
                 childArr[i] = '';
             }
-            this.setState({
-                commoditiesDetailToggle: array,
-                childElement: childArr
-            });
+
+            setTimeout(function(){
+                this.setState({
+                    commoditiesDetailToggle: array,
+                    childElement: childArr,
+                    loaded: true
+                });
+            }.bind(this), 1000);
         });
     }
 
@@ -222,7 +271,7 @@ export default class OnDemandResult extends React.Component {
                 </div>
                 <div className="result-param-div">
                     <div>{'원금'}</div>
-                    <span>{`${staticResource.moneyWithComma(this.state.param.money)}  원`}</span>
+                    <span>{`${resource.moneyWithComma(this.state.param.money)}  원`}</span>
                 </div>
                 <div className="result-param-div">
                     <div>{'나이'}</div>
@@ -261,14 +310,15 @@ export default class OnDemandResult extends React.Component {
 
                 <div className="clear-div-1"/>
                 <div className="commodities-result-title">
-                    <div className="result-title">{`결과 ${this.state.processedCommodities.length} 건`}</div>
+                    <div className="result-title">{`결과 ${this.state.selectedLength} 건`}</div>
                 </div>
 
                 <div className="sort-select-div">
-                    <select onChange={this.handleChangeSelectSort}
-                            value={this.state.sortingValue}>
-                        <option value="byMaxRate">{`우대금리 높은순`}</option>
-                        <option value="byMinRate">{`일반금리 높은순`}</option>
+                    <select onChange={this.handleChangeSelectBank}
+                            value={this.state.selectedBank}>
+                        {this.state.bankNames.map((name, index) => {
+                            return <option value={index} key={index}>{name}</option>
+                        })}
                     </select>
 
                     <select onChange={this.handleChangeSelectSort}
@@ -281,96 +331,98 @@ export default class OnDemandResult extends React.Component {
 
                 <div className="item-section-div">
                     <Grid>
-                        <Row className="show-grid">
-                            {this.state.processedCommodities.map((commodity, idx) => {
-                                return (
-                                    <Col xs={12} md={8} key={idx}
-                                         className="panel panel-default processed-commodity-intro">
-                                        <div className="show-grid-top">
-                                            <img src={`/images/bank_logos/${commodity["FIN_CO_NO"]}.png`}/>
-                                            <span>{commodity["FIN_PRDT_NM"]}</span>
-                                        </div>
-                                        <div>
-                                            {/* 금리가 같을경우.. (우대금리가 없는경우) */}
-                                            <div className="show-grid-mid">
-                                                <div className="grid-mid-title">
-                                                    <div className="intr-title">{'금리'}</div>
-                                                    <div className="final-money-title">{'만기지급액'}</div>
+                        <Loader loaded={this.state.loaded} color="#008485"  length={10} width={1} radius={10} shadow={true} hwaccel={true} top="60%">
+
+                            <Row className="show-grid">
+                                {this.state.processedCommodities.map((commodity, idx) => {
+                                    if (commodity['visible'] === 1) {
+                                        return (
+                                            <Col xs={12} md={8} key={idx}
+                                                 className="panel panel-default processed-commodity-intro">
+                                                <div className="show-grid-top">
+                                                    <img src={`/images/bank_logos/${commodity["FIN_CO_NO"]}.png`}/>
+                                                    <span>{commodity["FIN_PRDT_NM"]}</span>
+                                                </div>
+                                                <div>
+                                                    {/* 금리가 같을경우.. (우대금리가 없는경우) */}
+                                                    <div className="show-grid-mid">
+                                                        <div className="grid-mid-title">
+                                                            <div className="intr-title">{'금리'}</div>
+                                                            <div className="final-money-title">{'만기지급액'}</div>
+                                                        </div>
+
+                                                        <div className="grid-mid-section">
+                                                            <div className="grid-mid-left">
+                                                                <span className="min-intr-rate rate-numbering">{`최소  ${commodity["INTR_RATE"]}%`}</span>
+                                                            </div>
+                                                            <div className="grid-mid-right">
+                                                                <span className="rate-numbering">{resource.moneyWithComma(Math.floor(commodity["finalMinMoney"]))}원</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="clear-div"/>
+                                                        <div className="grid-mid-section">
+                                                            <div className="grid-mid-left">
+                                                                <span className="max-intr-rate rate-numbering">{`최대  ${commodity["INTR_RATE2"]}%`}</span>
+                                                            </div>
+                                                            <div className="grid-mid-right">
+                                                            <span className="rate-numbering">{resource.moneyWithComma(Math.floor(commodity["finalMaxMoney"]))}원</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="clear-div"/>
+                                                    </div>
                                                 </div>
 
-                                                <div className="grid-mid-section">
-                                                    <div className="grid-mid-left">
-                                                        <span
-                                                            className="min-intr-rate rate-numbering">{`최소  ${commodity["INTR_RATE"]}%`}</span>
+                                                <div className="show-grid-bottom"
+                                                     onClick={this.handleClickDetail.bind(this, idx)}>
+                                                    {'자세히보기'}
+                                                </div>
+                                                <div className={this.state.commoditiesDetailToggle[idx]}>
+                                                    <div className="clear-div-1"/>
+                                                    <div className={this.state.childElement[idx]}>
+                                                        <span className="child-title">원금</span>
+                                                        <span className="child-content">{`${resource.moneyWithComma(commodity["passPeriodMoney"])} 원`}</span>
                                                     </div>
-                                                    <div className="grid-mid-right">
-                                                        <span
-                                                            className="rate-numbering">{staticResource.moneyWithComma(Math.floor(commodity["finalMinMoney"]))}원</span>
+                                                    <div className={this.state.childElement[idx]}>
+                                                        <span className="child-title">일반금리 발생이자</span>
+                                                        <span className="child-content">{`${resource.moneyWithComma(commodity["minInterest"])} 원`}</span>
+                                                    </div>
+                                                    <div className={this.state.childElement[idx]}>
+                                                        <span className="child-title">일반금리 이자세금</span>
+                                                        <span className="child-content">{`${resource.moneyWithComma(commodity["minTax"])} 원`}</span>
+                                                    </div>
+                                                    <div className={this.state.childElement[idx]}>
+                                                        <span className="child-title">우대금리 발생이자</span>
+                                                        <span className="child-content">{`${resource.moneyWithComma(commodity["maxInterest"])} 원`}</span>
+                                                    </div>
+                                                    <div className={this.state.childElement[idx]}>
+                                                        <span className="child-title">우대금리 이자세금</span>
+                                                        <span className="child-content">{`${resource.moneyWithComma(commodity["maxTax"])} 원`}</span>
+                                                    </div>
+
+                                                    {commodity.specialOptions.length !== 0 ? this.renderSpecialIntro(idx, commodity["FIN_PRDT_NM"]) : undefined}
+                                                    {commodity.specialOptions.map((specialOption, subIndex) => {
+                                                        return (
+                                                            <div className={`${this.state.childElement[idx]} special-div-in`} key={subIndex}>
+                                                                <div className="special_condition_title">{specialOption["SPECIAL_CONDITION"]}</div>
+                                                                <div className="special_condition_rate">{`+ ${specialOption["SPECIAL_INTR"]} %`}</div>
+                                                            </div>
+                                                        );
+                                                    })}
+                                                    <div className={`${this.state.childElement[idx]} bank-link-div`}
+                                                         onClick={this.handleClickProductLink.bind(this, commodity)}>
+                                                        <span>해당 상품 자세히 보기</span>
                                                     </div>
                                                 </div>
-                                                <div className="clear-div"/>
-                                                <div className="grid-mid-section">
-                                                    <div className="grid-mid-left">
-                                                        <span
-                                                            className="max-intr-rate rate-numbering">{`최대  ${commodity["INTR_RATE2"]}%`}</span>
-                                                    </div>
-                                                    <div className="grid-mid-right">
-                                                        <span
-                                                            className="rate-numbering">{staticResource.moneyWithComma(Math.floor(commodity["finalMaxMoney"]))}원</span>
-                                                    </div>
-                                                </div>
-                                                <div className="clear-div"/>
-                                            </div>
-                                        </div>
 
-                                        <div className="show-grid-bottom"
-                                             onClick={this.handleClickDetail.bind(this, idx)}>
-                                            {'자세히보기'}
-                                        </div>
-                                        <div className={this.state.commoditiesDetailToggle[idx]}>
-                                            <div className="clear-div-1" />
-                                            <div className={this.state.childElement[idx]}>
-                                                <span className="child-title">원금</span>
-                                                <span
-                                                    className="child-content">{`${staticResource.moneyWithComma(commodity["passPeriodMoney"])} 원`}</span>
-                                            </div>
-                                            <div className={this.state.childElement[idx]}>
-                                                <span className="child-title">일반금리 발생이자</span>
-                                                <span className="child-content">{`${staticResource.moneyWithComma(commodity["minInterest"])} 원`}</span>
-                                            </div>
-                                            <div className={this.state.childElement[idx]}>
-                                                <span className="child-title">일반금리 이자세금</span>
-                                                <span className="child-content">{`${staticResource.moneyWithComma(commodity["minTax"])} 원`}</span>
-                                            </div>
-                                            <div className={this.state.childElement[idx]}>
-                                                <span className="child-title">우대금리 발생이자</span>
-                                                <span className="child-content">{`${staticResource.moneyWithComma(commodity["maxInterest"])} 원`}</span>
-                                            </div>
-                                            <div className={this.state.childElement[idx]}>
-                                                <span className="child-title">우대금리 이자세금</span>
-                                                <span className="child-content">{`${staticResource.moneyWithComma(commodity["maxTax"])} 원`}</span>
-                                            </div>
+                                                <div className="clear-div-2"/>
+                                            </Col>
+                                        );
+                                    } else {
+                                        return undefined;
+                                    }})}
 
-                                            {commodity.specialOptions.length !== 0 ? this.renderSpecialIntro(idx, commodity["FIN_PRDT_NM"]) : undefined}
-                                            {commodity.specialOptions.map((specialOption, subIndex) => {
-                                                return (
-                                                   <div className={`${this.state.childElement[idx]} special-div-in`} key={subIndex}>
-                                                        <div className="special_condition_title">{specialOption["SPECIAL_CONDITION"]}</div>
-                                                        <div className="special_condition_rate">{`+ ${specialOption["SPECIAL_INTR"]} %`}</div>
-                                                    </div>
-                                                );
-                                            })}
-                                            <div className={`${this.state.childElement[idx]} bank-link-div`} onClick={this.handleClickProductLink.bind(this, commodity)}>
-                                                <span>해당 상품 자세히 보기</span>
-                                            </div>
-                                        </div>
-
-                                        <div className="clear-div-2"/>
-                                    </Col>
-                                );
-                            })}
-
-                        </Row>
+                            </Row>
+                        </Loader>
                     </Grid>
                 </div>
             </div>

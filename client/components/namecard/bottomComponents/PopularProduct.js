@@ -64,9 +64,9 @@ export default class PopularProduct extends React.Component {
                         </span>
                     </div>
 
-                    <div className="drop-down-item">
+                    <div className="drop-down-item" onClick={this.handleLinkMenu.bind(this, 'fundCalculator')}>
                         <span className="down-menu-span">
-                            <i className="fa fa-angle-right" aria-hidden="true"/>{'어쩌구 Top3'}
+                            <i className="fa fa-angle-right" aria-hidden="true"/>{'돈 계산기'}
                         </span>
                     </div>
 

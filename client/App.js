@@ -11,7 +11,7 @@ import Consult from './components/page/Consult';
 import Survey from './components/page/Survey';
 import CommodityDetail from './components/page/CommodityDetail';
 import ConsultDetail from './components/page/ConsultDetail';
-import FundCalculator from './components/page/FundCalculator';
+import FundCalculator from './components/page/calculator/FundCalculator';
 import ChatBot from './components/page/ChatBot';
 import NoMatch from './NoMatch';
 import './global_css/globalFont.css';
@@ -20,10 +20,9 @@ import './global_css/transition-group.css';
 function getHistoryAction() {
     history.listen((location, action) => {
         window.detectingHistory.historyAction = action;
-        console.log(action);
+        // console.log(action); // push or pop
     });
     let transition = window.detectingHistory.historyAction === 'PUSH' ? 'slideIn' : 'example';
-    console.log(transition);
     return transition;
 }
 

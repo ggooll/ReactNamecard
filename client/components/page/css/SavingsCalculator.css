@@ -1,21 +1,25 @@
-
-
-.fund-div1 {
-    margin: 1vh 1vw;
-    padding: 1vw 0;
-    min-height: 30vh;
-    background: #d07373;
-}
-
 .fund-cal-title {
     height: 8vh;
     line-height: 8vh;
     padding-left: 4vw;
     font-size: 1.8rem;
-    margin: 2vh auto;
+    margin: 1vh auto;
     border: 2px solid lightgray;
     background: #f3f3f3;
 }
+
+.fund-div1 {
+    padding: 0;
+    margin: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+}
+
+.fund-div1.visible{
+    max-height: 80vh;
+}
+
 
 .fund-cal-title i{
     float: right;
@@ -40,7 +44,7 @@
 }
 
 .plus-value-input-div > input {
-    height: 5vh;
+    min-height: 5vh;
     line-height: 5vh;
     margin: 0 3vw;
     text-align: right;
@@ -57,7 +61,7 @@
 
 .plus-value-btn-div > div {
     display: inline-block;
-    height: 6vh;
+    min-height: 6vh;
     width: 19vw;
     margin: 1vh 1vw;
     background-color: #fbfbfb;
@@ -96,10 +100,6 @@
     font-size: 1.6rem;
 }
 
-.result-calculate-div {
-    min-height: 20vh;
-}
-
 .result-calculate {
     min-height: 21vh;
     background: #f7f7f7;
@@ -108,7 +108,7 @@
 }
 
 .result-calculate > div {
-    height: 7vh;
+    min-height: 7vh;
     line-height: 7vh;
     text-align: center;
 }
