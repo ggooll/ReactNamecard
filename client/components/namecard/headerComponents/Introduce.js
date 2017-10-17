@@ -33,7 +33,7 @@ export default class Introduce extends React.Component {
 
     componentDidMount() {
         axios.get(`/api/employee/${this.props.name}`, {}).then((emp) => {
-            if ((typeof emp.data) !== 'string') {
+            if ((typeof emp.data) === 'object') {
                 this.setState({
                     id: emp.data["ID"],
                     name: emp.data["NAME"],

@@ -25,8 +25,7 @@ function getHistoryAction() {
         window.detectingHistory.historyAction = action;
         // console.log(action); // push or pop
     });
-    let transition = window.detectingHistory.historyAction === 'PUSH' ? 'slideIn' : 'example';
-    return transition;
+    return window.detectingHistory.historyAction === 'PUSH' ? 'slideIn' : 'example';;
 }
 
 export default class App extends React.Component {
@@ -36,12 +35,10 @@ export default class App extends React.Component {
 
         window.onpopstate = function () {
             window.detectingHistory.historyAction = 'POP';
-
             let detect = window.detectingHistory;
             if (detect.isModal === true) {
                 let modalFunc = detect.modalFunc;
                 modalFunc.call();
-                detect.isModal = false;
             }
         };
     }
@@ -110,7 +107,7 @@ export default class App extends React.Component {
 
                             {/* 상담 관련 상품 정보 보기 추가 */}
                             <Route name="survey"
-                                   exact path={`/:empcode/private/survey`}
+                                   exact path={`/:empcode/survey`}
                                    component={Survey}/>
 
                             <Route name="home"

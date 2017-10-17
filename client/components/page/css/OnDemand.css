@@ -115,10 +115,10 @@
 }
 
 .top-introduce-frame {
-    font-size: 2.5rem;
-    height: 35vh;
+    font-size: 2.3rem;
+    height: 30vh;
     color: white;
-    line-height: 25vh;
+    line-height: 23vh;
     background: #005657;
     background: -webkit-linear-gradient(left top, #008485, #ffa4a4);
     background: -o-linear-gradient(bottom right, #008485, #ffa4a4);
@@ -127,7 +127,8 @@
 }
 
 .top-introduce-frame > div{
-    font-family: Hana L;
+    font-family: 'Hana L';
+    height: 20vh;
 }
 
 .selectBox {

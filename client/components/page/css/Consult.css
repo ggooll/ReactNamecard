@@ -1,5 +1,5 @@
 .consult-background-div {
-    height: 37vh;
+    height: 30vh;
     background: url("https://image.shutterstock.com/z/stock-photo-business-partners-taking-notes-at-seminar-101562343.jpg");
     background-size: cover;
     -webkit-filter: blur(2px) brightness(0.4);
@@ -13,8 +13,8 @@
     top: 6.5vh;
     text-align: center;
     width: 100vw;
-    height: 37vh;
-    line-height: 37vh;
+    height: 30vh;
+    line-height: 30vh;
     font-size: 2.3rem;
     color: white;
     font-family: Hana L;

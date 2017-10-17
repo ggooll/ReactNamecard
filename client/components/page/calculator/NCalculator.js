@@ -118,7 +118,7 @@ export default class SavingsCalculator extends React.Component{
                   <div className="n-div-value">
                       <div className="n-div-input-div">
                         총액 <input name="nMoney" onFocus={this.makeNoneComma} onBlur={this.makeComma}
-                                   onChange={this.handleChangeInput} value={this.state.nMoney}/> 원
+                                  value={this.state.nMoney} readOnly/> 원
                       </div>
                       <div className="n-value-btn-div">
                           <div onClick={this.handleClickPlusMoneyTwo.bind(this, '100000')}>{'+ 십만원'}</div>
@@ -130,7 +130,7 @@ export default class SavingsCalculator extends React.Component{
 
                   <div className="n-div-value">
                       <div className="n-div-input-div">
-                        인원 <input value={this.state.nPeople}/> 명
+                        인원 <input value={this.state.nPeople} readOnly/> 명
                       </div>
                       <div className="n-value-btn-div">
                           <div onClick={this.handleClickPlusPeople.bind(this, '+1')}>{'+ 1명'}</div>

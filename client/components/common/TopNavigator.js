@@ -14,8 +14,7 @@ export default class TopNavigator extends React.Component {
     }
 
     handleClick() {
-        //window.history.back();
-        history.go(-1);
+        window.history.back();
     }
 
     render() {

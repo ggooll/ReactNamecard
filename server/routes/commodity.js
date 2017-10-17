@@ -29,7 +29,7 @@ router.post('/overall', (req, res) => {
                             (select count(deposit_no) from deposit_log where deposit_no = di.NO group by(deposit_no)) deposit_count
                             FROM deposit_info di
                             order by di.no`;
-    let savingsStatement = `(select count(product_no) from consult_product where type = 1 and product_no = si.NO group by(product_no)) product_count, 
+    let savingsStatement = `(select count(product_no) from consult_product where type = 2 and product_no = si.NO group by(product_no)) product_count, 
                             (select count(savings_no) from savings_log where savings_no = si.NO group by(savings_no)) savings_count
                             FROM savings_info si
                             order by si.no`;

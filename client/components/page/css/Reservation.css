@@ -1,0 +1,141 @@
+.reservation-header-div {
+    min-height: 56vh;
+    width: 100vw;
+    padding: 3vh 5vw;
+    background-color: rgba(2, 103, 105, 0.88);
+    border-top: 1px solid white;
+}
+
+.reservation-title1{
+    color: white;
+    height: 5vh;
+    line-height: 5vh;
+}
+
+.reservation-calendar-div{
+    padding-top: 2vh;
+    background-color: #eaeaea;
+}
+
+.reservation-title2{
+    color: #006C6C;
+    height: 5vh;
+    line-height: 5vh;
+    margin-left: 5vw;
+}
+
+.reservation-possible-div{
+    padding: 2vh 0;
+    background-color: #eaeae1;
+}
+
+
+.reservation-input-div input {
+    width: 100%;
+    height: 5vh;
+    line-height: 5vh;
+    padding: 2vw;
+    border-radius: 0;
+    font-size: 1.3rem;
+}
+
+.reservation-input-div span{
+    display: block;
+    height: 5vh;
+    line-height: 5vh;
+    background: #d8d8d8;
+    padding-left: 2vw;
+}
+
+.reservation-input-div textarea {
+    width: 100%;
+    height: 8vh;
+    border-radius: 0;
+    padding:1vw;
+    font-size: 1.3rem;
+}
+
+.reservation-select-div{
+    width: 100%;
+    padding-left: 2px;
+}
+
+.reservation-select-div select{
+    width: 29vw;
+    background-color: white;
+    height: 5vh;
+    margin: 0 1px;
+}
+
+.task-select-div{
+    margin: 2vh auto 0 auto;
+}
+
+.task-div {
+    width: 30vw;
+    height: 7vh;
+    line-height: 7vh;
+    border: 2px solid lightgray;
+    float: right !important;
+    text-align: -webkit-center;
+    margin-left: 3.5vw;
+    color: white;
+}
+
+.task-selected {
+    background-color: white;
+    color: #008485;
+}
+
+.reservation-submit-div{
+    height: 7vh;
+    line-height: 7vh;
+    text-align: center;
+    background: #006667;
+    color: white;
+}
+
+.reservation-preSubmit-div{
+    height: 7vh;
+    line-height: 7vh;
+    text-align: center;
+    background: lightgray;
+}
+
+.possible-time-select{
+    width: 80%;
+    height: 6vh;
+    line-height: 6vh;
+    display: block;
+    margin: 1vh auto;
+    padding-left: 5vw;
+    background: white;
+}
+
+.possible-time-select option{
+    text-align: center;
+}
+
+.selected-date-input-div{
+    padding-left: 5vw;
+    padding-bottom: 2vw;
+}
+
+.selected-date-input-div span{
+    height: 5vh;
+    line-height: 5vh;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.selected-date-input-div input{
+    height: 5vh;
+    line-height: 5vh;
+    font-size: 1.5rem;
+    text-align: center;
+    width: 35vw;
+    color: #43497d;
+    font-weight: bold;
+    background: #eaeaea;
+    border: 0;
+}

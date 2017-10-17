@@ -16,7 +16,7 @@ export default class NameCardBottom extends React.Component {
     constructor(props) {
         super(props);
 
-        this.bottomItemTitles = ["금융상품보기", "상담내역확인", "돈계산기", "챗봇", "상담예약"];
+        this.bottomItemTitles = ["금융상품보기", "상담내역확인", "상담예약", "챗봇"];
 
         this.state = {
             empCode: this.props.name
@@ -35,22 +35,13 @@ export default class NameCardBottom extends React.Component {
                                menuTitle={this.bottomItemTitles[1]}
                                name={this.state.empCode}/>
 
-                <div className="namecard-bottom-itemdiv">
-                    <span className="bottom-item-titlespan">{'상담예약'}</span>
-                </div>
+                <ReservationMenu index={2}
+                                 menuTitle={this.bottomItemTitles[2]}
+                                 name={this.state.empCode}/>
 
                 <Chat index={3}
                       menuTitle={this.bottomItemTitles[3]}
                       name={this.state.empCode}/>
-                <ReservationMenu index={4}
-                      menuTitle={this.bottomItemTitles[4]}
-                      name={this.state.empCode}/>
-
-                <div className="namecard-bottom-itemdiv">
-                    <span className="bottom-item-titlespan">{'empty'}</span>
-                </div>
-
-                {/*<Link to="ranking"><BottomItem/></Link>*/}
             </div>
         );
     }

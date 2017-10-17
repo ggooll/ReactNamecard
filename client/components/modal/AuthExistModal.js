@@ -98,7 +98,6 @@ export default class AuthExistModal extends React.Component {
             inputNum: inputAuthNumber, refSaltedNumber: this.state.refSaltedNumber
         }).then((success) => {
             if (success.data) {
-                // this.setState(this.defaultState);
                 window.history.pushState('forward', null, './');
                 this.props.authSuccess();
             } else {

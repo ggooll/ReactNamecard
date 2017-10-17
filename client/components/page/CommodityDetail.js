@@ -40,11 +40,6 @@ export default class CommodityDetail extends React.Component {
             special: []
         };
         this.state = this.defaultState;
-        this.handleClickBack = this.handleClickBack.bind(this);
-    }
-
-    handleClickBack() {
-        history.go(-1);
     }
 
     getCommodityDetail(params, callback) {
@@ -135,7 +130,7 @@ export default class CommodityDetail extends React.Component {
         }
         return (
             <div className="commodity-detail-sub-div">
-                <div className="commodity-lined-title">{title}</div>
+                <div className="commodity-lined-title"><i className="fa fa-circle fa-fw" aria-hidden="true" />{title} <hr className="detail-hr"/></div>
                 <div className="commodity-multiple-lined-div">
                     {multiLineValue.split('\n').map((item, key) => {
                         if (item !== '')
@@ -149,7 +144,7 @@ export default class CommodityDetail extends React.Component {
     renderMainSubIntro(title, value) {
         return (
             <div>
-                <div className="main-sub-title">{title}</div>
+                <div className="main-sub-title"><i className="fa fa-circle fa-fw" aria-hidden="true" /> {title} <hr className="detail-hr-red"/></div>
                 <div className="main-sub-content">{value}</div>
             </div>
         );
@@ -160,40 +155,41 @@ export default class CommodityDetail extends React.Component {
 
         return (
             <div className="item-whole-div">
+                <TopNavigator title={'상품 상세 보기'}/>
                 <div className="commodity-detail-main-title-div">
-                    <div className="commodity-top-layout">
-                        <div className="nav-icon-div detail-back" onClick={this.handleClickBack}>
-                            <i className="fa fa-chevron-left fa-lg" aria-hidden="true"/>
-                        </div>
-                        <div className="commodity-detail-bank-title">
-                            {this.state.commodity['KOR_CO_NM']}
-                        </div>
-                        <div className="commodity-detail-product-title">
-                            {`< ${this.state.commodity['FIN_PRDT_NM']} >`}
-                        </div>
 
-                        <div className="clear-div-3"/>
-                        <div className="title-min-money">
-                            {`${this.state.category === 'savings_info' ? '월 ' : ''}
-                            최소 ${this.state.processedInfo['MIN_MONEY'] === null ?
-                            '1,000원' : (resource.moneyWithComma(this.state.processedInfo['MIN_MONEY']) + "원")}부터 ~`}
-                        </div>
-                        <div className="title-max-money">
-                            {`최대 ${this.state.processedInfo['MAX_MONEY'] === null ?
-                            '제한없이' : (resource.moneyWithComma(this.state.processedInfo['MAX_MONEY']) + "원까지")}
-                            ${this.state.category === 'savings_info' ? '적립' : '예치'}가능`}
-                        </div>
-                        <div className="title-intr-type">
-                            {`이 상품은
-                            ${this.state.commodity['INTR_RATE_TYPE'] !== 'M' ? '단리' : '복리'}
-                             방식입니다.`}
-                        </div>
+                    <div className="commodity-detail-bank-title">
+                        {this.state.commodity['KOR_CO_NM']}
                     </div>
+                    <div className="commodity-detail-product-title">
+                        {`${this.state.commodity['FIN_PRDT_NM']}`}
+                    </div>
+
+                    {/*<div className="clear-div-3"/>*/}
+                    {/*<div className="title-min-money">*/}
+                        {/*{`${this.state.category === 'savings_info' ? '월 ' : ''}*/}
+                        {/*최소 ${this.state.processedInfo['MIN_MONEY'] === null ?*/}
+                        {/*'1,000원' : (resource.moneyWithComma(this.state.processedInfo['MIN_MONEY']) + "원")}부터 ~`}*/}
+                    {/*</div>*/}
+                    {/*<div className="title-max-money">*/}
+                        {/*{`최대 ${this.state.processedInfo['MAX_MONEY'] === null ?*/}
+                        {/*'제한없이' : (resource.moneyWithComma(this.state.processedInfo['MAX_MONEY']) + "원까지")}*/}
+                        {/*${this.state.category === 'savings_info' ? '적립' : '예치'}가능`}*/}
+                    {/*</div>*/}
+                    {/*<div className="title-intr-type">*/}
+                        {/*{`이 상품은*/}
+                        {/*${this.state.commodity['INTR_RATE_TYPE'] !== 'M' ? '단리' : '복리'}*/}
+                         {/*방식입니다.`}*/}
+                    {/*</div>*/}
+
 
                     <div className="item-section-div commodity-section">
                         <div className="commodity-detail-wrap">
                             <div className="commodity-detail-sub-div">
-                                <div>{'가입대상'}</div>
+                                <div><i className="fa fa-circle fa-fw" aria-hidden="true" />{' 가입대상'}
+                                <hr className="detail-hr"/>
+                                </div>
+
                                 <div className="detail-join-member-div">
                                     {this.state.commodity['JOIN_MEMBER'].split('\n').map((item, key) => {
                                         if (item !== '')
@@ -204,7 +200,7 @@ export default class CommodityDetail extends React.Component {
 
                             {/* 적금의경우 자유적립식과 정액적립식이 같이나오는 경우가 존재한다. */}
                             <div className="commodity-detail-sub-div">
-                                <div>{'개월별 기본금리'}</div>
+                                <div><i className="fa fa-circle fa-fw" aria-hidden="true" /> {' 개월별 기본금리'} <hr className="detail-hr"/></div>
                                 <table className="commodity-detail-table">
                                     <thead>
                                     <tr>
@@ -237,7 +233,7 @@ export default class CommodityDetail extends React.Component {
 
                             {this.state.special.length !== 0 ?
                                 <div className="commodity-detail-sub-div">
-                                    <div>{'우대조건'}</div>
+                                    <div> <i className="fa fa-circle fa-fw" aria-hidden="true" /> {' 우대조건'} <hr className="detail-hr"/></div>
                                     <table className="commodity-detail-table special-table">
                                         <thead>
                                         <tr>
@@ -270,14 +266,14 @@ export default class CommodityDetail extends React.Component {
                             }
 
                             <div className="commodity-detail-sub-div">
-                                <div>가입경로</div>
+                                <div><i className="fa fa-circle fa-fw" aria-hidden="true" /> {' 가입경로'} <hr className="detail-hr"/></div>
                                 <div className="detail-join-member-div">
                                     {this.state.commodity['JOIN_WAY']}
                                 </div>
                             </div>
 
-                            {this.renderSplitLineIntro('만기 후 처리', this.state.commodity['MTRT_INT'])}
-                            {this.renderSplitLineIntro('기타 유의사항', this.state.commodity['ETC_NOTE'])}
+                            {this.renderSplitLineIntro(' 만기 후 처리', this.state.commodity['MTRT_INT'])}
+                            {this.renderSplitLineIntro(' 기타 유의사항', this.state.commodity['ETC_NOTE'])}
 
                             {/*{this.renderSimpleIntro('가입제한', this.state.commodity['JOIN_DENY'] === 1 ? '제한없음' : '제한있음')}*/}
                             {/*{this.renderSimpleIntro('시작일', this.state.commodity['DCLS_STRT_DAY'])}*/}

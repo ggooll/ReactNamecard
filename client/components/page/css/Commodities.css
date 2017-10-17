@@ -1,37 +1,31 @@
 .commodity-top-layout{
     border-bottom: 5px solid #f9f9f9;
     margin-bottom: 3vh;
-    background: url('https://image.freepik.com/free-vector/colorful-background-with-flat-geometric-shapes_1201-669.jpg');
+    /*background: url('https://image.freepik.com/free-vector/colorful-background-with-flat-geometric-shapes_1201-669.jpg');*/
     background-size: cover;
 }
 
 .commodity-detail-main-title-div {
     min-height: 70vh;
-    padding: 1vw;
+    padding: 2vw;
     color: black;
     width: 100vw;
+    background : #f9f9f9;
 }
 
 .main-sub-title {
-    height: 5vh;
+    min-height: 5vh;
     line-height: 5vh;
-    text-align: center;
-    font-size: 1.5rem;
-    color: whitesmoke;
-    background: rgba(210, 147, 159, 0.65);
-    /* background: -webkit-linear-gradient(left top, #d07373, #8a0000); */
-    /*background: -o-linear-gradient(bottom right, #d07373, #8a0000);*/
-    /*background: -moz-linear-gradient(bottom right, #d07373, #8a0000);*/
-    /* background: linear-gradient(to bottom right, #d07373, #8a0000); */
-    font-family: Hana L;
+    font-size: 1.6rem;
+    font-family: 'Hana L';
+    font-weight: bold;
 }
 
 .main-sub-content {
-    height: 7vh;
-    line-height: 7vh;
-    text-align: center;
+    height: 6vh;
+    padding-left: 2vw;
+    line-height: 6vh;
     font-size: 1.5rem;
-    border: 2px solid rgba(169, 169, 169, 0.7);
     margin-bottom: 2vh;
     background: white;
     color: black;
@@ -40,19 +34,22 @@
 .commodity-detail-bank-title {
     height: 10vh;
     line-height: 15vh;
-    font-size: 3rem;
+    font-size: 2.5rem;
     color: black;
-    padding-left: 3vw;
-    margin-top: 11vh;
+    padding-left: 2vw;
+    /* padding-top: 5vh; */
+    font-family: 'Hana L';
+    font-weight: bold;
 }
 
 .commodity-detail-product-title {
-    height: 10vh;
-    line-height: 8vh;
+    height: 7vh;
+    line-height: 7vh;
     color: black;
     font-size: 1.85rem;
-    padding-left: 5vw;
-    font-weight: bold;
+    padding-left: 3vw;
+    /* font-weight: bold; */
+    font-family: 'Hana L';
 }
 
 .commodity-detail-main-sub-div {
@@ -74,11 +71,9 @@
 .commodity-detail-sub-div > div {
     min-height: 5vh;
     line-height: 5vh;
-    font-size: 1.5rem;
-    text-align: center;
-    background-color: #cbd0d0;
-    color: whitesmoke;
-    font-family: Hana L;
+    font-size: 1.6rem;
+    font-family: 'Hana L';
+    font-weight: bolder;
 }
 
 .detail-join-member-div{
@@ -87,8 +82,10 @@
     font-size: 1.5rem !important;
     background: white !important;
     color: black !important;
-    border: 2px solid rgba(169, 169, 169, 0.7);
+    /* border: 2px solid rgba(169, 169, 169, 0.7); */
     font-family: inherit !important;
+    padding-left: 2vw;
+    font-weight: 500 !important;
 }
 
 thead > td{
@@ -105,11 +102,18 @@ thead > td{
 
 .commodity-detail-table tr td {
     width: 50%;
-    border: 2px solid rgba(169, 169, 169, 0.7);
+    border: 1px solid rgba(169, 169, 169, 0.7);
     background-color: white;
     text-align: center;
     color: black;
     font-size: 1.5rem;
+    font-family: 'Hana L';
+    padding: 2vw;
+}
+
+.commodity-detail-table tbody tr td:nth-child(2){
+    color: #ff6c98;
+    font-weight: bold;
 }
 
 .special-table td {
@@ -121,11 +125,12 @@ thead > td{
     text-align: left !important;
     color: black !important;
     font-weight: 400 !important;
-    font-size: 1.3rem !important;
-    border: 2px solid lightgray;
+    font-size: 1.4rem !important;
+    /* border: 2px solid lightgray; */
     height: auto !important;
     line-height: 4vh !important;
-    padding-left: 2vw;
+    padding: 2vw;
+    /* padding-left: 2vw; */
     font-family: inherit !important;
 }
 
@@ -160,4 +165,20 @@ thead > td{
     margin: 0 !important;
     padding: 2vw !important;
     background: #f9f9f9 !important;
+}
+
+.detail-hr{
+    background-color: #26dbdc !important;
+    margin: 0 auto 10px 0 !important;
+    height: 2px !important;
+}
+
+.detail-hr-red{
+    background-color: #d95a80 !important;
+    margin: 0 auto 10px 0 !important;
+    height: 2px !important;
+}
+
+.fa-fw{
+    font-size: 1.1rem !important;
 }

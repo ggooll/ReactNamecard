@@ -114,8 +114,8 @@ export default class ChatReview extends React.Component {
                             {<li> 기본금리 : {(filteredItems[0]["INTR_RATE"]).toFixed(2)}%</li>}
                             {<li> 최대금리 : {(filteredItems[0]["INTR_RATE2"]).toFixed(2)}%</li>}
                             {<li> 우대조건 :
-                                {filteredItems[0]["SPCL_CND"].split('\n').map((special)=>{
-                                    return <span><br/>{special}</span>
+                                {filteredItems[0]["SPCL_CND"].split('\n').map((special, idx)=>{
+                                    return <span key={idx}><br/>{special}</span>
                                 })}
                             </li>}
                         </ul>

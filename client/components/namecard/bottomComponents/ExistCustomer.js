@@ -55,12 +55,14 @@ export default class ExistCustomer extends React.Component {
     }
 
     handleModalClose() {
+        window.detectingHistory.isModal = false;
         this.setState({
             modalVisible: false
         });
     }
 
     handleAuthSuccess() {
+        window.detectingHistory.isModal = false;
         this.setState({
             modalVisible: false,
             downVisible: this.state.downVisible === 'down-menu' ? 'down-menu visible' : 'down-menu'
@@ -94,15 +96,9 @@ export default class ExistCustomer extends React.Component {
                         </span>
                     </div>
 
-                    <div className="drop-down-item" onClick={this.handleLinkMenu.bind(this, 'commodities')}>
+                    <div className="drop-down-item" onClick={this.handleLinkMenu.bind(this, 'reservationList')}>
                         <span className="down-menu-span">
-                            <i className="fa fa-angle-right" aria-hidden="true"/>{'상품정보'}
-                        </span>
-                    </div>
-
-                    <div className="drop-down-item" onClick={this.handleLinkMenu.bind(this, 'survey')}>
-                        <span className="down-menu-span">
-                            <i className="fa fa-angle-right" aria-hidden="true"/>{'평가'}
+                            <i className="fa fa-angle-right" aria-hidden="true"/>{'상담예약내역'}
                         </span>
                     </div>
                 </div>

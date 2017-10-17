@@ -155,10 +155,16 @@ export default class OverAll extends React.Component {
                                                         <div className="popular-product-count"/>
                                                         {`${item['PRODUCT_COUNT']}명이 상담`}
                                                     </span> : undefined}
-                                                    {item['DEPOSIT_COUNT'] !== null ? <span>
+                                                    {this.state.selectedProducts === 'deposit_info' ?
+                                                        item['DEPOSIT_COUNT'] !== null ? <span>
                                                         <div className="popular-click-count"/>
-                                                        {`${item['DEPOSIT_COUNT']}명이 관심`}
-                                                    </span> : undefined}
+                                                            {`${item['DEPOSIT_COUNT']}명이 관심`}
+                                                        </span> : undefined :
+                                                        item['SAVINGS_COUNT'] !== null ? <span>
+                                                        <div className="popular-click-count"/>
+                                                            {`${item['SAVINGS_COUNT']}명이 관심`}
+                                                        </span> : undefined
+                                                    }
                                                 </div>
 
                                                 <div className="clear-div-1"/>

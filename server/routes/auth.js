@@ -65,9 +65,9 @@ router.post('/isExistSession', (req, res) => {
     const session = req.session;
     // let sessSalt = session.refSalt;
     let authUser = session.authUser;
+    console.log(authUser);
 
     // res.send(true);
-
     // if (authUser !== undefined && sessSalt !== undefined) {
     if (authUser !== undefined) {
         // 세션의 phone + bcrypt와 refSalt를 추가로 검사할 수 있다.

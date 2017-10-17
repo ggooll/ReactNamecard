@@ -270,7 +270,7 @@ export default class OnDemandResult extends React.Component {
                     <span>{this.state.param.product === 'deposit_info' ? '예금' : '적금'}</span>
                 </div>
                 <div className="result-param-div">
-                    <div>{'원금'}</div>
+                    <div>{this.state.param.product === 'deposit_info' ? '원금' : '월 적립금'}</div>
                     <span>{`${resource.moneyWithComma(this.state.param.money)}  원`}</span>
                 </div>
                 <div className="result-param-div">
@@ -404,7 +404,7 @@ export default class OnDemandResult extends React.Component {
                                                         return (
                                                             <div className={`${this.state.childElement[idx]} special-div-in`} key={subIndex}>
                                                                 <div className="special_condition_title">{specialOption["SPECIAL_CONDITION"]}</div>
-                                                                <div className="special_condition_rate">{`+ ${specialOption["SPECIAL_INTR"]} %`}</div>
+                                                                <div className="special_condition_rate">{`+ ${Number(specialOption["SPECIAL_INTR"]).toFixed(2)} %`}</div>
                                                             </div>
                                                         );
                                                     })}

@@ -28,7 +28,7 @@
 
 .consult-div {
     position: relative;
-    height: 14vh;
+    height: 12vh;
     margin-bottom: 2vh;
     background-color: #fff;
     border: 1px solid lightgray;
@@ -44,8 +44,8 @@
 
 .consult-product-name {
     margin: 0;
-    height: 8vh;
-    line-height: 10vh;
+    height: 7vh;
+    line-height: 8vh;
 }
 
 .consult-product-name span {
@@ -65,9 +65,9 @@
 
 .consult-product-link-div {
     width: 25%;
-    height: 14vh;
+    height: 12vh;
     float: left;
-    line-height: 14vh;
+    line-height: 12vh;
     font-weight: 600;
     font-size: 1.3rem;
     color: white;

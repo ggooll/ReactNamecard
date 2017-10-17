@@ -23,22 +23,22 @@ router.get('/:empCode/:customerNo', (req, res) => {
                             COMMENTS
                      FROM RESERVATION 
                      WHERE CUSTOMER_NO = :customerNo 
-                     AND EMPLOYEE_NO = (SELECT NO FROM EMPLOYEE WHERE CODE = :empCode)`;
+                     AND EMPLOYEE_NO = (SELECT NO FROM EMPLOYEE WHERE CODE = :empCode)
+                     ORDER BY 9 DESC`;
 
     oracledb.query(statement, params).then(function (dbResult) {
         let list = oracledb.transformToAssociated(dbResult);
-        console.log(list);
         res.send(list);
     });
 });
 
-router.get('/check/:empCode/:day/:type',(req,res)=>{
+router.get('/check/:empCode/:day/:type', (req, res) => {
     console.log('check');
     let empCode = req.params.empCode;
     let day = req.params.day;
     let type = req.params.type;
     let params = [empCode, day, day, type];
-    let statement =`SELECT NO, 
+    let statement = `SELECT NO, 
                            TO_CHAR(START_DATE,'HH24:MI') START_TIME,
                            TO_CHAR(END_DATE,'HH24:MI') END_TIME  
                     FROM SCHEDULE
@@ -47,64 +47,50 @@ router.get('/check/:empCode/:day/:type',(req,res)=>{
                     AND TO_CHAR(START_DATE, 'HH24:MI') != '00:00'
                     AND TYPE = :type
                     ORDER BY 2`;
-    console.log(params);
 
     oracledb.query(statement, params).then(function (dbResult) {
         let list = oracledb.transformToAssociated(dbResult);
-        console.log(list.length);
-        console.log(list);
         let result = temp(list, type);
         res.send(result);
     });
 
 });
 
-router.post('/user',(req,res)=>{
-    console.log('user');
-    let customerNo = req.body.data;//req.params.userNo;
-    console.log('=====');
-    console.log(customerNo);
-    let params = [customerNo];
-    let statement=`select name, phone from customer where no=:customerNo`;
-    console.log(params);
+router.post('/user', (req, res) => {
+    let customerSession = req.session.authUser;
+    if (customerSession === undefined) {
+        res.send(false);
+    } else {
+        //
+        let customerNo = customerSession["NO"];
+        let params = [customerNo];
+        let statement = `select name, phone from customer where no=:customerNo`;
 
-    oracledb.query(statement, params).then(function (dbResult) {
-        let result = oracledb.transformToAssociated(dbResult);
-        console.log(result);
-        res.send(result);
-    });
+        oracledb.query(statement, params).then(function (dbResult) {
+            let result = oracledb.transformToAssociated(dbResult);
+            res.send(result);
+        });
+    }
 });
-//insert into reservation
-// values(reservation_seq.nextval, 1, 68, '임고객', '01099899444', '서울시 강남구', 'Meeting', '상담신청', to_date('2017/10/11 17:00','yyyy/MM/dd hh24:mi'),
-// to_date('2017/10/11 16:00','yyyy/MM/dd hh24:mi')+ 0.5/24,'D',sysdate,'');
-router.post('/request', (req,res)=>{
-    console.log('request');
-    console.log(req.body);
-    const session = req.session;
-    //console.log(session.authUser);
 
+router.post('/request', (req, res) => {
+    const session = req.session;
     let empCode = req.body.data.empCode;
     let start_date = req.body.data.start_date;
     let start_time = req.body.data.start_time;
-    let t_date = start_date+' '+start_time;
+    let t_date = start_date + ' ' + start_time;
     let type = req.body.data.type;
-    //let customerNo = req.body.data.customer_no;
     let location = req.body.data.location;
-    let msg = req.body.data.msg == undefined ? "" : req.body.data.msg;
-
+    let msg = req.body.data.msg === undefined ? "" : req.body.data.msg;
     let name = req.body.data.name;      //session.authUser==undefined ? req.body.data.name : session.authUser.NAME;
     let phone = req.body.data.phone;    //session.authUser==undefined ? req.body.data.phone : session.authUser.PHONE;
-
-    let range = type =='Meeting' ? 1/24 : 0.5/24;
+    let range = type === 'Meeting' ? 1 / 24 : 0.5 / 24;
     let comments = "";
-
-    //let params = [empCode, customerNo, name, phone, location, type, msg, t_date, t_date ,range ,comments];
-    //console.log(params);
 
     //세션체크 후 세션이 없으면 name, phone으로 유저 가입 후 일정잡기
     async.waterfall([
-        function(callback){
-            if(session.authUser==undefined) {
+        function (callback) {
+            if (session.authUser === undefined) {
                 let params = [name, phone, empCode];
                 console.log(params);
                 let statement = `insert into customer(no, name, phone, employee_no, grade, reg_date) 
@@ -122,16 +108,15 @@ router.post('/request', (req,res)=>{
                                 res.send({msg: "fail"});
                             }
                             doRelease(connection);
-                            //res.send({msg:"success"});
-                            callback(null,true);
+                            callback(null, true);
                         });
                 });
-            }else
-                callback(null,false);
-            //callback(null);
+            } else
+                callback(null, false);
         },
-        function(arg, callback){
-            if(arg==true){
+
+        function (arg, callback) {
+            if (arg === true) {
                 let params = [phone];
                 console.log(params);
                 let statement = `SELECT NO,
@@ -149,18 +134,16 @@ router.post('/request', (req,res)=>{
                     req.session.authUser = auth[0];
                     callback(null);
                 });
-            }else{
+            } else {
                 console.log('else');
                 callback(null);
             }
-
         },
-        function(callback){
-            console.log(req.session.authUser);
+
+        function (callback) {
             let customerNo = req.session.authUser["NO"];
-            let params = [empCode, customerNo, name, phone, location, type, msg, t_date, t_date ,range ,comments];
-            console.log(params);
-            let statement =`INSERT INTO RESERVATION
+            let params = [empCode, customerNo, name, phone, location, type, msg, t_date, t_date, range, comments];
+            let statement = `INSERT INTO RESERVATION
                     VALUES(RESERVATION_SEQ.NEXTVAL, (select no from employee where code=:empCode), :customerNo, :name, :phone, :location, :type, :msg, 
                     to_date(:t_date, 'yyyy/MM/dd hh24:mi'), (to_date(:t_date, 'yyyy/MM/dd hh24:mi')+:range), 'D', sysdate, :comments)`;
             originDb.getConnection(dbConfig, function (err, connection) {
@@ -173,26 +156,68 @@ router.post('/request', (req,res)=>{
                         if (err) {
                             console.error(err.message);
                             doRelease(connection);
-                            res.send({msg:"fail"});
+                            res.send({msg: "fail"});
                         }
                         doRelease(connection);
-                        //res.send({msg:"success"});
                         callback(null);
                     });
             });
-            //callback(null,b);
         }
-    ],function(err, result){
-        if(err){
+    ], function (err, result) {
+        if (err) {
             console.log(err);
-            res.send({msg:"fail"});
+            res.send({msg: "fail"});
         }
         res.cookie('user', req.session.authUser["NO"]);
-        res.send({msg:"success"});
-
+        res.send({msg: "success"});
     });
 
 });
+
+function temp(dummy, type) {
+    let result = [];
+    let data =
+        [{time: "10:00", available: true}, {time: "10:30", available: true},
+            {time: "11:00", available: true}, {time: "11:30", available: true},
+            {time: "12:00", available: true}, {time: "12:30", available: true},
+            {time: "13:00", available: true}, {time: "13:30", available: true},
+            {time: "14:00", available: true}, {time: "14:30", available: true},
+            {time: "15:00", available: true}, {time: "15:30", available: true},
+            {time: "16:00", available: true}, {time: "16:30", available: true},
+            {time: "17:00", available: true}, {time: "17:30", available: true},
+            {time: "18:00", available: true}, {time: "18:30", available: true},
+            {time: "19:00", available: true}, {time: "19:30", available: true}];
+    let index = 0; //type 1 or 2
+    let num = type === 'Call' ? 1 : 2;
+    for (let i = 0; i < data.length;) {
+        index = 1;
+        if (dummy.length === 0) {
+            break;
+        }
+        if (data[i + (num - 1)].time < dummy[0].START_TIME) {
+            i += index;
+            //console.log(index);
+        } else {
+            data[i].available = false;
+            let j = 1;
+            while (true) {
+                if (data[i + j].time < dummy[0].END_TIME) {
+                    data[i + j].available = false;
+                    index++;
+                    j++;
+                } else {
+                    break;
+                }
+            }
+            dummy.splice(0, 1);
+        }
+    }
+    for (let value of data) {
+        if (value.available === true)
+            result.push(value.time);
+    }
+    return result;
+}
 
 function doRelease(conn) {
     conn.close(function (err) {
@@ -201,55 +226,6 @@ function doRelease(conn) {
     });
 }
 
-function temp(dummy, type){
-    let result=[];
-    let data =
-        [   {time:"10:00", available:true}, {time:"10:30", available:true},
-            {time:"11:00", available:true}, {time:"11:30", available:true},
-            {time:"12:00", available:true}, {time:"12:30", available:true},
-            {time:"13:00", available:true}, {time:"13:30", available:true},
-            {time:"14:00", available:true}, {time:"14:30", available:true},
-            {time:"15:00", available:true}, {time:"15:30", available:true},
-            {time:"16:00", available:true}, {time:"16:30", available:true},
-            {time:"17:00", available:true}, {time:"17:30", available:true},
-            {time:"18:00", available:true}, {time:"18:30", available:true},
-            {time:"19:00", available:true}, {time:"19:30", available:true}];
-    //let dummy = [{start:"11:00", end:"12:00"},{start:"14:00", end:"14:30"},{start:"14:30", end:"15:00"},{start:"15:00", end:"16:00"},{start:"18:00", end:"19:00"}];
-    let index = 0 //type 1 or 2
-    let num = type=='Call' ? 1 : 2;
-    for(var i=0;i<data.length;){
-        //index= type=='Call' ? 1 : 2;
-        index=1;
-        console.log("index : "+ index);
-        if(dummy.length==0){
-            break;
-        }
-        if(data[i+(num-1)].time<dummy[0].START_TIME){
-            i+=index;
-            //console.log(index);
-        }else{
-            data[i].available=false;
-            var j=1;
-            while(true){
-                if(data[i+j].time<dummy[0].END_TIME){
-                    data[i+j].available=false;
-                    index++;
-                    j++;
-                }else{
-                    break;
-                }
-            }
-            dummy.splice(0,1);
-        }
-    }
-    console.log('==data==');
-    console.log(data);
-    for(let value of data){
-        if(value.available==true)
-            result.push(value.time);
-    }
-    return result;
-}
 export default router;
 // select no, type, to_char(start_date,'HH24:MI') as start_date
 // from schedule

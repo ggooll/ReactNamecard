@@ -7,6 +7,7 @@ import ChatReview from './ChatReview';
 import {ThemeProvider} from 'styled-components';
 import './css/page.css';
 import './css/ChatBot.css';
+import TopNavigator from "../common/TopNavigator";
 
 export default class ChatBot extends React.Component {
 
@@ -43,7 +44,7 @@ export default class ChatBot extends React.Component {
         let steps = [
             {
                 id: '1',
-                message: '상품 추천, 자주 묻는 질문(FAQ) 중 하나를 선택해 주세요.',
+                message: '안녕하세요! 상품 추천, 자주 묻는 질문(FAQ) 중 하나를 선택해 주세요.',
                 trigger: '2',
             },
             {
@@ -183,6 +184,7 @@ export default class ChatBot extends React.Component {
 
         return (
             <div className="docs-example-1">
+                <TopNavigator title={'채팅'}/>
                 <ThemeProvider theme={theme}>
                     <Bot headerTitle={'채팅'} handleEnd={this.handleEnd} steps={steps}/>
                 </ThemeProvider>

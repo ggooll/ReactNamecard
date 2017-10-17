@@ -6,8 +6,8 @@ import React from 'react';
 import TopNavigator from '../../common/TopNavigator';
 import SavingsCalculator from '../calculator/SavingsCalculator';
 import NCalculator from '../calculator/NCalculator';
+import ExchangeCalculator from '../calculator/ExchangeCalculator';
 import '../css/FundCalculator.css';
-
 
 export default class FundCalculator extends React.Component {
 
@@ -34,11 +34,8 @@ export default class FundCalculator extends React.Component {
                 <div className="fund-section-div">
                     <SavingsCalculator/>
                     <NCalculator/>
+                    <ExchangeCalculator/>
 
-                    <div className="fund-cal-title">대출이자계산기?</div>
-                    <div className="fund-div3">
-                        흠..
-                    </div>
 
                     <div className="fund-cal-title">연봉계산기?</div>
                     <div className="fund-div3">

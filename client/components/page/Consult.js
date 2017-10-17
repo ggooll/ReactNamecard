@@ -106,7 +106,7 @@ export default class Consult extends React.Component {
                 <TopNavigator title="내 상담기록"/>
 
                 <div className="consult-background-div"/>
-                <div className="consult-introduce-div">테스트세트스테스</div>
+                <div className="consult-introduce-div" />
 
                 <div className="search-div">
                     <div>

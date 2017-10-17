@@ -308,6 +308,7 @@ export default class OnDemand extends React.Component {
                                     value={this.state.selectedProducts}>
                                 <option value="deposit_info">예금찾기</option>
                                 <option value="savings_info">적금찾기</option>
+                                {/*<option value="monthly_money">월저축금액계산</option>*/}
                             </select>
                         </div>
                     </div>

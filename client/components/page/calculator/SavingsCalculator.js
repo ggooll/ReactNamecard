@@ -166,8 +166,7 @@ export default class SavingsCalculator extends React.Component{
                     <div className="plus-value">
                         <div className="plus-value-input-div">
                             얼마나
-                            <input onFocus={this.makeNoneComma} onBlur={this.makeComma}
-                                   onChange={this.handleChangeInput} value={this.state.plusMoneyOne}/>원
+                            <input onFocus={this.makeNoneComma} onBlur={this.makeComma} value={this.state.plusMoneyOne} readOnly/>원
                         </div>
                         <div className="plus-value-btn-div">
                             <div onClick={this.handleClickPlusMoneyOne.bind(this, '10000000')}>{'+ 천만원'}</div>
@@ -180,7 +179,7 @@ export default class SavingsCalculator extends React.Component{
                     <div className="plus-value">
                         <div className="plus-value-input-div">
                             얼마동안
-                            <input onChange={this.handleChangeInput} value={this.state.plusPeriodOne}/>개월
+                            <input value={this.state.plusPeriodOne} readOnly/>개월
                         </div>
                         <div className="plus-value-btn-div">
                             <div onClick={this.handleClickPlusPeriodOne.bind(this, '24')}>{'+ 24개월'}</div>

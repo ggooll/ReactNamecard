@@ -1,0 +1,43 @@
+.reservation-list-title{
+    margin: 2vh;
+}
+
+.reservation-list-div{
+    border: 2px solid #d2d2d2;
+    margin: 3vh 2vh;
+}
+
+.reservation-list-type{
+    font-size: 1.5rem;
+    padding: 1vw 2vw 1vw 3vw;
+    height: 6vh;
+    line-height: 5vh;
+    background: #e4e4e4;
+    color: #3e3e3e;
+    font-weight: bold;
+}
+.reservation-list-type > i{
+    margin: 0 3vw 0 0;
+}
+
+.reservation-list-location{
+    color: dimgray;
+    padding: 1vw 2vw;
+}
+
+.reservation-list-msg{
+    display: inline-block;
+    float: right;
+}
+
+.reserve-success{
+    color: dodgerblue;
+}
+
+.reserve-wait{
+    color: #147754;
+}
+
+.reserve-cancel{
+    color:darkred;
+}
