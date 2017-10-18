@@ -34,12 +34,13 @@ export default class ChatReview extends React.Component {
 
     getParameter(steps, callback) {
         let param = null;
+        console.log(steps);
         if (steps.type.value === "1") {
-            const {type, deposit_period, deposit_amount, join_way} = steps;
-            param = {type: type, period: deposit_period, amount: deposit_amount, join_way: join_way};
+            const {type, deposit_period, deposit_amount, join_way, input_val} = steps;
+            param = {type: type, period: deposit_period, amount: deposit_amount.value==0 ? input_val : deposit_amount, join_way: join_way};
         } else {
-            const {type, savings_period, savings_amount, join_way} = steps;
-            param = {type: type, period: savings_period, amount: savings_amount, join_way: join_way};
+            const {type, savings_period, savings_amount, join_way, input_val} = steps;
+            param = {type: type, period: savings_period, amount: savings_amount.value==0 ? input_val : savings_amount, join_way: join_way};
         }
         callback(null, param);
     }
