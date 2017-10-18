@@ -7,6 +7,7 @@ import axios from 'axios';
 import async from 'async';
 import {Grid, Row, Col} from 'react-bootstrap';
 import Loader from 'react-loader';
+import ScrollToTop from 'react-scroll-up';
 import TopNavigator from '../common/TopNavigator';
 import resource from './StaticResource';
 import history from '../../history';
@@ -16,6 +17,17 @@ export default class OnDemandResult extends React.Component {
 
     constructor(props) {
         super(props);
+
+        this.scrollTopStyle = {
+            position: 'fixed',
+            bottom: 40,
+            right: 30,
+            cursor: 'pointer',
+            transitionDuration: '0.2s',
+            transitionTimingFunction: 'linear',
+            transitionDelay: '0s'
+        };
+
         this.state = {
             param: this.props.location.state.passParam,
             commodities: [],
@@ -425,6 +437,10 @@ export default class OnDemandResult extends React.Component {
                         </Loader>
                     </Grid>
                 </div>
+
+                <ScrollToTop style={this.scrollTopStyle} showUnder={250}>
+                    <span className="scroll-top-span">UP</span>
+                </ScrollToTop>
             </div>
         );
     }

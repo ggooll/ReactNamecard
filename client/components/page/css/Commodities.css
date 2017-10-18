@@ -8,16 +8,17 @@
 .commodity-detail-main-title-div {
     min-height: 70vh;
     padding: 2vw;
-    color: black;
+    color: dimgray;
     width: 100vw;
     background : #f9f9f9;
+    font-family: 'Nanum Barun Gothic';
 }
 
 .main-sub-title {
     min-height: 5vh;
     line-height: 5vh;
     font-size: 1.6rem;
-    font-family: 'Hana L';
+    font-family: 'Hana L' !important;
     font-weight: bold;
 }
 
@@ -29,27 +30,30 @@
     margin-bottom: 2vh;
     background: white;
     color: black;
+    font-family: 'Nanum Barun Gothic';
 }
 
 .commodity-detail-bank-title {
     height: 10vh;
     line-height: 15vh;
-    font-size: 2.5rem;
-    color: black;
+    font-size: 3rem;
+    color: dimgray;
     padding-left: 2vw;
-    /* padding-top: 5vh; */
-    font-family: 'Hana L';
-    font-weight: bold;
+    font-weight: 600;
+}
+
+.commodity-detail-bank-title span{
+    font-family: 'Nanum Barun Gothic';
 }
 
 .commodity-detail-product-title {
     height: 7vh;
     line-height: 7vh;
-    color: black;
+    color: dimgray;
     font-size: 1.85rem;
     padding-left: 3vw;
     /* font-weight: bold; */
-    font-family: 'Hana L';
+    font-family: 'Hana L' !important;
 }
 
 .commodity-detail-main-sub-div {
@@ -57,6 +61,7 @@
     background-color: whitesmoke;
     margin-top: 3vh;
     padding-left: 0.5vw;
+    font-family: 'Nanum Barun Gothic';
 }
 
 .commodity-detail-main-sub-div > div {
@@ -66,6 +71,7 @@
 .commodity-detail-sub-div {
     min-height: 10vh;
     margin: 2vh auto;
+    font-family: 'Nanum Barun Gothic';
 }
 
 .commodity-detail-sub-div > div {
@@ -83,9 +89,9 @@
     background: white !important;
     color: black !important;
     /* border: 2px solid rgba(169, 169, 169, 0.7); */
-    font-family: inherit !important;
     padding-left: 2vw;
-    font-weight: 500 !important;
+    font-weight: 400 !important;
+    font-family: 'Nanum Barun Gothic' !important;
 }
 
 thead > td{
@@ -105,14 +111,14 @@ thead > td{
     border: 1px solid rgba(169, 169, 169, 0.7);
     background-color: white;
     text-align: center;
-    color: black;
+    color: dimgray;
     font-size: 1.5rem;
-    font-family: 'Hana L';
+    font-family: 'Nanum Barun Gothic';
     padding: 2vw;
 }
 
 .commodity-detail-table tbody tr td:nth-child(2){
-    color: #ff6c98;
+    color: #e24e4e;
     font-weight: bold;
 }
 
@@ -123,7 +129,7 @@ thead > td{
 .commodity-multiple-lined-div{
     background: white !important;
     text-align: left !important;
-    color: black !important;
+    color: dimgray !important;
     font-weight: 400 !important;
     font-size: 1.4rem !important;
     /* border: 2px solid lightgray; */
@@ -131,9 +137,11 @@ thead > td{
     line-height: 4vh !important;
     padding: 2vw;
     /* padding-left: 2vw; */
-    font-family: inherit !important;
 }
 
+.commodity-multiple-lined-div span{
+    font-family: 'Nanum Barun Gothic';
+}
 
 .title-min-money{
     text-align: left;
@@ -168,7 +176,7 @@ thead > td{
 }
 
 .detail-hr{
-    background-color: #26dbdc !important;
+    background-color: #066e6f !important;
     margin: 0 auto 10px 0 !important;
     height: 2px !important;
 }
@@ -181,4 +189,54 @@ thead > td{
 
 .fa-fw{
     font-size: 1.1rem !important;
+}
+
+.type-title-deposit{
+    font-size: 1.5rem;
+    line-height: 4vh;
+    height: 5vh;
+    margin: 0 0 1vw 2vw;
+    padding: 3px;
+    font-weight: 600;
+    color: #0e8071;
+    border-radius: 3px;
+    display: inline-block;
+    font-family: 'Nanum Barun Gothic';
+}
+
+.type-title-savings{
+    font-size: 1.5rem;
+    line-height: 4vh;
+    height: 5vh;
+    margin: 0 0 1vw 2vw;
+    padding: 3px;
+    font-weight: 600;
+    color: #f18282;
+    border-radius: 3px;
+    display: inline-block;
+    font-family: 'Nanum Barun Gothic';
+}
+
+.savings-type-div{
+    display: inline-block;
+}
+
+.rsrv-type-span{
+    font-weight: 400;
+    padding-left: 2vw;
+    display: inline-block;
+    margin-top: 1vh;
+}
+
+.scroll-top-span{
+    display: inline-block;
+    width: 17vw;
+    height: 17vw;
+    background: #488680;
+    color: white;
+    border-radius: 50%;
+    line-height: 17vw;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.3rem;
 }

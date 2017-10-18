@@ -12,6 +12,7 @@ import consult from './routes/consult';
 import ondemand from './routes/ondemand';
 import chat from './routes/chat';
 import reservation from './routes/reservation';
+import rank from './routes/rank';
 
 import flash from 'connect-flash';
 import path from 'path';
@@ -84,6 +85,7 @@ app.use('/api/consult', consult);
 app.use('/api/ondemand', ondemand);
 app.use('/api/chat', chat);
 app.use('/api/reservation', reservation);
+app.use('/api/rank', rank);
 
 /**
  * static
@@ -96,6 +98,7 @@ app.get("*", function (req, res) {
     if (empCode !== undefined) {
         res.redirect(`/${empCode}`);
     } else {
+        //
         res.redirect('/fail');
     }
 });
@@ -117,6 +120,7 @@ httpApp.get('*', function (req, res) {
     if (empCode !== undefined) {
         res.redirect(`https://${host}/${empCode}`);
     } else {
+        //
         res.redirect('/fail');
     }
 });

@@ -88,12 +88,14 @@ router.post('/search/option', (req, res) => {
                         INTR_RATE_TYPE_NM,
                         SAVE_TRM,
                         INTR_RATE,
-                        INTR_RATE2
-                    FROM ${searchTable} 
-                    WHERE 
+                        INTR_RATE2 `;
+    let savings = req.body.category !== 'deposit_options' ? ',RSRV_TYPE ' : '';
+    let conditional = `FROM ${searchTable} 
+                        WHERE 
                         to_char(dcls_month, 'yyyy-mm-dd') = :dcls_month
                         AND fin_co_no = :fin_co_no
                         AND fin_prdt_cd = :fin_prdt_cd`;
+    statement += (savings + conditional);
 
     oracledb.query(statement, [dcls_month, fin_co_no, fin_prdt_cd]).then(function (dbResult) {
         // savetrm 6 12 24 36

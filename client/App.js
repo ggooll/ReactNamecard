@@ -11,11 +11,10 @@ import Consult from './components/page/Consult';
 import Survey from './components/page/Survey';
 import CommodityDetail from './components/page/CommodityDetail';
 import ConsultDetail from './components/page/ConsultDetail';
-import FundCalculator from './components/page/calculator/FundCalculator';
 import ChatBot from './components/page/ChatBot';
 import ReservationList from './components/page/ReservationList';
 import Reservation from './components/page/Reservation';
-import NoMatch from './NoMatch';
+import NoMatch from './components/page/NoMatch';
 import './global_css/globalFont.css';
 import './global_css/transition-group.css';
 import 'moment/locale/fr-ca';
@@ -25,7 +24,7 @@ function getHistoryAction() {
         window.detectingHistory.historyAction = action;
         // console.log(action); // push or pop
     });
-    return window.detectingHistory.historyAction === 'PUSH' ? 'slideIn' : 'example';;
+    return window.detectingHistory.historyAction === 'PUSH' ? 'slideIn' : 'example';
 }
 
 export default class App extends React.Component {
@@ -80,10 +79,6 @@ export default class App extends React.Component {
                             <Route name="consultInfo"
                                    exact path={`/:empcode/consult`}
                                    component={Consult}/>
-
-                            <Route name="FundCalculator"
-                                   exact path={`/:empcode/fundCalculator`}
-                                   component={FundCalculator}/>
 
                             <Route name="chatBot"
                                    exact path={`/:empcode/chatbot`}

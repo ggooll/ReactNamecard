@@ -33,6 +33,7 @@ export default class Introduce extends React.Component {
 
     componentDidMount() {
         axios.get(`/api/employee/${this.props.name}`, {}).then((emp) => {
+            console.log(emp);
             if ((typeof emp.data) === 'object') {
                 this.setState({
                     id: emp.data["ID"],
@@ -50,14 +51,17 @@ export default class Introduce extends React.Component {
 
                 document.title = "하나 영업사원 " + this.state.name + "입니다.";
             } else {
-                history.push(`/fail`);
+                history.push({
+                    pathname: '/fail',
+                    state: {inputCode: this.props.name}
+                })
             }
         }).catch((error) => {
             console.log(error);
         });
     }
 
-    getMarkedStrongTitle(content) {
+    getStrongTitle(content) {
         return (
             <strong>
                 {content}
@@ -104,14 +108,14 @@ export default class Introduce extends React.Component {
                     <div>
                         {/* vertical slide div - 상세정보 */}
                         <div className="detail-introduce-div">
-                            <p>{this.getMarkedStrongTitle('회사')} : 하나금융티아이</p>
-                            <p>{this.getMarkedStrongTitle('부서')} : {this.state.dept_name} </p>
-                            <p>{this.getMarkedStrongTitle('직급')} : {this.state.position} </p>
-                            <p>{this.getMarkedStrongTitle('지역')} : {this.state.region_name}</p>
-                            <p>{this.getMarkedStrongTitle('phone')} : <a href={`tel:${this.state.phone}`}>{this.state.phone}</a></p>
-                            <p>{this.getMarkedStrongTitle('email')} : <a href={`mailto:${this.state.email}?subject=문의입니다`}>{this.state.email}</a></p>
-                            <p>{this.getMarkedStrongTitle('fax')} : {this.state.fax} </p>
-                            <p>{this.getMarkedStrongTitle('sns')} : <a href={`${this.state.sns}`}>{this.state.sns}</a> </p>
+                            <p>{this.getStrongTitle('회사')} : 하나금융티아이</p>
+                            <p>{this.getStrongTitle('부서')} : {this.state.dept_name} </p>
+                            <p>{this.getStrongTitle('직급')} : {this.state.position} </p>
+                            <p>{this.getStrongTitle('지역')} : {this.state.region_name}</p>
+                            <p>{this.getStrongTitle('phone')} : <a href={`tel:${this.state.phone}`}>{this.state.phone}</a></p>
+                            <p>{this.getStrongTitle('email')} : <a href={`mailto:${this.state.email}?subject=문의입니다`}>{this.state.email}</a></p>
+                            <p>{this.getStrongTitle('fax')} : {this.state.fax} </p>
+                            <p>{this.getStrongTitle('sns')} : <a href={`${this.state.sns}`}>{this.state.sns}</a> </p>
                         </div>
                     </div>
 

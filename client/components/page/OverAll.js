@@ -9,12 +9,23 @@ import IntroduceImages from './StaticResource';
 import TopNavigator from '../common/TopNavigator';
 import history from '../../history';
 import resource from './StaticResource';
+import ScrollToTop from 'react-scroll-up';
 import './css/page.css';
 
 export default class OverAll extends React.Component {
 
     constructor(props) {
         super(props);
+
+        this.scrollTopStyle = {
+            position: 'fixed',
+            bottom: 40,
+            right: 30,
+            cursor: 'pointer',
+            transitionDuration: '0.2s',
+            transitionTimingFunction: 'linear',
+            transitionDelay: '0s'
+        };
 
         this.defaultState = {
             loaded: false,
@@ -216,6 +227,10 @@ export default class OverAll extends React.Component {
                     </Grid>
                 </div>
                 <div className="clear-div-4">{''}</div>
+
+                <ScrollToTop style={this.scrollTopStyle} showUnder={250}>
+                    <span className="scroll-top-span">UP</span>
+                </ScrollToTop>
             </div>
         );
     }

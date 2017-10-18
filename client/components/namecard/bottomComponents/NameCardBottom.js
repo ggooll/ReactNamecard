@@ -7,7 +7,6 @@ import './css/BottomItem.css';
 import '../../../global_css/global.css';
 import PopularProduct from './PopularProduct';
 import ExistCustomer from './ExistCustomer';
-import FundCalMenu from './FundCalMenu';
 import ReservationMenu from './ReservationMenu';
 import Chat from './Chat';
 

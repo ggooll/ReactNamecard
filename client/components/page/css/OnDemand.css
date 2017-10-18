@@ -20,15 +20,16 @@
 }
 
 .plus-money-button-div > div, .period-button-div > div {
-    width: 15vw;
-    height: 5vh;
+    width: 17vw;
+    height: 6vh;
     border: 2px solid lightgray;
     background: white;
     float: right;
     margin: 0 0.5vw;
     text-align: center;
-    line-height: 5vh;
+    line-height: 6vh;
     color: gray;
+    font-size: 1.3rem;
 }
 
 .plus-money-button-div > div:active, .period-button-div > div:active {
@@ -47,7 +48,7 @@
     border-bottom: 2px solid #008485;
     height: 6vh;
     line-height: 6vh;
-    margin: 1vh auto;
+    margin: 1vh auto 2vh auto;
 }
 
 .list-input-div input {
@@ -57,7 +58,7 @@
     width: 60vw;
     margin-left: 3vw;
     font-size: 2rem;
-    color: #008485;
+    color: #005A5A;
     border: 0;
     outline: none;
 }
@@ -127,7 +128,7 @@
 }
 
 .top-introduce-frame > div{
-    font-family: 'Hana L';
+    /*font-family: 'Hana L';*/
     height: 20vh;
 }
 

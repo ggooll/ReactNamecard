@@ -32,6 +32,7 @@ export default class Reservation extends React.Component {
             startDate: '',
             availableTime: [],
             start_date: '',
+            authUser: false
         };
         this.state = this.defaultState;
         this.handleChange = this.handleChange.bind(this);
@@ -51,7 +52,8 @@ export default class Reservation extends React.Component {
                 if(result.data !== false){
                     this.setState({
                         name: result.data[0]['NAME'],
-                        phone: result.data[0]['PHONE']
+                        phone: result.data[0]['PHONE'],
+                        authUser: true
                     });
                 }
             }).catch((error) => {
@@ -193,7 +195,13 @@ export default class Reservation extends React.Component {
 
         axios.post(`/api/reservation/request`, {data: param}).then((result) => {
             window.alert(result.data.msg);
-            let empCode = location.pathname.split('/')[1]
+            // 성공했다 아니다 알릴 것!
+            if(result.data.msg === 'success'){
+                window.alert('예약성공 \n 고객님이 남겨주신 연락처로 연락드리겠습니다.');
+            } else{
+                window.alert('예약에 실패했습니다.');
+            }
+            let empCode = location.pathname.split('/')[1];
             history.push(`/${empCode}/`);
         }).catch((error) => {
             console.log(error);
@@ -205,7 +213,7 @@ export default class Reservation extends React.Component {
             <div>
                 <div className="clear-div-3"/>
                 <div className="reservation-input-div">
-                    { this.state.name === '' ?
+                    { this.state.authUser === false ?
                         <input type="text" name="name"
                                value={this.state.name}
                                placeholder="이름"
@@ -215,7 +223,7 @@ export default class Reservation extends React.Component {
                 </div>
                 <div className="clear-div-3"/>
                 <div className="reservation-input-div">
-                    { this.state.phone === '' ?
+                    { this.state.authUser === false ?
                         <input type="text" name="phone"
                                value={this.state.phone}
                                placeholder="전화번호"

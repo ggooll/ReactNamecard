@@ -3,10 +3,7 @@ import React from 'react';
 import './css/BottomItem.css';
 import './css/NameCardBottom.css';
 import history from '../../../history';
-import AuthExistCustomer from '../../modal/AuthExistModal';
-import Rodal from 'rodal';
 import 'rodal/lib/rodal.css';
-import axios from 'axios';
 
 export default class ReservationMenu extends React.Component {
 
@@ -21,7 +18,6 @@ export default class ReservationMenu extends React.Component {
 
         this.state = this.defaultState;
     }
-
 
     handleLinkMenu(linkUri) {
         history.push(`/${this.state.empCode}/${linkUri}`);

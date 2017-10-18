@@ -12,8 +12,6 @@ export default class PopularProduct extends React.Component {
     constructor(props, context) {
         super(props, context);
 
-        // 인증을 했고, 기존고객메뉴를 누른경우 redirect
-        // 인증을 완료 후 redirect
         this.state = {
             empCode: this.props.name,
             downVisible: 'down-menu',
@@ -64,14 +62,7 @@ export default class PopularProduct extends React.Component {
                         </span>
                     </div>
 
-                    <div className="drop-down-item" onClick={this.handleLinkMenu.bind(this, 'fundCalculator')}>
-                        <span className="down-menu-span">
-                            <i className="fa fa-angle-right" aria-hidden="true"/>{'돈 계산기'}
-                        </span>
-                    </div>
-
                 </div>
-
             </div>
         );
     }

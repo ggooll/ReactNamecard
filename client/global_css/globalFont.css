@@ -1,13 +1,5 @@
 @charset "utf-8";
 
-/* 청소년체 */
-@font-face {
-    font-family: 'Youth';
-    font-style: normal;
-    font-weight: 400;
-    src: url('https://cdn.jsdelivr.net/korean-webfonts/1/orgs/othrs/kywa/Youth/Youth.woff2') format('woff2'), url('https://cdn.jsdelivr.net/korean-webfonts/1/orgs/othrs/kywa/Youth/Youth.woff') format('woff');
-}
-
 @font-face {
     font-family: 'Nanum Barun Gothic';
     font-style: normal;
@@ -23,7 +15,7 @@
 }
 
 :global(*) {
-    /*font-family: 'Nanum Barun Gothic';*/
+    font-family: 'Nanum Barun Gothic';
     /*font-family: 'Youth', 'Godo';*/
-    font-family: 'Noto Sans', sans-serif;
+    /*font-family: 'Noto Sans', sans-serif;*/
 }

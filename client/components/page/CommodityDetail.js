@@ -7,6 +7,7 @@ import axios from 'axios';
 import history from '../../history';
 import TopNavigator from '../common/TopNavigator';
 import resource from './StaticResource';
+import Loader from 'react-loader';
 import async from 'async';
 import './css/Commodities.css';
 
@@ -37,7 +38,8 @@ export default class CommodityDetail extends React.Component {
             },
             option: [],
             processedInfo: {},
-            special: []
+            special: [],
+            loaded : false
         };
         this.state = this.defaultState;
     }
@@ -112,7 +114,8 @@ export default class CommodityDetail extends React.Component {
                 category: category,
                 option: option,
                 processedInfo: processedInfo,
-                special: special
+                special: special,
+                loaded : true
             });
             window.scrollTo(0, 1);
         });
@@ -150,137 +153,227 @@ export default class CommodityDetail extends React.Component {
         );
     }
 
+    renderSavingsType(){
+        // S - 정액적립식, F - 자유적립식
+        // 적금의 유형 파악 S, F인경우 둘다
+        // options를 뒤지며 둘다 있는경우..?
+        let sType = 0, fType = 0;
+        for (let i = 0; i < this.state.option.length; i++) {
+            if (this.state.option[i]['RSRV_TYPE'] === 'S') {
+                sType++;
+            } else {
+                fType++;
+            }
+        }
+
+        return (
+            <div className="savings-type-div">
+                {sType !== 0 ? <span className="type-title-savings">{'정액적립식'}</span> : undefined}
+                {fType !== 0 ? <span className="type-title-savings">{'자유적립식'}</span> : undefined}
+            </div>
+        );
+    }
+
+
+    renderSavingsRates(){
+        let sOption = [], fOption = [];
+        for (let i = 0; i < this.state.option.length; i++) {
+            let rate = {
+                'SAVE_TRM' : this.state.option[i]['SAVE_TRM'],
+                'INTR_RATE' : this.state.option[i]['INTR_RATE']
+            };
+
+            if (this.state.option[i]['RSRV_TYPE'] === 'S') {
+                sOption.push(rate);
+            } else {
+                fOption.push(rate);
+            }
+        }
+
+        return(
+            <div className="commodity-detail-sub-div">
+                <div><i className="fa fa-circle fa-fw" aria-hidden="true" /> {' 개월별 기본금리'} <hr className="detail-hr"/></div>
+
+                {/* S */}
+                {sOption.length !== 0 ?
+                    <div>
+                        <span className="rsrv-type-span">{'정액적립식'}</span>
+                        <table className="commodity-detail-table">
+                            <thead>
+                            <tr>
+                                <td><strong>{'개월'}</strong></td>
+                                <td><strong>{'금리'}</strong></td>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            {sOption.map((option, index) => {
+                                return (
+                                    <tr key={index}>
+                                        <td>{option['SAVE_TRM']}</td>
+                                        <td>{`${resource.getRoundThirdDecimalPlace(option['INTR_RATE'])} %`}</td>
+                                    </tr>
+                                );
+                            })}
+                            </tbody>
+                        </table>
+                    </div>
+                    : undefined}
+                {/* F */}
+                {fOption.length !== 0 ?
+                    <div>
+                        <span className="rsrv-type-span">{'자유적립식'}</span>
+                        <table className="commodity-detail-table">
+                            <thead>
+                            <tr>
+                                <td><strong>{'개월'}</strong></td>
+                                <td><strong>{'금리'}</strong></td>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            {fOption.map((option, index) => {
+                                return (
+                                    <tr key={index}>
+                                        <td>{option['SAVE_TRM']}</td>
+                                        <td>{`${resource.getRoundThirdDecimalPlace(option['INTR_RATE'])} %`}</td>
+                                    </tr>
+                                );
+                            })}
+                            </tbody>
+                        </table>
+                    </div>
+                    : undefined}
+            </div>
+        );
+
+    }
+
     render() {
         let bankIndex = resource.bankCodes.indexOf(this.state.commodity['FIN_CO_NO']);
-
         return (
             <div className="item-whole-div">
                 <TopNavigator title={'상품 상세 보기'}/>
-                <div className="commodity-detail-main-title-div">
 
-                    <div className="commodity-detail-bank-title">
-                        {this.state.commodity['KOR_CO_NM']}
-                    </div>
-                    <div className="commodity-detail-product-title">
-                        {`${this.state.commodity['FIN_PRDT_NM']}`}
-                    </div>
+                <Loader loaded={this.state.loaded} color="#008485" length={10} width={1} radius={10}
+                        shadow={true} hwaccel={true} top="50%">
 
-                    {/*<div className="clear-div-3"/>*/}
-                    {/*<div className="title-min-money">*/}
-                        {/*{`${this.state.category === 'savings_info' ? '월 ' : ''}*/}
-                        {/*최소 ${this.state.processedInfo['MIN_MONEY'] === null ?*/}
-                        {/*'1,000원' : (resource.moneyWithComma(this.state.processedInfo['MIN_MONEY']) + "원")}부터 ~`}*/}
-                    {/*</div>*/}
-                    {/*<div className="title-max-money">*/}
-                        {/*{`최대 ${this.state.processedInfo['MAX_MONEY'] === null ?*/}
-                        {/*'제한없이' : (resource.moneyWithComma(this.state.processedInfo['MAX_MONEY']) + "원까지")}*/}
-                        {/*${this.state.category === 'savings_info' ? '적립' : '예치'}가능`}*/}
-                    {/*</div>*/}
-                    {/*<div className="title-intr-type">*/}
-                        {/*{`이 상품은*/}
-                        {/*${this.state.commodity['INTR_RATE_TYPE'] !== 'M' ? '단리' : '복리'}*/}
-                         {/*방식입니다.`}*/}
-                    {/*</div>*/}
+                    <div className="commodity-detail-main-title-div">
+                        <div className="commodity-detail-bank-title">
+                            <span>{this.state.commodity['KOR_CO_NM']}</span>
+                            {this.state.category === 'deposit_info' ?
+                                <span className="type-title-deposit">{'예금'}</span> : undefined}
+                            {this.state.category ==='savings_info' ?
+                                this.renderSavingsType() : undefined}
+                        </div>
+                        <div className="commodity-detail-product-title">
+                            {`${this.state.commodity['FIN_PRDT_NM']}`}
+                        </div>
 
-
-                    <div className="item-section-div commodity-section">
-                        <div className="commodity-detail-wrap">
-                            <div className="commodity-detail-sub-div">
-                                <div><i className="fa fa-circle fa-fw" aria-hidden="true" />{' 가입대상'}
-                                <hr className="detail-hr"/>
-                                </div>
-
-                                <div className="detail-join-member-div">
-                                    {this.state.commodity['JOIN_MEMBER'].split('\n').map((item, key) => {
-                                        if (item !== '')
-                                            return <span key={key}>{item}<br/></span>
-                                    })}
-                                </div>
-                            </div>
-
-                            {/* 적금의경우 자유적립식과 정액적립식이 같이나오는 경우가 존재한다. */}
-                            <div className="commodity-detail-sub-div">
-                                <div><i className="fa fa-circle fa-fw" aria-hidden="true" /> {' 개월별 기본금리'} <hr className="detail-hr"/></div>
-                                <table className="commodity-detail-table">
-                                    <thead>
-                                    <tr>
-                                        <td><strong>{'개월'}</strong></td>
-                                        <td><strong>{'금리'}</strong></td>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {this.state.option.length !== 0 ? this.state.option.map((option, index) => {
-                                        return (
-                                            <tr key={index}>
-                                                <td>{option['SAVE_TRM']}</td>
-                                                <td>{`${resource.getRoundThirdDecimalPlace(option['INTR_RATE'])} %`}</td>
-                                            </tr>
-                                        );
-                                    }) : undefined}
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            {this.state.category === 'savings_info' ?
-                                this.renderMainSubIntro('적금적립방식', this.state.processedInfo['RSRV_TYPE'] === 'F' ? '자유적립식' : '정액적립식')
-                                : undefined}
-                            {this.renderMainSubIntro('이자계산방법', this.state.commodity['INTR_RATE_TYPE'] !== 'M' ? '단리' : '복리')}
-                            {this.renderMainSubIntro('최소금액', this.state.processedInfo['MIN_MONEY'] === null ?
-                                '1,000원' : (resource.moneyWithComma(this.state.processedInfo['MIN_MONEY']) + "원"))}
-                            {this.renderMainSubIntro('최대금액', this.state.processedInfo['MAX_MONEY'] === null ?
-                                '제한없음' : (resource.moneyWithComma(this.state.processedInfo['MAX_MONEY']) + "원"))}
-
-
-                            {this.state.special.length !== 0 ?
+                        <div className="item-section-div commodity-section">
+                            <div className="commodity-detail-wrap">
                                 <div className="commodity-detail-sub-div">
-                                    <div> <i className="fa fa-circle fa-fw" aria-hidden="true" /> {' 우대조건'} <hr className="detail-hr"/></div>
-                                    <table className="commodity-detail-table special-table">
-                                        <thead>
-                                        <tr>
-                                            <td><strong>{'조건'}</strong></td>
-                                            <td><strong>{'추가금리'}</strong></td>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        {this.state.special.map((special, index) => {
-                                            return (
-                                                <tr key={index}>
-                                                    <td>{special['SPECIAL_CONDITION']}</td>
-                                                    <td>{`+ ${special['SPECIAL_INTR']} %`}</td>
-                                                </tr>
-                                            );
+                                    <div><i className="fa fa-circle fa-fw" aria-hidden="true" />{' 가입대상'}
+                                    <hr className="detail-hr"/>
+                                    </div>
+
+                                    <div className="detail-join-member-div">
+                                        {this.state.commodity['JOIN_MEMBER'].split('\n').map((item, key) => {
+                                            if (item !== '')
+                                                return <span key={key}>{item}<br/></span>
                                         })}
-                                        </tbody>
-                                        <tfoot>
-                                        <tr>
-                                            <td colSpan="2">
-                                                <strong>{`이 상품의 최대금리는 `}
-                                                    <mark>{resource.getRoundThirdDecimalPlace(this.state.special[0]['MAX_INTR'])}</mark>
-                                                    {`%입니다`}</strong>
-                                            </td>
-                                        </tr>
-                                        </tfoot>
-                                    </table>
+                                    </div>
                                 </div>
-                                : undefined
-                            }
 
-                            <div className="commodity-detail-sub-div">
-                                <div><i className="fa fa-circle fa-fw" aria-hidden="true" /> {' 가입경로'} <hr className="detail-hr"/></div>
-                                <div className="detail-join-member-div">
-                                    {this.state.commodity['JOIN_WAY']}
+                                {/* 적금의경우 자유적립식과 정액적립식이 같이나오는 경우가 존재한다. */}
+                                {/* 예금인 경우의 금리 */}
+                                {this.state.category === 'deposit_info' ?
+                                    <div className="commodity-detail-sub-div">
+                                        <div><i className="fa fa-circle fa-fw" aria-hidden="true" /> {' 개월별 기본금리'} <hr className="detail-hr"/></div>
+                                        <table className="commodity-detail-table">
+                                            <thead>
+                                            <tr>
+                                                <td><strong>{'개월'}</strong></td>
+                                                <td><strong>{'금리'}</strong></td>
+                                            </tr>
+                                            </thead>
+
+                                            <tbody>
+                                            {this.state.option.length !== 0 ? this.state.option.map((option, index) => {
+                                                return (
+                                                    <tr key={index}>
+                                                        <td>{option['SAVE_TRM']}</td>
+                                                        <td>{`${resource.getRoundThirdDecimalPlace(option['INTR_RATE'])} %`}</td>
+                                                    </tr>
+                                                );
+                                            }) : undefined}
+                                            </tbody>
+                                        </table>
+                                    </div> : undefined}
+
+                                {this.state.category === 'savings_info' ?
+                                    this.renderSavingsRates()
+                                : undefined}
+
+                                {/* 적금인 경우의 금리 (자유 / 정액) */}
+                                {this.state.category === 'savings_info' ?
+                                    this.renderMainSubIntro('적금적립방식', this.state.processedInfo['RSRV_TYPE'] === 'F' ? '자유적립식' : '정액적립식')
+                                    : undefined}
+                                {this.renderMainSubIntro('이자계산방법', this.state.commodity['INTR_RATE_TYPE'] !== 'M' ? '단리' : '복리')}
+                                {this.renderMainSubIntro('최소금액', this.state.processedInfo['MIN_MONEY'] === null ?
+                                    '1,000원' : (resource.moneyWithComma(this.state.processedInfo['MIN_MONEY']) + "원"))}
+                                {this.renderMainSubIntro('최대금액', this.state.processedInfo['MAX_MONEY'] === null ?
+                                    '제한없음' : (resource.moneyWithComma(this.state.processedInfo['MAX_MONEY']) + "원"))}
+
+                                {this.state.special.length !== 0 ?
+                                    <div className="commodity-detail-sub-div">
+                                        <div> <i className="fa fa-circle fa-fw" aria-hidden="true" /> {' 우대조건'} <hr className="detail-hr"/></div>
+                                        <table className="commodity-detail-table special-table">
+                                            <thead>
+                                            <tr>
+                                                <td><strong>{'조건'}</strong></td>
+                                                <td><strong>{'추가금리'}</strong></td>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {this.state.special.map((special, index) => {
+                                                return (
+                                                    <tr key={index}>
+                                                        <td>{special['SPECIAL_CONDITION']}</td>
+                                                        <td>{`+ ${special['SPECIAL_INTR']} %`}</td>
+                                                    </tr>
+                                                );
+                                            })}
+                                            </tbody>
+                                            <tfoot>
+                                            <tr>
+                                                <td colSpan="2">
+                                                    <strong>{`이 상품의 최대금리는 `}
+                                                        <mark>{resource.getRoundThirdDecimalPlace(this.state.special[0]['MAX_INTR'])}</mark>
+                                                        {`%입니다`}</strong>
+                                                </td>
+                                            </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                    : undefined
+                                }
+
+                                <div className="commodity-detail-sub-div">
+                                    <div><i className="fa fa-circle fa-fw" aria-hidden="true" /> {' 가입경로'} <hr className="detail-hr"/></div>
+                                    <div className="detail-join-member-div">
+                                        {this.state.commodity['JOIN_WAY']}
+                                    </div>
                                 </div>
+                                {this.renderSplitLineIntro(' 만기 후 처리', this.state.commodity['MTRT_INT'])}
+                                {this.renderSplitLineIntro(' 기타 유의사항', this.state.commodity['ETC_NOTE'])}
+
+                                {/*{this.renderSimpleIntro('가입제한', this.state.commodity['JOIN_DENY'] === 1 ? '제한없음' : '제한있음')}*/}
+                                {/*{this.renderSimpleIntro('시작일', this.state.commodity['DCLS_STRT_DAY'])}*/}
                             </div>
-
-                            {this.renderSplitLineIntro(' 만기 후 처리', this.state.commodity['MTRT_INT'])}
-                            {this.renderSplitLineIntro(' 기타 유의사항', this.state.commodity['ETC_NOTE'])}
-
-                            {/*{this.renderSimpleIntro('가입제한', this.state.commodity['JOIN_DENY'] === 1 ? '제한없음' : '제한있음')}*/}
-                            {/*{this.renderSimpleIntro('시작일', this.state.commodity['DCLS_STRT_DAY'])}*/}
-
                         </div>
                     </div>
-                </div>
+                </Loader>
             </div>
         );
     }
