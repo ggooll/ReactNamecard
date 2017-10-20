@@ -16,19 +16,19 @@ import rank from './routes/rank';
 
 import flash from 'connect-flash';
 import path from 'path';
-import fs from 'fs';
-import https from 'https';
+// import fs from 'fs';
+// import https from 'https';
 
-const sslPath = path.join(__dirname, '/../server/sslcert');
-const certOption = {
-    key: fs.readFileSync(sslPath + '/server.key', 'utf8'),
-    cert: fs.readFileSync(sslPath + '/server.crt', 'utf8')
-};
+// const sslPath = path.join(__dirname, '/../server/sslcert');
+// const certOption = {
+//     key: fs.readFileSync(sslPath + '/server.key', 'utf8'),
+//     cert: fs.readFileSync(sslPath + '/server.crt', 'utf8')
+// };
 
 const app = express();
 const port = 3000;
 const devPort = 3001;
-const sslPort = 3002;
+// const sslPort = 3002;
 const db = require('oracledb-autoreconnect');
 db.oracledb.maxRows = 300;
 const dbConfig = require('./database/config');
@@ -93,7 +93,8 @@ app.use('/api/rank', rank);
 app.use('/images', express.static(path.join(__dirname, '/../images')));
 app.use('/:name', express.static(path.join(__dirname, '/../public')));
 
-app.get("*", function (req, res) {
+
+app.get("*", function(req, res) {
     let empCode = req.path.split('/')[1];
     if (empCode !== undefined) {
         res.redirect(`/${empCode}`);
@@ -102,28 +103,47 @@ app.get("*", function (req, res) {
         res.redirect('/fail');
     }
 });
-https.createServer(certOption, app).listen(sslPort, function () {
-    console.log('Express HTTPS server listening on port ' + sslPort);
+import http from 'http';
+http.createServer(app).listen(port, function () {
+    console.log('Express HTTP server listening on port ' + port);
 });
+
+
+// http.createServer(app).listen(port, function () {
+//     console.log('Express HTTP server listening on port ' + port);
+// });
+
+// app.get("*", function (req, res) {
+//     let empCode = req.path.split('/')[1];
+//     if (empCode !== undefined) {
+//         res.redirect(`/${empCode}`);
+//     } else {
+//         //
+//         res.redirect('/fail');
+//     }
+// });
+// https.createServer(certOption, app).listen(sslPort, function () {
+//     console.log('Express HTTPS server listening on port ' + sslPort);
+// });
 
 /**
  * Secondary express - http
  * @type {*}
  */
-const httpApp = express();
-import http from 'http';
-httpApp.get('*', function (req, res) {
-    let empCode = req.path.split('/')[1];
-    let host = req.get('Host');
-    host = host.replace(/:\d+$/, ":" + sslPort);
-
-    if (empCode !== undefined) {
-        res.redirect(`https://${host}/${empCode}`);
-    } else {
-        //
-        res.redirect('/fail');
-    }
-});
-http.createServer(httpApp).listen(port, function () {
-    console.log('Express HTTP server listening on port ' + port);
-});
+// const httpApp = express();
+// import http from 'http';
+// httpApp.get('*', function (req, res) {
+//     let empCode = req.path.split('/')[1];
+//     let host = req.get('Host');
+//     host = host.replace(/:\d+$/, ":" + sslPort);
+//
+//     if (empCode !== undefined) {
+//         res.redirect(`https://${host}/${empCode}`);
+//     } else {
+//         //
+//         res.redirect('/fail');
+//     }
+// });
+// http.createServer(httpApp).listen(port, function () {
+//     console.log('Express HTTP server listening on port ' + port);
+// });
