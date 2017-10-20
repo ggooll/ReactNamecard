@@ -22,6 +22,7 @@ export default class AuthExistModal extends React.Component {
             inputNumber: '',
             refSaltedNumber: '',
             authTimer: 'hide-div',
+            userNo: ''
         };
 
         this.state = this.defaultState;
@@ -69,10 +70,12 @@ export default class AuthExistModal extends React.Component {
         axios.post('/api/auth/existCustomer', {'phone': component.state.phone}).then((promiseNumber) => {
             if (promiseNumber.data !== false) {
                 window.alert('요청하신 번호로 인증번호가 발송되었습니다');
+                console.log(promiseNumber.data.authUser);
                 component.setState({
                     refSaltedNumber: promiseNumber.data.saltedNum,
                     checkSMSMessageDiv: '',
-                    checkPhoneDiv: 'hide-div'
+                    checkPhoneDiv: 'hide-div',
+                    userNo: promiseNumber.data.authUser
                 });
             } else {
                 window.alert('조회하신 정보가 없습니다!');
@@ -94,7 +97,9 @@ export default class AuthExistModal extends React.Component {
         let inputAuthNumber = this.state.inputNumber;
 
         axios.post('/api/auth/authNumber', {
-            inputNum: inputAuthNumber, refSaltedNumber: this.state.refSaltedNumber
+            inputNum: inputAuthNumber,
+            refSaltedNumber: this.state.refSaltedNumber,
+            userNo: this.state.userNo
         }).then((success) => {
             if (success.data) {
                 window.history.pushState('forward', null, './');

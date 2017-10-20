@@ -28,14 +28,14 @@ router.post('/existCustomer', (req, res) => {
     oracledb.query(statement, params).then(function (dbResult) {
         let auth = oracledb.transformToAssociated(dbResult);
         if (auth.length > 0) {
-            // session에 customer와, saltedNum 저장 후
+            // session에 customerNo와, saltedNum 저장 후
             // 문자로 인증번호 보내고 saltedNum을 보냄
-            session.authUser = auth[0];
             let randNum = numberGenerator.getRandomNumber();
-            console.log('generate : ' + randNum);
             let saltedNum = bcrypt.hashSync(randNum, salt);
+            console.log('generate : ' + randNum);
             res.json({
-                saltedNum: saltedNum
+                saltedNum: saltedNum,
+                authUser: auth[0]["NO"]
             });
         } else {
             console.log('false!');
@@ -47,6 +47,7 @@ router.post('/existCustomer', (req, res) => {
 router.post('/authNumber', (req, res) => {
     let inputNum = req.body.inputNum;
     let refSaltedNum = req.body.refSaltedNumber;
+    let authUserNo = req.body.userNo;
     // 두 번호 검증
     let hashed = bcrypt.hashSync(inputNum, salt);
 
@@ -56,18 +57,14 @@ router.post('/authNumber', (req, res) => {
         // 인증 성공
         const session = req.session;
         session.refSalt = refSaltedNum;
-        res.cookie('user', req.session.authUser["NO"]);
+        session.authUser = authUserNo;
+        res.cookie('user', authUserNo);
         res.send(true);
     }
 });
 
 router.post('/isExistSession', (req, res) => {
-    const session = req.session;
-    // let sessSalt = session.refSalt;
-    let authUser = session.authUser;
-    console.log(authUser);
-
-    // res.send(true);
+    let authUser = req.session.authUser;
     // if (authUser !== undefined && sessSalt !== undefined) {
     if (authUser !== undefined) {
         // 세션의 phone + bcrypt와 refSalt를 추가로 검사할 수 있다.

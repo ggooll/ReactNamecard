@@ -68,6 +68,7 @@ export default class BestCommodities extends React.Component {
                 loaded: true
             })
         });
+        window.scrollTo(0, 1);
     }
 
     render() {

@@ -38,7 +38,7 @@ export default class ShortCut extends React.Component {
                         </li>
                         <li>
                             <CopyToClipboard
-                                text={this.empUrl}>
+                                text={`영업사원 ${this.props.name}의 모바일 명함입니다.\n${this.empUrl}`}>
                                 <a onClick={this.handleClickClip}><img src="/images/shareIcon.png"/></a>
                             </CopyToClipboard>
                         </li>

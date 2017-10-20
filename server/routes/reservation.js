@@ -50,7 +50,7 @@ router.get('/check/:empCode/:day/:type', (req, res) => {
 
     oracledb.query(statement, params).then(function (dbResult) {
         let list = oracledb.transformToAssociated(dbResult);
-        let result = temp(list, type);
+        let result = getAvailableTime(list, type);
         res.send(result);
     });
 
@@ -61,9 +61,7 @@ router.post('/user', (req, res) => {
     if (customerSession === undefined) {
         res.send(false);
     } else {
-        //
-        let customerNo = customerSession["NO"];
-        let params = [customerNo];
+        let params = [customerSession];
         let statement = `select name, phone from customer where no=:customerNo`;
 
         oracledb.query(statement, params).then(function (dbResult) {
@@ -131,7 +129,7 @@ router.post('/request', (req, res) => {
                             REG_DATE FROM CUSTOMER WHERE PHONE = :phone`;
                 oracledb.query(statement, params).then(function (dbResult) {
                     let auth = oracledb.transformToAssociated(dbResult);
-                    req.session.authUser = auth[0];
+                    req.session.authUser = auth[0]["NO"];
                     callback(null);
                 });
             } else {
@@ -141,7 +139,7 @@ router.post('/request', (req, res) => {
         },
 
         function (callback) {
-            let customerNo = req.session.authUser["NO"];
+            let customerNo = req.session.authUser;
             let params = [empCode, customerNo, name, phone, location, type, msg, t_date, t_date, range, comments];
             let statement = `INSERT INTO RESERVATION
                     VALUES(RESERVATION_SEQ.NEXTVAL, (select no from employee where code=:empCode), :customerNo, :name, :phone, :location, :type, :msg, 
@@ -168,13 +166,13 @@ router.post('/request', (req, res) => {
             console.log(err);
             res.send({msg: "fail"});
         }
-        res.cookie('user', req.session.authUser["NO"]);
+        res.cookie('user', req.session.authUser);
         res.send({msg: "success"});
     });
 
 });
 
-function temp(dummy, type) {
+function getAvailableTime(dummy, type) {
     let result = [];
     let data =
         [{time: "10:00", available: true}, {time: "10:30", available: true},

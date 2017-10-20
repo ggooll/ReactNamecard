@@ -6928,9 +6928,9 @@ var commoditiesCategoryTitle = ['예금', '적금'];
 var commoditiesCategoryName = ['deposit_info', 'savings_info'];
 var commoditiesCategoryOption = ['deposit_options', 'savings_options'];
 
-var bankCodes = ['', '0010020', '0014674', '0010019', '0010022', '0010024', '0010927', '0010017', '0010006', '0010026', '0011625', '0010016', '0010030', '0014807', '0015130', '0013175', '0010001', '0010002', '0013909'];
+var bankCodes = ['', '0013909', '0010020', '0014674', '0010019', '0010022', '0010024', '0010927', '0010017', '0010006', '0010026', '0011625', '0010016', '0010030', '0014807', '0015130', '0013175', '0010001', '0010002'];
 
-var bankNames = ['전체', '제주은행', '케이뱅크은행', '광주은행', '전북은행', '경남은행', '국민은행', '부산은행', '한국씨티은행', '중소기업은행', '신한은행', '대구은행', '한국산업은행', '수협은행', '한국카카오은행', '농협은행', '우리은행', '한국스탠다드차타드은행', 'KEB하나은행'];
+var bankNames = ['전체', 'KEB하나은행', '제주은행', '케이뱅크은행', '광주은행', '전북은행', '경남은행', '국민은행', '부산은행', '한국씨티은행', '중소기업은행', '신한은행', '대구은행', '한국산업은행', '수협은행', '한국카카오은행', '농협은행', '우리은행', '한국스탠다드차타드은행'];
 
 var bankMainColor = ['', '#0087CF', '#EE5B6E', '#013174', '#013174', '#D81921', '#FDCD04', '#D81921', '#020065', '#0099DC', '#0087CF', '#0A3D8E', '#0D488A', '#0171BB', '#FFE100', '#1FB25A', '#0083CB', '#0071AB', '#008485'];
 
@@ -61926,7 +61926,7 @@ var Introduce = function (_React$Component) {
                             )
                         ),
                         _react2.default.createElement('div', { className: 'clear-div-3' }),
-                        _react2.default.createElement(_ShortCut2.default, { phone: this.state.phone, email: this.state.email, sns: this.state.sns, clip: this.props.name }),
+                        _react2.default.createElement(_ShortCut2.default, { name: this.state.name, phone: this.state.phone, email: this.state.email, sns: this.state.sns, clip: this.props.name }),
                         _react2.default.createElement('div', { className: 'clear-div-2' })
                     ),
                     _react2.default.createElement(
@@ -64642,7 +64642,7 @@ var ShortCut = function (_React$Component) {
                             _react2.default.createElement(
                                 _reactCopyToClipboard.CopyToClipboard,
                                 {
-                                    text: this.empUrl },
+                                    text: '\uC601\uC5C5\uC0AC\uC6D0 ' + this.props.name + '\uC758 \uBAA8\uBC14\uC77C \uBA85\uD568\uC785\uB2C8\uB2E4.\n' + this.empUrl },
                                 _react2.default.createElement(
                                     'a',
                                     { onClick: this.handleClickClip },
@@ -66631,6 +66631,7 @@ var ExistCustomer = function (_React$Component) {
 
             // localStorage말고 세션을 검사하게끔 한다.
             _axios2.default.post('/api/auth/isExistSession', {}).then(function (exist) {
+                console.log(exist);
                 if (exist.data !== false) {
                     _this2.setState({
                         downVisible: _this2.state.downVisible === 'down-menu' ? 'down-menu visible' : 'down-menu'
@@ -66788,7 +66789,8 @@ var AuthExistModal = function (_React$Component) {
             checkSMSMessageDiv: 'hide-div',
             inputNumber: '',
             refSaltedNumber: '',
-            authTimer: 'hide-div'
+            authTimer: 'hide-div',
+            userNo: ''
         };
 
         _this.state = _this.defaultState;
@@ -66843,10 +66845,12 @@ var AuthExistModal = function (_React$Component) {
             _axios2.default.post('/api/auth/existCustomer', { 'phone': component.state.phone }).then(function (promiseNumber) {
                 if (promiseNumber.data !== false) {
                     window.alert('요청하신 번호로 인증번호가 발송되었습니다');
+                    console.log(promiseNumber.data.authUser);
                     component.setState({
                         refSaltedNumber: promiseNumber.data.saltedNum,
                         checkSMSMessageDiv: '',
-                        checkPhoneDiv: 'hide-div'
+                        checkPhoneDiv: 'hide-div',
+                        userNo: promiseNumber.data.authUser
                     });
                 } else {
                     window.alert('조회하신 정보가 없습니다!');
@@ -66869,7 +66873,9 @@ var AuthExistModal = function (_React$Component) {
             var inputAuthNumber = this.state.inputNumber;
 
             _axios2.default.post('/api/auth/authNumber', {
-                inputNum: inputAuthNumber, refSaltedNumber: this.state.refSaltedNumber
+                inputNum: inputAuthNumber,
+                refSaltedNumber: this.state.refSaltedNumber,
+                userNo: this.state.userNo
             }).then(function (success) {
                 if (success.data) {
                     window.history.pushState('forward', null, './');
@@ -68920,7 +68926,6 @@ var OnDemand = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-
             return _react2.default.createElement(
                 'div',
                 { className: 'item-whole-div' },
@@ -82921,7 +82926,7 @@ exports = module.exports = __webpack_require__(13)(undefined);
 
 
 // module
-exports.push([module.i, ".ondemand-whole-container {\n    background-color: #f9f9f9;\n}\n\n.result-user-input-div {\n    height: auto;\n    min-height: 20vh;\n    margin: 0;\n    width: 80vw;\n}\n\n.result-param-title {\n    height: 5vh;\n    line-height: 5vh;\n    font-size: 1.75rem;\n    text-align: center;\n}\n\n.result-param-div {\n    height: 5vh;\n    line-height: 5vh;\n    width: 90vw;\n    margin: 0 5vw;\n    background-color: white;\n    border-bottom: 1px solid lightgray;\n}\n\n.result-param-div div {\n    display: inline-block;\n    width: 25vw;\n    text-align: center;\n    color: #0c7d75;\n    margin-left: 2vw;\n    font-size: 1.3rem;\n}\n\n.result-param-div span {\n    display: inline-block;\n    float: right;\n    margin-right: 7vw;\n    width: 50vw;\n    text-align: right;\n    font-size: 1.3rem;\n}\n\n.commodities-result-title {\n    height: 7vh;\n    line-height: 7vh;\n    font-size: 1.5rem;\n    text-align: center;\n    background-color: whitesmoke;\n}\n\n.result-sort-menu-div {\n    height: 7vh;\n    line-height: 7vh;\n    font-size: 1.5rem;\n    text-align: center;\n    background-color: mediumpurple;\n}\n\n.processed-commodity-intro {\n    margin-top: 1.5vh;\n    margin-bottom: 1.5vh;\n    padding-top: 1vh;\n    padding-bottom: 1vh;\n}\n\n.show-grid-top {\n    height: 7vh;\n    line-height: 7vh;\n    background-color: white;\n    width: 100%;\n    border-bottom: 3px solid palevioletred;\n    margin-bottom: 1vh;\n}\n\n.show-grid-top img {\n    height: auto;\n    width: 20vw;\n}\n\n.show-grid-top span {\n    float: right;\n    font-size: 1.3rem;\n    color: gray;\n}\n\n.grid-mid-title {\n    height: 7vh;\n    line-height: 7vh;\n}\n\n.intr-title {\n    display: inline-block;\n    float: left;\n    text-align: left;\n    height: 100%;\n}\n\n.final-money-title {\n    display: inline-block;\n    float: right;\n    text-align: right;\n    padding-right: 1vw;\n    height: 100%;\n}\n\n.grid-mid-section {\n    height: 6vh;\n    line-height: 6vh;\n}\n\n.grid-mid-left {\n    display: inline-block;\n    width: 30vw;\n    margin-top: -10px;\n}\n\n.grid-mid-right {\n    display: inline-block;\n    float: right;\n}\n\n.min-intr-rate {\n    color: royalblue;\n    font-size: 1.7rem !important;\n    display: inline-block;\n    margin-right: 2vw;\n    line-height: 7vh;\n}\n\n.rate-numbering {\n    font-size: 1.7rem !important;\n}\n\n.max-intr-rate {\n    color: #cb2243;\n    font-size: 1.7rem !important;\n    display: inline-block;\n    margin-right: 2vw;\n    line-height: 7vh;\n}\n\n.show-grid-bottom {\n    height: 6vh;\n    line-height: 6vh;\n    font-size: 1.3rem;\n    text-align: center;\n    background-color: #41a5ce;\n    color: white;\n    width: 100%;\n    margin-top: 2vw;\n}\n\n.result-title {\n    font-weight: bold;\n}\n\n.sort-select-div {\n    margin: 0 auto;\n    text-align: center;\n}\n\n.sort-select-div > select {\n    width: 40vw;\n    height: 6vh;\n    padding: 6px 12px;\n    color: #555;\n    background-color: #ffffff;\n    border: 1px solid #ccc;\n    border-radius: 4px;\n    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);\n    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);\n    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;\n    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;\n    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;\n    margin: 0 3vw;\n    font-size: 1.2rem;\n}\n\n.grid-detail-div {\n    background: white;\n    border: 1px solid lightgray;\n    margin-top: 0;\n    width: 100%;\n    max-height: 0;\n    overflow: hidden;\n    transition: max-height 0.5s ease;\n}\n\n.grid-detail-div > *.non-visible {\n    max-height: 0;\n    visibility: hidden;\n    display: none;\n}\n\n.grid-detail-div.visible {\n    max-height: 100vmax;\n    width: 100%;\n    font-size: 1.3rem;\n}\n\n.grid-detail-div > *.visible {\n    height: 5vh;\n    line-height: 5vh;\n    visibility: visible;\n    clear: both;\n}\n\n.child-title {\n    display: inline-block;\n    float: left;\n    margin-left: 3vw;\n}\n\n.child-content {\n    display: inline-block;\n    float: right;\n    margin-right: 3vw;\n    font-weight: bolder;\n}\n\n.bank-link-div {\n    height: 6vh;\n    background-color: #555555;\n    line-height: 6vh;\n    color: white;\n    text-align: center;\n}\n\n.special-intro-div {\n    height: 10vh !important;\n    text-align: center;\n    font-size: 1.2rem;\n    background-color: #e8cbcb;\n}\n\n.special_intro {\n    height: 5vh;\n    line-height: 5vh;\n    margin: 0 auto;\n}\n\n\n.special-div-in {\n    border-bottom: 1px solid rgba(154, 0, 0, 0.44);\n    height: auto !important;\n}\n\n.special_condition_title {\n    min-height: 6vh;\n    line-height: 6vh;\n    margin-left: 3vw;\n    width: 55vw;\n    float: left;\n    font-size: 1.3rem;\n    overflow: auto;\n    color: black;\n}\n\n.special_condition_rate {\n    min-height: 6vh;\n    line-height: 6vh;\n    float: right;\n    width: 19vw;\n    font-size: 1.3rem;\n    text-align: center;\n    font-style: italic;\n    font-weight: bolder;\n    color: #029467;\n}\n\n", ""]);
+exports.push([module.i, ".ondemand-whole-container {\n    background-color: #f9f9f9;\n}\n\n.result-user-input-div {\n    height: auto;\n    min-height: 20vh;\n    margin: 0;\n    width: 80vw;\n}\n\n.result-param-title {\n    height: 5vh;\n    line-height: 5vh;\n    font-size: 1.75rem;\n    text-align: center;\n}\n\n.result-param-div {\n    height: 5vh;\n    line-height: 5vh;\n    width: 90vw;\n    margin: 0 5vw;\n    background-color: white;\n    border-bottom: 1px solid lightgray;\n}\n\n.result-param-div div {\n    display: inline-block;\n    width: 25vw;\n    text-align: center;\n    color: #0c7d75;\n    margin-left: 2vw;\n    font-size: 1.3rem;\n}\n\n.result-param-div span {\n    display: inline-block;\n    float: right;\n    margin-right: 7vw;\n    width: 50vw;\n    text-align: right;\n    font-size: 1.3rem;\n}\n\n.commodities-result-title {\n    height: 7vh;\n    line-height: 7vh;\n    font-size: 1.5rem;\n    text-align: center;\n    background-color: whitesmoke;\n}\n\n.result-sort-menu-div {\n    height: 7vh;\n    line-height: 7vh;\n    font-size: 1.5rem;\n    text-align: center;\n    background-color: mediumpurple;\n}\n\n.processed-commodity-intro {\n    margin-top: 1.5vh;\n    margin-bottom: 1.5vh;\n    padding-top: 1vh;\n    padding-bottom: 1vh;\n}\n\n.show-grid-top {\n    height: 7vh;\n    line-height: 7vh;\n    background-color: white;\n    width: 100%;\n    border-bottom: 3px solid palevioletred;\n    margin-bottom: 1vh;\n}\n\n.show-grid-top img {\n    height: auto;\n    width: 20vw;\n}\n\n.show-grid-top span {\n    float: right;\n    font-size: 1.3rem;\n    color: gray;\n}\n\n.grid-mid-title {\n    height: 7vh;\n    line-height: 7vh;\n}\n\n.intr-title {\n    display: inline-block;\n    float: left;\n    text-align: left;\n    height: 100%;\n}\n\n.final-money-title {\n    display: inline-block;\n    float: right;\n    text-align: right;\n    padding-right: 1vw;\n    height: 100%;\n}\n\n.grid-mid-section {\n    height: 6vh;\n    line-height: 6vh;\n}\n\n.grid-mid-left {\n    display: inline-block;\n    width: 30vw;\n    margin-top: -10px;\n}\n\n.grid-mid-right {\n    display: inline-block;\n    float: right;\n}\n\n.min-intr-rate {\n    color: royalblue;\n    font-size: 1.7rem !important;\n    display: inline-block;\n    margin-right: 2vw;\n    line-height: 7vh;\n}\n\n.rate-numbering {\n    font-size: 1.7rem !important;\n}\n\n.max-intr-rate {\n    color: #cb2243;\n    font-size: 1.7rem !important;\n    display: inline-block;\n    margin-right: 2vw;\n    line-height: 7vh;\n}\n\n.show-grid-bottom {\n    height: 6vh;\n    line-height: 6vh;\n    font-size: 1.3rem;\n    text-align: center;\n    background-color: #41a5ce;\n    color: white;\n    width: 100%;\n    margin-top: 2vw;\n}\n\n.result-title {\n    font-weight: bold;\n}\n\n.sort-select-div {\n    margin: 0 auto;\n    text-align: center;\n}\n\n.sort-select-div > select {\n    width: 40vw;\n    height: 6vh;\n    padding: 6px 12px;\n    color: #555;\n    background-color: #ffffff;\n    border: 1px solid #ccc;\n    border-radius: 4px;\n    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);\n    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);\n    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;\n    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;\n    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;\n    margin: 0 3vw;\n    font-size: 1.2rem;\n}\n\n.grid-detail-div {\n    background: white;\n    border: 1px solid lightgray;\n    margin-top: 0;\n    width: 100%;\n    max-height: 0;\n    overflow: hidden;\n    transition: max-height 0.5s ease;\n}\n\n.grid-detail-div > *.non-visible {\n    max-height: 0;\n    visibility: hidden;\n    display: none;\n}\n\n.grid-detail-div.visible {\n    max-height: 100vmax;\n    width: 100%;\n    font-size: 1.3rem;\n}\n\n.grid-detail-div > *.visible {\n    height: 5vh;\n    line-height: 5vh;\n    visibility: visible;\n    clear: both;\n}\n\n.child-title {\n    display: inline-block;\n    float: left;\n    margin-left: 3vw;\n}\n\n.child-content {\n    display: inline-block;\n    float: right;\n    margin-right: 3vw;\n    font-weight: bolder;\n}\n\n.bank-link-div {\n    height: 6vh;\n    background-color: #555555;\n    line-height: 6vh;\n    color: white;\n    text-align: center;\n}\n\n.special-intro-div {\n    height: 10vh !important;\n    text-align: center;\n    font-size: 1.2rem;\n    background-color: #e8cbcb;\n}\n\n.special_intro {\n    height: 5vh;\n    line-height: 5vh;\n    margin: 0 auto;\n}\n\n\n.special-div-in {\n    border-bottom: 1px solid rgba(154, 0, 0, 0.44);\n    height: auto !important;\n}\n\n.special_condition_title {\n    min-height: 6vh;\n    line-height: 6vh;\n    margin-left: 3vw;\n    width: 55vw;\n    float: left;\n    font-size: 1.2rem;\n    overflow: auto;\n    color: black;\n}\n\n.special_condition_rate {\n    min-height: 6vh;\n    line-height: 6vh;\n    float: right;\n    width: 19vw;\n    font-size: 1.3rem;\n    text-align: center;\n    font-style: italic;\n    font-weight: bolder;\n    color: #029467;\n}\n\n", ""]);
 
 // exports
 
@@ -83020,11 +83025,24 @@ var OverAll = function (_React$Component) {
     _createClass(OverAll, [{
         key: 'componentWillMount',
         value: function componentWillMount() {
-            var preSelectedQuery = window.localStorage.getItem('overAllQuery');
-            if (preSelectedQuery !== null) {
-                var queryObject = JSON.parse(preSelectedQuery);
-                console.log(queryObject);
-                this.setState(queryObject);
+            var overAllDate = window.localStorage.getItem('overAllDate');
+
+            if (overAllDate !== null) {
+                var date = new Date();
+                var today = date.getFullYear() + " " + (date.getMonth() + 1) + " " + date.getDate();
+                var setDate = overAllDate;
+
+                if (today === setDate) {
+                    var preSelectedQuery = window.localStorage.getItem('overAllQuery');
+                    if (preSelectedQuery !== null) {
+                        var queryObject = JSON.parse(preSelectedQuery);
+                        console.log(queryObject);
+                        this.setState(queryObject);
+                    }
+                } else {
+                    window.localStorage.removeItem("overAllQuery");
+                    window.localStorage.removeItem("overAllDate");
+                }
             }
         }
     }, {
@@ -83070,7 +83088,7 @@ var OverAll = function (_React$Component) {
                         console.log(error);
                     });
                 }.bind(this), 200);
-                window.localStorage.setItem('overAllQuery', JSON.stringify(this.state));
+                // window.localStorage.setItem('overAllQuery', JSON.stringify(this.state));
             }
         }
     }, {
@@ -83095,12 +83113,15 @@ var OverAll = function (_React$Component) {
                 });
 
                 // async??;;
-                window.localStorage.setItem('overAllQuery', JSON.stringify(this.state));
+                // window.localStorage.setItem('overAllQuery', JSON.stringify(this.state));
             }
         }
     }, {
         key: 'handleClickProduct',
         value: function handleClickProduct(productNo) {
+            var date = new Date();
+            var today = date.getFullYear() + " " + (date.getMonth() + 1) + " " + date.getDate();
+            window.localStorage.setItem('overAllDate', today);
             window.localStorage.setItem('overAllQuery', JSON.stringify(this.state));
             _history2.default.push('/' + this.state.empCode + '/products/' + this.state.selectedProducts + '/' + productNo);
         }
@@ -90244,7 +90265,6 @@ var Reservation = function (_React$Component) {
             };
 
             _axios2.default.post('/api/reservation/request', { data: param }).then(function (result) {
-                window.alert(result.data.msg);
                 // 성공했다 아니다 알릴 것!
                 if (result.data.msg === 'success') {
                     window.alert('예약성공 \n 고객님이 남겨주신 연락처로 연락드리겠습니다.');
@@ -91591,6 +91611,7 @@ var BestCommodities = function (_React$Component) {
                     loaded: true
                 });
             });
+            window.scrollTo(0, 1);
         }
     }, {
         key: 'render',

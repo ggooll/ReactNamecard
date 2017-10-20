@@ -44,11 +44,24 @@ export default class OverAll extends React.Component {
     }
 
     componentWillMount() {
-        let preSelectedQuery = window.localStorage.getItem('overAllQuery');
-        if (preSelectedQuery !== null) {
-            let queryObject = JSON.parse(preSelectedQuery);
-            console.log(queryObject);
-            this.setState(queryObject);
+        let overAllDate = window.localStorage.getItem('overAllDate');
+
+        if (overAllDate !== null) {
+            let date = new Date();
+            let today = date.getFullYear() + " " + (date.getMonth() + 1) + " " + date.getDate();
+            let setDate = overAllDate;
+
+            if (today === setDate) {
+                let preSelectedQuery = window.localStorage.getItem('overAllQuery');
+                if (preSelectedQuery !== null) {
+                    let queryObject = JSON.parse(preSelectedQuery);
+                    console.log(queryObject);
+                    this.setState(queryObject);
+                }
+            } else {
+                window.localStorage.removeItem("overAllQuery");
+                window.localStorage.removeItem("overAllDate");
+            }
         }
     }
 
@@ -88,7 +101,7 @@ export default class OverAll extends React.Component {
                     console.log(error);
                 });
             }.bind(this), 200);
-            window.localStorage.setItem('overAllQuery', JSON.stringify(this.state));
+            // window.localStorage.setItem('overAllQuery', JSON.stringify(this.state));
         }
     }
 
@@ -112,11 +125,14 @@ export default class OverAll extends React.Component {
             });
 
             // async??;;
-            window.localStorage.setItem('overAllQuery', JSON.stringify(this.state));
+            // window.localStorage.setItem('overAllQuery', JSON.stringify(this.state));
         }
     }
 
     handleClickProduct(productNo) {
+        let date = new Date();
+        let today = date.getFullYear() + " " + (date.getMonth() + 1) + " " + date.getDate();
+        window.localStorage.setItem('overAllDate', today);
         window.localStorage.setItem('overAllQuery', JSON.stringify(this.state));
         history.push(`/${this.state.empCode}/products/${this.state.selectedProducts}/${productNo}`);
     }
@@ -181,7 +197,8 @@ export default class OverAll extends React.Component {
 
 
                                                     <div><img className="bank-logo-img"
-                                                              src={`/images/bank_logos/${item["FIN_CO_NO"]}.png`}/></div>
+                                                              src={`/images/bank_logos/${item["FIN_CO_NO"]}.png`}/>
+                                                    </div>
                                                     <div className="clear-div-1"/>
 
                                                     <div>

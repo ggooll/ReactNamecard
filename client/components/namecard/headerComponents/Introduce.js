@@ -117,7 +117,7 @@ export default class Introduce extends React.Component {
                         </div>
                         <div className="clear-div-3"/>
 
-                        <ShortCut phone={this.state.phone} email={this.state.email} sns={this.state.sns} clip={this.props.name}/>
+                        <ShortCut name={this.state.name} phone={this.state.phone} email={this.state.email} sns={this.state.sns} clip={this.props.name}/>
                         <div className="clear-div-2"/>
                     </div>
 

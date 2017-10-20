@@ -44,7 +44,6 @@ export default class OnDemand extends React.Component {
     }
 
     render() {
-
         return (
             <div className="item-whole-div">
                 <TopNavigator title="나에게 맞는 예.적금 찾기"/>

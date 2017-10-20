@@ -34,6 +34,7 @@ export default class ExistCustomer extends React.Component {
     handleDownMenuShow() {
         // localStorage말고 세션을 검사하게끔 한다.
         axios.post('/api/auth/isExistSession', {}).then((exist) => {
+            console.log(exist);
             if (exist.data !== false) {
                 this.setState({
                     downVisible: this.state.downVisible === 'down-menu' ? 'down-menu visible' : 'down-menu'

@@ -194,7 +194,6 @@ export default class Reservation extends React.Component {
         };
 
         axios.post(`/api/reservation/request`, {data: param}).then((result) => {
-            window.alert(result.data.msg);
             // 성공했다 아니다 알릴 것!
             if(result.data.msg === 'success'){
                 window.alert('예약성공 \n 고객님이 남겨주신 연락처로 연락드리겠습니다.');
