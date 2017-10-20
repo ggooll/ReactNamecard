@@ -1,10 +1,15 @@
+.container{
+    padding-right: 1vw !important;
+    padding-left: 1vw !important;
+}
+
 .item-whole-div {
     width: 100vw;
     margin: 0;
     padding: 0;
     background-color: #fcfcfc;
     font-size: 1.4rem;
-    min-height: 105vmax;
+    min-height: 101vh;
 }
 
 .item-top-introduce {
@@ -71,6 +76,7 @@
     clear: both;
     border-bottom: 1px solid lightgray;
     margin: 0 auto !important;
+    width: 100% !important;
 }
 
 .item-separate-div > div{
@@ -132,4 +138,19 @@
 .popular-click-count{
     background: #1c8561;
     opacity: 0.9;
+}
+
+
+.scroll-top-span{
+    display: inline-block;
+    width: 17vw;
+    height: 17vw;
+    background: #488680;
+    color: white;
+    border-radius: 50%;
+    line-height: 17vw;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.3rem;
+    opacity: 0.7;
 }

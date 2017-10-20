@@ -18,7 +18,7 @@ export default class OnDemand extends React.Component {
         let title = {
             deposit_info : '목돈 보관하는 방법! 예금',
             savings_info : '목돈을 모으고 싶다면? 적금',
-            monthly_info : '얼마나 모아야 모일까'
+            monthly_info : '목표금액.. 얼마나 모아야 할까'
         };
 
 
@@ -55,9 +55,9 @@ export default class OnDemand extends React.Component {
                         <div className="ondemand-selected-product">
                             <select className="form-control" onChange={this.handleChangeProducts}
                                     value={this.state.selectedProducts}>
-                                <option value="deposit_info">예금찾기</option>
-                                <option value="savings_info">적금찾기</option>
-                                <option value="monthly_info">월저축금액계산</option>
+                                <option value="deposit_info">내게맞는 예금찾기</option>
+                                <option value="savings_info">내게맞는 적금찾기</option>
+                                <option value="monthly_info">월적금액계산</option>
                             </select>
                         </div>
                     </div>

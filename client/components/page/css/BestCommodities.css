@@ -1,0 +1,104 @@
+.best-whole-container{
+    background-color: #f9f9f9;
+}
+
+.best-deposit-whole{
+    background-color: #e8e5bd;
+    margin: 3vh 2vh 5vh 2vh;
+}
+
+.best-savings-whole{
+    background-color: #c0dccc;
+    margin: 3vh 2vh 5vh 2vh;
+}
+
+.best-commodity-one{
+    padding: 2vh 1vw;
+    clear: both;
+    background: white;
+    margin: 1vh 1vh 2vh 1vh;
+}
+
+.best-intro{
+    font-size: 2.2rem;
+    padding: 3vh 0 1vh 3vw;
+}
+
+.best-bank-name{
+    padding-left: 1vh;
+    line-height: 5vh;
+    font-size: 1.55rem;
+    margin-bottom: 3vw;
+    text-decoration: underline;
+}
+
+.best-title{
+    padding-left: 1vh;
+    height: 5vh;
+    line-height: 5vh;
+    display: inline-block;
+}
+
+.best-title > img{
+    width: 20vw;
+}
+
+.best-rate{
+    float: right;
+    padding-right: 1vh;
+    line-height: 5vh;
+    display: inline-block;
+    font-size: 1.8rem !important;
+}
+
+.best-rate span{
+    font-size: 0.8rem !important;
+}
+
+.best-detail-exp{
+    height: 5vh;
+    line-height: 5vh;
+    font-size: 1rem;
+    text-align: center;
+    color: dimgray;
+}
+
+.rank-badge{
+    text-align: center;
+    line-height: 5vh;
+    width: 5vh;
+    background-color: rgba(222, 67, 104, 0.88);
+    float: left;
+    color: white;
+    margin: -8px 2vw 0 -9px;
+    font-size: 1rem;
+}
+
+.best-click-product{
+    height: 5vh;
+    line-height: 5vh;
+    background: rgba(0, 125, 122, 0.7);
+    text-align: center;
+    clear: both;
+    margin: 1vh 2vw 0 1vh;
+    color: white;
+}
+
+.best-to-overall-div{
+    height:8vh;
+    line-height:8vh;
+    text-align: center;
+    background-color: rgba(70, 130, 180, 0.83);
+    margin: 2vh 10vw;
+    color: white
+}
+
+.best-to-ondemand-div{
+    height:8vh;
+    line-height:8vh;
+    text-align:center;
+    background-color: rgba(0, 139, 139, 0.62);
+    margin: 2vh 10vw;
+    color: white;
+}
+

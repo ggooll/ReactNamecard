@@ -67,8 +67,8 @@ export default class ChatBot extends React.Component {
             {
                 id: 'type',
                 options: [
-                    {value: '1', label: '예금', trigger: 'deposit'},
-                    {value: '2', label: '적금 ', trigger: 'savings'},
+                    {value: '1', label: '예금상품', trigger: 'deposit'},
+                    {value: '2', label: '적금상품', trigger: 'savings'},
                     {value: '3', label: '이전', trigger: '1'},
                 ],
             },
@@ -85,8 +85,7 @@ export default class ChatBot extends React.Component {
             {
                 id: 'deposit_period',
                 options: [
-                    {value: '3', label: '3개월이하', trigger: '5'},
-                    {value: '6', label: '6개월 ', trigger: '5'},
+                    {value: '6', label: '6개월', trigger: '5'},
                     {value: '12', label: '1년', trigger: '5'},
                     {value: '24', label: '2년', trigger: '5'},
                     {value: '36', label: '3년', trigger: '5'},
@@ -98,8 +97,7 @@ export default class ChatBot extends React.Component {
             {
                 id: 'savings_period',
                 options: [
-                    {value: '3', label: '3개월이하', trigger: '21'},
-                    {value: '6', label: '6개월 ', trigger: '21'},
+                    {value: '6', label: '6개월', trigger: '21'},
                     {value: '12', label: '1년', trigger: '21'},
                     {value: '24', label: '2년', trigger: '21'},
                     {value: '36', label: '3년', trigger: '21'},
@@ -110,23 +108,23 @@ export default class ChatBot extends React.Component {
             },
             {
                 id: '5',
-                message: '{previousValue}개월을 선택하셨군요. 예치금액을 선택해 주세요.',
+                message: '{previousValue}개월을 선택하셨습니다. 예치금액을 선택해 주세요.',
                 trigger: 'deposit_amount',
             },
             {
                 id: '21',
-                message: '{previousValue}개월을 선택하셨군요. 월저금액을 선택해 주세요.',
+                message: '{previousValue}개월을 선택하셨습니다. 월 저금액을 선택해 주세요.',
                 trigger: 'savings_amount',
             },
             {
                 id: 'deposit_amount',
                 options: [
-                    {value: '1000000', label: '백만원', trigger: '8'},
-                    {value: '5000000', label: '오백만원', trigger: '8'},
-                    {value: '10000000', label: '천만원', trigger: '8'},
-                    {value: '30000000', label: '삼천만원', trigger: '8'},
-                    {value: '50000000', label: '오천만원', trigger: '8'},
-                    {value: '100000000', label: '일억원', trigger: '8'},
+                    {value: '1000000', label: '100만원', trigger: '8'},
+                    {value: '5000000', label: '500만원', trigger: '8'},
+                    {value: '10000000', label: '1000만원', trigger: '8'},
+                    {value: '30000000', label: '3000만원', trigger: '8'},
+                    {value: '50000000', label: '5000만원', trigger: '8'},
+                    {value: '100000000', label: '1억원', trigger: '8'},
                     {value: '0', label: '직접입력', trigger: 'input_val'},
                     {value: '9', label: '이전', trigger: 'deposit'},
                     {value: '10', label: '처음', trigger: '1'},
@@ -135,12 +133,10 @@ export default class ChatBot extends React.Component {
             {
                 id: 'savings_amount',
                 options: [
-                    {value: '10000', label: '만원', trigger: '8'},
-                    {value: '50000', label: '오만원', trigger: '8'},
-                    {value: '100000', label: '십만원', trigger: '8'},
-                    {value: '300000', label: '삽십만원', trigger: '8'},
-                    {value: '500000', label: '오십만원', trigger: '8'},
-                    {value: '1000000', label: '백만원', trigger: '8'},
+                    {value: '100000', label: '10만원', trigger: '8'},
+                    {value: '300000', label: '30만원', trigger: '8'},
+                    {value: '500000', label: '50만원', trigger: '8'},
+                    {value: '1000000', label: '100만원', trigger: '8'},
                     {value: '0', label: '직접입력', trigger: 'input_val'},
                     {value: '9', label: '이전', trigger: 'savings'},
                     {value: '10', label: '처음', trigger: '1'},
@@ -156,7 +152,6 @@ export default class ChatBot extends React.Component {
                             } else if (value < 0) {
                                 return 'value must be positive';
                             }
-
                             return true;
                         },
             },
@@ -175,65 +170,97 @@ export default class ChatBot extends React.Component {
                     {value: '9', label: '처음', trigger: '1'},
                 ],
             },
-            {//개행이 안되 ㅠㅠ
+            {
                 id: '50',
-                message: '아래 중에 궁금하신 내용이 있나요? \n '+
-                        '1.예금 상품 해지시 방문하여야 할 영업점은 꼭 개설점인가요? \n'+
-                        '2.적금을 이체 날짜보다 늦게 입금한다면 불이익이 있나요?\n'+
-                        '3.입출금형 예금 이율을 알려주세요.\n'+
-                        '4.세금우대 통장에 대해 알려주세요.\n'+
-                        '5.입출금 통장의 이자는 언제 나오나요? \n'+
-                        '번호를 입력하면 상세 내용을 보여드립니다.',
+                component: (
+                    <div className="faq-div">
+                        <div className="faq-question-div"> (FAQ) 아래 중에 궁금하신 내용이 있나요? </div>
+                        <div> 1. 예금 상품 해지시 방문하여야 할 영업점은 꼭 개설점인가요? </div>
+                        <div> 2. 적금을 이체 날짜보다 늦게 입금한다면 불이익이 있나요? </div>
+                        <div> 3. 입출금형 예금 이율을 알려주세요. </div>
+                        <div> 4. 세금우대 통장에 대해 알려주세요. </div>
+                        <div> 5. 입출금 통장의 이자는 언제 나오나요? </div>
+                        <div> 번호를 클릭하시면 상세 내용을 보여드립니다. </div>
+                    </div>
+                ),
                 trigger: '101',
             },
             {
                 id: '101',
                 options: [
-                    {value: '1', label: '1', trigger: '102'},
-                    {value: '2', label: '2', trigger: '103'},
-                    {value: '3', label: '3', trigger: '104'},
-                    {value: '4', label: '4', trigger: '105'},
-                    {value: '5', label: '5', trigger: '106'},
-                    {value:'0', label:'이전', trigger: '50'},
-                    {value:'0',label:'처음', trigger:'1'}
+                    {value: '1', label: '1번', trigger: '102'},
+                    {value: '2', label: '2번', trigger: '103'},
+                    {value: '3', label: '3번', trigger: '104'},
+                    {value: '4', label: '4번', trigger: '105'},
+                    {value: '5', label: '5번', trigger: '106'},
+                    {value:'1000', label:'이전', trigger: '50'},
+                    {value:'1001', label:'처음', trigger:'1'}
                 ],
             },
             {
                 id:'102',
-                message:'Q.예금 상품 해지시 방문하여야 할 영업점은 꼭 개설점인가요? \n'+
-                        'A.예금 및 적금 상품을 가입하신 후 해지시에는 가까운 당행 영업점에서 해지처리를 하실 수 있습니다',
+                component: (
+                    <div className="faq-div">
+                        <div className="faq-question-div"> Q. 예금 상품 해지시 방문하여야 할 영업점은 꼭 개설점인가요? </div>
+                        <div> A. 예금 및 적금 상품을 가입하신 후 해지시에는 가까운 당행 영업점에서 해지처리를 하실 수 있습니다 </div>
+                    </div>
+                ),
                 trigger:'110',
             },
             {
                 id:'103',
-                message:'Q.적금을 이체 날짜보다 늦게 입금한다면 불이익이 있나요?? \n'+
-                        '현재 예금주의 사정에 의해 납입 기일을 경과하여 납입한 경우에는 만기일을 이연할 수가 있습니다 납기기일이 공유힐인 경우에는 공휴일에 이은 익영업일에 납부하여도 납입지연으로 보지 않고 있습니다 그러므로 만약 손님께서 납입 하시는 날짜를 늦게 입금하셨다면 다음 입금시에 지연일수 만큼 더 일찍 넣으시면 이연되는 날짜가 줄어들게 됩니다 만약 계속해서 늦게 입금처리가 되는 경우에는 만기일을 약정하셨던 날에서 지연한 날짜 만큼 경과한 후 해지 하시면 됩니다',
-
+                component: (
+                    <div className="faq-div">
+                        <div className="faq-question-div"> Q. 적금을 이체 날짜보다 늦게 입금한다면 불이익이 있나요?? </div>
+                        <div> A. 현재 예금주의 사정에 의해 납입 기일을 경과하여 납입한 경우에는 만기일을 이연할 수가 있습니다. </div>
+                        <div> 납기기일이 공유힐인 경우에는 공휴일에 이은 익영업일에 납부하여도 납입지연으로 보지 않고 있습니다. </div>
+                        <div> 그러므로 만약 손님께서 납입 하시는 날짜를 늦게 입금하셨다면 다음 입금시에 지연일수 만큼 더 일찍 넣으시면 이연되는 날짜가 줄어들게 됩니다. </div>
+                        <div> 만약 계속해서 늦게 입금처리가 되는 경우에는 만기일을 약정하셨던 날에서 지연한 날짜 만큼 경과한 후 해지 하시면 됩니다. </div>
+                    </div>
+                ),
                 trigger:'110',
             },
             {
                 id:'104',
-                message:'Q.입출금형 예금 이율을 알려주세요.' +
-                        'A.시장금리의 변동에 따라 금리의 변화가 있을 수 있으므로 입출금형 통장의 종류와 적용이율 확인은 당행 홈페이지 메인화면에서 금융상품몰 클릭 후 하단에 금리안내 클릭하여 자유입출금 선택하여 확인할 수 있습니다.',
+                component: (
+                    <div className="faq-div">
+                        <div className="faq-question-div"> Q. 입출금형 예금 이율을 알려주세요. </div>
+                        <div> A. 시장금리의 변동에 따라 금리의 변화가 있을 수 있습니다. </div>
+                        <div> 입출금형 통장의 종류와 적용이율 확인은 당행 홈페이지 메인화면에서 금융상품몰 클릭 후 하단에 금리안내 클릭하여 자유입출금 선택하여 확인할 수 있습니다. </div>
+                    </div>
+                ),
                 trigger:'110',
             },
             {
                 id:'105',
-                message:'Q.세금우대 통장에 대해 알려주세요.' +
-                        'A.세금우대제도는 만기시 지급받는 이자 소득에 과세되는 소득세를 우대해 주는 내용으로 주민세를 면제하고 소득세 9% 및 농특세 0.5%를 원천징수함으로 실제 손님께서 받게 되는 만기 원리금이 늘어나는 효과를 가져오는 제도 입니다. 세금우대 혜택을 받으면 일반세율 15.4%가 아니라 우대세율 9.5%를 적용받습니다.',
+                component: (
+                    <div className="faq-div">
+                        <div className="faq-question-div"> Q. 세금우대 통장에 대해 알려주세요. </div>
+                        <div> A. 세금우대제도는 만기시 지급받는 이자 소득에 과세되는 소득세를 우대해 주는 내용으로 주민세를 면제하고 소득세 9% 및 농특세 0.5%를 원천징수함으로</div>
+                        <div> 실제 손님께서 받게 되는 만기 원리금이 늘어나는 효과를 가져오는 제도 입니다. </div>
+                        <div> 세금우대 혜택을 받으면 일반세율 15.4%가 아니라 우대세율 9.5%를 적용받습니다. </div>
+                    </div>
+                ),
                 trigger:'110',
             },
             {
                 id:'106',
-                message:'Q.입출금 통장의 이자는 언제 나오나요 ?' +
-                        'A.보통예금: 연 2회(6,12 월 제3금요일에 결산하여 토요일에 지급) 저축예금 기업자유예금 가계당좌예금 : 연 4회 (3,6,9,12 월 제3금요일에 결산하여 토요일에 지급)',
+                component: (
+                    <div className="faq-div">
+                        <div className="faq-question-div"> Q. 입출금 통장의 이자는 언제 나오나요 ? </div>
+                        <div> A. 보통예금: 연 2회 제공됩니다.</div>
+                        <div> (6,12월 제3금요일에 결산하여 토요일에 지급) </div>
+                        <div> 저축예금 기업자유예금 가계당좌예금 : 연 4회 제공됩니다. </div>
+                        <div> (3,6,9,12월 제3금요일에 결산하여 토요일에 지급) </div>
+                    </div>
+                ),
                 trigger:'110',
             },
             {
                 id:'110',
                 options:[
-                    {value: '', label: '이전', trigger: '50'},
-                    {value: '', label: '처음', trigger: '1'},
+                    {value: '1002', label: '이전', trigger: '50'},
+                    {value: '1003', label: '처음', trigger: '1'},
                 ],
             },
             {

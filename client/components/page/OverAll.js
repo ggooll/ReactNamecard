@@ -44,7 +44,6 @@ export default class OverAll extends React.Component {
     }
 
     componentWillMount() {
-        console.log('will mount');
         let preSelectedQuery = window.localStorage.getItem('overAllQuery');
         if (preSelectedQuery !== null) {
             let queryObject = JSON.parse(preSelectedQuery);
@@ -54,7 +53,6 @@ export default class OverAll extends React.Component {
     }
 
     componentDidMount() {
-        console.log('did mount');
         let searchParam = this.state.selectedProducts;
         if (this.state.overAllItems.length === 0) {
             setTimeout(function () {
@@ -66,7 +64,7 @@ export default class OverAll extends React.Component {
                 }).catch((error) => {
                     console.log(error);
                 });
-            }.bind(this), 700);
+            }.bind(this), 200);
         }
         window.scrollTo(0, 1);
     }
@@ -89,7 +87,7 @@ export default class OverAll extends React.Component {
                 }).catch((error) => {
                     console.log(error);
                 });
-            }.bind(this), 700);
+            }.bind(this), 200);
             window.localStorage.setItem('overAllQuery', JSON.stringify(this.state));
         }
     }
@@ -128,109 +126,111 @@ export default class OverAll extends React.Component {
             <div className="item-whole-div">
                 <TopNavigator title="전체 예,적금 상품"/>
 
-                <div className="item-top-introduce">
-                    <img src={this.state.selectedImage}/>
-                </div>
-
-                <div className="item-section-div">
-                    <div className="clear-div-1"/>
-                    <div>
-                        <select className="form-control" onChange={this.handleChangeItem}
-                                value={this.state.selectedProducts}>
-                            <option value="deposit_info">예금</option>
-                            <option value="savings_info">적금</option>
-                        </select>
+                <div>
+                    <div className="item-top-introduce">
+                        <img src={this.state.selectedImage}/>
                     </div>
-                    <div className="clear-div-1"/>
-                    <div>
-                        <select className="form-control"
-                                value={this.state.selectedBanksIndex} onChange={this.handleChangeBank}>
-                            {this.state.bankNames.map((name, index) => {
-                                return <option value={index} key={index}>{name}</option>
-                            })}
-                        </select>
-                    </div>
-                    <div className="clear-div-1"/>
 
-                    <Grid>
-                        <Loader loaded={this.state.loaded} color="#008485" length={10} width={1} radius={10}
-                                shadow={true} hwaccel={true} top="70%">
-                            <Row className="show-grid">
-                                {this.state.overAllItems.map((item, idx) => {
-                                    if (item['VISIBLE'] === 1) {
-                                        return (
-                                            <Col xs={12} md={8} key={idx} className="panel panel-default item-div"
-                                                 onClick={this.handleClickProduct.bind(this, item["NO"])}>
-                                                <div className="commodity-popular-desc">
-                                                    {item['PRODUCT_COUNT'] !== null ? <span>
-                                                        <div className="popular-product-count"/>
-                                                        {`${item['PRODUCT_COUNT']}명이 상담`}
-                                                    </span> : undefined}
-                                                    {this.state.selectedProducts === 'deposit_info' ?
-                                                        item['DEPOSIT_COUNT'] !== null ? <span>
-                                                        <div className="popular-click-count"/>
-                                                            {`${item['DEPOSIT_COUNT']}명이 관심`}
-                                                        </span> : undefined :
-                                                        item['SAVINGS_COUNT'] !== null ? <span>
-                                                        <div className="popular-click-count"/>
-                                                            {`${item['SAVINGS_COUNT']}명이 관심`}
-                                                        </span> : undefined
-                                                    }
-                                                </div>
-
-                                                <div className="clear-div-1"/>
-
-
-                                                <div><img className="bank-logo-img"
-                                                          src={`/images/bank_logos/${item["FIN_CO_NO"]}.png`}/></div>
-                                                <div className="clear-div-1"/>
-
-                                                <div>
-                                                    <h4>{item["FIN_PRDT_NM"]}</h4>
-                                                </div>
-                                                <hr/>
-                                                <div className="clear-div-1"/>
-
-                                                <div className="item-separate-div">
-                                                    <div>가입대상</div>
-                                                    <span>
-                                                    {item["JOIN_MEMBER"].split('\n').map((item, key) => {
-                                                        if (item !== '')
-                                                            return <span key={key}>{`${item}`}<br/></span>
-                                                    })}
-                                                </span>
-                                                </div>
-
-                                                <div className="item-separate-div">
-                                                    <div>이자방식</div>
-                                                    <span>{item["INTR_RATE_TYPE"] === 'S' ? '단리' : '복리'}</span>
-                                                </div>
-
-                                                <div className="item-separate-div">
-                                                    <div>가입경로</div>
-                                                    <span>{item["JOIN_WAY"]}</span>
-                                                </div>
-
-                                                <div className="item-separate-div">
-                                                    <div>{this.state.selectedProducts === 'deposit_info' ? '최대예치금액' : '월 최대 납입금액'}</div>
-                                                    <span>{(item["MAX_LIMIT"] <= 0) ? '제한없음' : `${resource.moneyWithComma(item["MAX_LIMIT"])} 원`}</span>
-                                                </div>
-                                            </Col>
-                                        );
-                                    } else {
-                                        return undefined;
-                                    }
+                    <div className="item-section-div">
+                        <div className="clear-div-1"/>
+                        <div>
+                            <select className="form-control" onChange={this.handleChangeItem}
+                                    value={this.state.selectedProducts}>
+                                <option value="deposit_info">예금</option>
+                                <option value="savings_info">적금</option>
+                            </select>
+                        </div>
+                        <div className="clear-div-1"/>
+                        <div>
+                            <select className="form-control"
+                                    value={this.state.selectedBanksIndex} onChange={this.handleChangeBank}>
+                                {this.state.bankNames.map((name, index) => {
+                                    return <option value={index} key={index}>{name}</option>
                                 })}
-                            </Row>
-                            {this.state.overAllItems.length === 0 ? <h5>조회하신 데이터가 없습니다</h5> : undefined}
-                        </Loader>
-                    </Grid>
-                </div>
-                <div className="clear-div-4">{''}</div>
+                            </select>
+                        </div>
+                        <div className="clear-div-1"/>
 
-                <ScrollToTop style={this.scrollTopStyle} showUnder={250}>
-                    <span className="scroll-top-span">UP</span>
-                </ScrollToTop>
+                        <Grid>
+                            <Loader loaded={this.state.loaded} color="#008485" length={10} width={1} radius={10}
+                                    shadow={true} hwaccel={true} top="70%">
+                                <Row className="show-grid">
+                                    {this.state.overAllItems.map((item, idx) => {
+                                        if (item['VISIBLE'] === 1) {
+                                            return (
+                                                <Col xs={12} md={8} key={idx} className="panel panel-default item-div"
+                                                     onClick={this.handleClickProduct.bind(this, item["NO"])}>
+                                                    <div className="commodity-popular-desc">
+                                                        {item['PRODUCT_COUNT'] !== null ? <span>
+                                                            <div className="popular-product-count"/>
+                                                            {`${item['PRODUCT_COUNT']}명이 상담`}
+                                                        </span> : undefined}
+                                                        {this.state.selectedProducts === 'deposit_info' ?
+                                                            item['DEPOSIT_COUNT'] !== null ? <span>
+                                                            <div className="popular-click-count"/>
+                                                                {`${item['DEPOSIT_COUNT']}명이 관심`}
+                                                            </span> : undefined :
+                                                            item['SAVINGS_COUNT'] !== null ? <span>
+                                                            <div className="popular-click-count"/>
+                                                                {`${item['SAVINGS_COUNT']}명이 관심`}
+                                                            </span> : undefined
+                                                        }
+                                                    </div>
+
+                                                    <div className="clear-div-1"/>
+
+
+                                                    <div><img className="bank-logo-img"
+                                                              src={`/images/bank_logos/${item["FIN_CO_NO"]}.png`}/></div>
+                                                    <div className="clear-div-1"/>
+
+                                                    <div>
+                                                        <h4>{item["FIN_PRDT_NM"]}</h4>
+                                                    </div>
+                                                    <hr/>
+                                                    <div className="clear-div-1"/>
+
+                                                    <div className="item-separate-div">
+                                                        <div>가입대상</div>
+                                                        <span>
+                                                        {item["JOIN_MEMBER"].split('\n').map((item, key) => {
+                                                            if (item !== '')
+                                                                return <span key={key}>{`${item}`}<br/></span>
+                                                        })}
+                                                    </span>
+                                                    </div>
+
+                                                    <div className="item-separate-div">
+                                                        <div>이자방식</div>
+                                                        <span>{item["INTR_RATE_TYPE"] === 'S' ? '단리' : '복리'}</span>
+                                                    </div>
+
+                                                    <div className="item-separate-div">
+                                                        <div>가입경로</div>
+                                                        <span>{item["JOIN_WAY"]}</span>
+                                                    </div>
+
+                                                    <div className="item-separate-div">
+                                                        <div>{this.state.selectedProducts === 'deposit_info' ? '최대예치금액' : '월 최대 납입금액'}</div>
+                                                        <span>{(item["MAX_LIMIT"] <= 0) ? '제한없음' : `${resource.moneyWithComma(item["MAX_LIMIT"])} 원`}</span>
+                                                    </div>
+                                                </Col>
+                                            );
+                                        } else {
+                                            return undefined;
+                                        }
+                                    })}
+                                </Row>
+                                {this.state.overAllItems.length === 0 ? <h5>조회하신 데이터가 없습니다</h5> : undefined}
+                            </Loader>
+                        </Grid>
+                    </div>
+                    <div className="clear-div-4">{''}</div>
+
+                    <ScrollToTop style={this.scrollTopStyle} showUnder={250}>
+                        <span className="scroll-top-span">UP</span>
+                    </ScrollToTop>
+                </div>
             </div>
         );
     }

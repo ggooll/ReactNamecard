@@ -3,8 +3,7 @@
  */
 
 import React from 'react';
-import './css/modal.css';
-import './css/authExistModal.css';
+import './authExistModal.css';
 import axios from 'axios';
 import async from 'async';
 
@@ -108,7 +107,6 @@ export default class AuthExistModal extends React.Component {
         });
     }
 
-    // rendering
     render() {
         return (
             <div>

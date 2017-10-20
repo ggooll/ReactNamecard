@@ -84,7 +84,6 @@ export default class Consult extends React.Component {
     }
 
     getIcon() {
-        // fa-sticky-note
         return <i className="fa fa-tasks fa-lg" aria-hidden="true"/>
     }
 
@@ -106,7 +105,9 @@ export default class Consult extends React.Component {
                 <TopNavigator title="내 상담기록"/>
 
                 <div className="consult-background-div"/>
-                <div className="consult-introduce-div" />
+                <div className="consult-introduce-div">
+                    {``}
+                </div>
 
                 <div className="search-div">
                     <div>
@@ -121,29 +122,35 @@ export default class Consult extends React.Component {
                 </div>
                 <div className="clear-div-2"/>
 
-                <div className="item-section-div">
-                    <Timeline>
-                        {this.state.consults.map((consult, idx) => {
-                            if (consult["VISIBLE"] === 1) {
-                                return (
-                                    <TimelineEvent
-                                        title={consult["TITLE"]}
-                                        createdAt={consult["REG_DATE"]}
-                                        iconColor="#4a6875"
-                                        container="card"
-                                        key={idx}
-                                        icon={this.getIcon()}
-                                        cardHeaderStyle={headerStyle}
-                                        contentStyle={contentStyle}
-                                        onClick={this.handleClickCard.bind(this, consult["NO"])}>
-                                        {consult["CONTENT"]}
-                                    </TimelineEvent>);
-                            } else {
-                                return undefined;
-                            }
-                        })}
-                    </Timeline>
-                </div>
+                {this.state.consults.length === 0 ?
+                    <div className="item-section-div">
+                        <Timeline>
+                            {this.state.consults.map((consult, idx) => {
+                                if (consult["VISIBLE"] === 1) {
+                                    return (
+                                        <TimelineEvent
+                                            title={consult["TITLE"]}
+                                            createdAt={consult["REG_DATE"]}
+                                            iconColor="#4a6875"
+                                            container="card"
+                                            key={idx}
+                                            icon={this.getIcon()}
+                                            cardHeaderStyle={headerStyle}
+                                            contentStyle={contentStyle}
+                                            onClick={this.handleClickCard.bind(this, consult["NO"])}>
+                                            {consult["CONTENT"]}
+                                        </TimelineEvent>);
+                                } else {
+                                    return undefined;
+                                }
+                            })}
+                        </Timeline>
+                    </div>
+                    :
+                    <div className="no-consult-div">
+                        <img src="/images/noFound.png"/>
+                    </div>
+                }
                 <div className="clear-div-4">{''}</div>
             </div>
         );

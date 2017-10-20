@@ -14,6 +14,7 @@ import ConsultDetail from './components/page/ConsultDetail';
 import ChatBot from './components/page/ChatBot';
 import ReservationList from './components/page/ReservationList';
 import Reservation from './components/page/Reservation';
+import BestCommodities from './components/page/BestCommodities';
 import NoMatch from './components/page/NoMatch';
 import './global_css/globalFont.css';
 import './global_css/transition-group.css';
@@ -24,7 +25,9 @@ function getHistoryAction() {
         window.detectingHistory.historyAction = action;
         // console.log(action); // push or pop
     });
-    return window.detectingHistory.historyAction === 'PUSH' ? 'slideIn' : 'example';
+    let transitionName = window.detectingHistory.historyAction === 'PUSH' ? 'slideIn' : 'example';
+    console.log(transitionName);
+    return transitionName;
 }
 
 export default class App extends React.Component {
@@ -48,17 +51,17 @@ export default class App extends React.Component {
                 <Route render={({location}) =>
                     <ReactCSSTransitionGroup
                         transitionName={getHistoryAction()}
-                        transitionAppear={false}
-                        transitionAppearTimeout={350}
+                        transitionAppear={true}
+                        transitionAppearTimeout={400}
                         transitionEnter={true}
-                        transitionEnterTimeout={350}
+                        transitionEnterTimeout={400}
                         transitionLeave={false}
-                        transitionLeaveTimeout={350}>
+                        transitionLeaveTimeout={400}>
 
                         <Switch location={location} key={location.key}>
                             <Route name="fail"
                                    exact path={`/fail`}
-                                   render={() => (<NoMatch />)}/>
+                                   component={NoMatch}/>
 
                             <Route name="productDetail"
                                    exact path={`/:empcode/products/:option/:no`}
@@ -83,6 +86,10 @@ export default class App extends React.Component {
                             <Route name="chatBot"
                                    exact path={`/:empcode/chatbot`}
                                    component={ChatBot}/>
+
+                            <Route name="ranking"
+                                   exact path={'/:empcode/ranking'}
+                                   component={BestCommodities}/>
 
                             <Route name="onDemand"
                                    exact path={`/:empcode/onDemand`}

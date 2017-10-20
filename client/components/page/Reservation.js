@@ -251,7 +251,6 @@ export default class Reservation extends React.Component {
                     </select>
 
                     <select value={this.state.selectedDong} onChange={this.handleChangeDong}>
-                        {/* 구군이 선택되었따면 그 동을 렌더링함 */}
                         <option value="">동</option>
                         {this.state.selectedGugun !== '' ?
                             KoAddress.dong[`${this.state.selectedSido}->${this.state.selectedGugun}`].map((dong, idx) => {

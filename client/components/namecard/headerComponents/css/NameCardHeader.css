@@ -11,15 +11,15 @@
 .header-top-line div {
     float: left;
     height: 1.5vh;
-    background-color: #008485;
+    background-color: #0e9192;
 }
 
 .top-left-line {
-    width: 80vw;
+    width: 77.5vw;
 }
 
 .top-point-line {
-    width: 7.5vw;
+    width: 10vw;
     background-color: #cb2243 !important;
 }
 

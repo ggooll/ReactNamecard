@@ -46,6 +46,7 @@
 .jKLQUD {
     margin-top: 2vh !important;
     border: 2px solid #008485 !important;
+    padding: 2vh 3vw !important;
 }
 
 /**
@@ -89,4 +90,15 @@
     text-align: center;
     margin: 2vh auto 0 auto;
     color: white;
+}
+
+.faq-div > div{
+    font-size: 1.3rem;
+    margin: 1vw auto;
+}
+
+.faq-question-div {
+    color: #d23519;
+    margin: 1vw auto;
+    font-size: 1.5rem;
 }

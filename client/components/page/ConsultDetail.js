@@ -21,8 +21,6 @@ export default class ConsultDetail extends React.Component {
             deposits: [],
             savings: []
         };
-
-        this.handleClickInquire = this.handleClickInquire.bind(this);
     }
 
     componentDidMount() {
@@ -64,10 +62,6 @@ export default class ConsultDetail extends React.Component {
         }).catch((error) => {
             console.log(error);
         });
-    }
-
-    handleClickInquire() {
-        window.alert('문의는 불가');
     }
 
     handleClickLink(productNo, category) {
@@ -156,9 +150,9 @@ export default class ConsultDetail extends React.Component {
                     </Grid>
                 </div>
 
-                <div className="consult-inquire-div" onClick={this.handleClickInquire}>
-                    {`이 상담내용에 대해 문의하기`}
-                </div>
+                {/*<div className="consult-inquire-div" onClick={this.handleClickInquire}>*/}
+                    {/*{`이 상담내용에 대해 문의하기`}*/}
+                {/*</div>*/}
             </div>
         );
     }

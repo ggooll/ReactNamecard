@@ -12,15 +12,13 @@
 .result-param-title {
     height: 5vh;
     line-height: 5vh;
-    width: 100vw;
-    /* background-color: #fff5f5; */
     font-size: 1.75rem;
     text-align: center;
 }
 
 .result-param-div {
-    height: 6vh;
-    line-height: 6vh;
+    height: 5vh;
+    line-height: 5vh;
     width: 90vw;
     margin: 0 5vw;
     background-color: white;
@@ -31,8 +29,9 @@
     display: inline-block;
     width: 25vw;
     text-align: center;
-    color:  #355f5c;
-    font-weight: bolder;
+    color: #0c7d75;
+    margin-left: 2vw;
+    font-size: 1.3rem;
 }
 
 .result-param-div span {
@@ -41,8 +40,7 @@
     margin-right: 7vw;
     width: 50vw;
     text-align: right;
-    font-size: 1.5rem;
-    font-weight: bold;
+    font-size: 1.3rem;
 }
 
 .commodities-result-title {
@@ -68,15 +66,11 @@
     padding-bottom: 1vh;
 }
 
-/**
-ddd?
- */
-
 .show-grid-top {
     height: 7vh;
     line-height: 7vh;
     background-color: white;
-    width: 80vw;
+    width: 100%;
     border-bottom: 3px solid palevioletred;
     margin-bottom: 1vh;
 }
@@ -120,6 +114,7 @@ ddd?
 .grid-mid-left {
     display: inline-block;
     width: 30vw;
+    margin-top: -10px;
 }
 
 .grid-mid-right {
@@ -137,7 +132,6 @@ ddd?
 
 .rate-numbering {
     font-size: 1.7rem !important;
-    font-weight: bold;
 }
 
 .max-intr-rate {
@@ -151,12 +145,12 @@ ddd?
 .show-grid-bottom {
     height: 6vh;
     line-height: 6vh;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     text-align: center;
-    background-color: #488680;
+    background-color: #41a5ce;
     color: white;
-    width: 80vw;
-    margin-top: 2vh;
+    width: 100%;
+    margin-top: 2vw;
 }
 
 .result-title {
@@ -189,7 +183,7 @@ ddd?
     background: white;
     border: 1px solid lightgray;
     margin-top: 0;
-    width: 80vw;
+    width: 100%;
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.5s ease;
@@ -203,7 +197,7 @@ ddd?
 
 .grid-detail-div.visible {
     max-height: 100vmax;
-    width: 80vw;
+    width: 100%;
     font-size: 1.3rem;
 }
 
@@ -239,7 +233,7 @@ ddd?
     height: 10vh !important;
     text-align: center;
     font-size: 1.2rem;
-    background-color: #c0c0c0;
+    background-color: #e8cbcb;
 }
 
 .special_intro {
@@ -270,7 +264,7 @@ ddd?
     line-height: 6vh;
     float: right;
     width: 19vw;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     text-align: center;
     font-style: italic;
     font-weight: bolder;

@@ -1,5 +1,5 @@
 .consult-background-div {
-    height: 30vh;
+    height: 20vh;
     background: url("https://image.shutterstock.com/z/stock-photo-business-partners-taking-notes-at-seminar-101562343.jpg");
     background-size: cover;
     -webkit-filter: blur(2px) brightness(0.4);
@@ -13,9 +13,9 @@
     top: 6.5vh;
     text-align: center;
     width: 100vw;
-    height: 30vh;
-    line-height: 30vh;
-    font-size: 2.3rem;
+    height: 20vh;
+    line-height: 23vh;
+    font-size: 2rem;
     color: white;
     font-family: Hana L;
 }
@@ -69,4 +69,14 @@
     font-size: 1.3rem;
     border-radius: 0;
     padding-left: 2vw;
+}
+
+.no-consult-div{
+    margin: 3vh auto;
+    text-align: center;
+}
+
+.no-consult-div img{
+    width: 80vw;
+    vertical-align: middle;
 }

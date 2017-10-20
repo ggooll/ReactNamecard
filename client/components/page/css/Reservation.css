@@ -2,7 +2,7 @@
     min-height: 56vh;
     width: 100vw;
     padding: 3vh 5vw;
-    background-color: rgba(2, 103, 105, 0.88);
+    background-color: #008485;
     border-top: 1px solid white;
 }
 
@@ -14,7 +14,7 @@
 
 .reservation-calendar-div{
     padding-top: 2vh;
-    background-color: #eaeaea;
+    background-color: #fcfcfc;
 }
 
 .reservation-title2{
@@ -136,6 +136,7 @@
     width: 35vw;
     color: #43497d;
     font-weight: bold;
-    background: #eaeaea;
+    background: #fcfcfc;
     border: 0;
+    margin-bottom: 2vh;
 }

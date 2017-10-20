@@ -48,11 +48,15 @@ export default class PopularProduct extends React.Component {
 
                 {/* dropdown 메뉴 */}
                 <div className={this.state.downVisible}>
-
-                    {/* 각 link가 붙음.. */}
                     <div className="drop-down-item" onClick={this.handleLinkMenu.bind(this, 'products')}>
                         <span className="down-menu-span">
                             <i className="fa fa-angle-right" aria-hidden="true"/>{'전체 예,적금 상품'}
+                        </span>
+                    </div>
+
+                    <div className="drop-down-item" onClick={this.handleLinkMenu.bind(this, 'ranking')}>
+                        <span className="down-menu-span">
+                            <i className="fa fa-angle-right" aria-hidden="true"/>{'금월의 예,적금 Top5!'}
                         </span>
                     </div>
 

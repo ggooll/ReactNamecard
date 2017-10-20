@@ -386,7 +386,7 @@ export default class OnDemandResult extends React.Component {
 
                                                 <div className="show-grid-bottom"
                                                      onClick={this.handleClickDetail.bind(this, idx)}>
-                                                    {'자세히보기'}
+                                                    {'이자, 원금, 우대금리 상세보기'}
                                                 </div>
                                                 <div className={this.state.commoditiesDetailToggle[idx]}>
                                                     <div className="clear-div-1"/>

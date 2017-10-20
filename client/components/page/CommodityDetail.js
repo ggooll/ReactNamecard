@@ -168,8 +168,8 @@ export default class CommodityDetail extends React.Component {
 
         return (
             <div className="savings-type-div">
-                {sType !== 0 ? <span className="type-title-savings">{'정액적립식'}</span> : undefined}
-                {fType !== 0 ? <span className="type-title-savings">{'자유적립식'}</span> : undefined}
+                {sType !== 0 ? <span className="type-title">{'정액적립식'}</span> : undefined}
+                {fType !== 0 ? <span className="type-title">{'자유적립식'}</span> : undefined}
             </div>
         );
     }
@@ -259,15 +259,17 @@ export default class CommodityDetail extends React.Component {
                         shadow={true} hwaccel={true} top="50%">
 
                     <div className="commodity-detail-main-title-div">
-                        <div className="commodity-detail-bank-title">
-                            <span>{this.state.commodity['KOR_CO_NM']}</span>
+                        <div className="commodity-title-div">
                             {this.state.category === 'deposit_info' ?
-                                <span className="type-title-deposit">{'예금'}</span> : undefined}
+                                <span className="type-title">{'예금'}</span> : undefined}
                             {this.state.category ==='savings_info' ?
                                 this.renderSavingsType() : undefined}
-                        </div>
-                        <div className="commodity-detail-product-title">
-                            {`${this.state.commodity['FIN_PRDT_NM']}`}
+                            <div className="commodity-detail-bank-title">
+                                <span>{this.state.commodity['KOR_CO_NM']}</span>
+                            </div>
+                            <div className="commodity-detail-product-title">
+                                {`${this.state.commodity['FIN_PRDT_NM']}`}
+                            </div>
                         </div>
 
                         <div className="item-section-div commodity-section">

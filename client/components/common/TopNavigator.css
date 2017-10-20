@@ -1,12 +1,13 @@
 .item-top-navigation {
     width: 100vw;
-    height: 6.5vh;
-    line-height: 6.5vh;
-    background-color: #008485;
+    height: 7vh;
+    line-height: 7vh;
+    background-color: #0e9192;
     color: white;
     margin: 0 auto;
     text-align: center;
     font-family: Hana L;
+    font-size: 1.5rem;
 }
 
 .nav-icon-div {
@@ -14,11 +15,11 @@
     position: absolute;
     top: 0;
     left: 0;
-    line-height: 6.5vh;
+    line-height: 7.5vh;
     vertical-align:middle;
 }
 
 .nav-icon-div i {
-    width: 6.5vh;
+    width: 7vh;
     vertical-align:middle;
 }

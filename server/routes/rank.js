@@ -40,11 +40,11 @@ router.post('/bestDeposit', (req, res) => {
 router.post('/bestSavings', (req, res) => {
     let statement = `SELECT * FROM
                         (SELECT
-                            NO,
-                            FIN_CO_NO,
-                            KOR_CO_NM,
-                            FIN_PRDT_NM,
-                            INTR_RATE_TYPE,
+                            si.NO,
+                            si.FIN_CO_NO,
+                            si.KOR_CO_NM,
+                            si.FIN_PRDT_NM,
+                            si.INTR_RATE_TYPE,
                             JOIN_WAY,
                             MAX_LIMIT,
                             MTRT_INT,
@@ -52,10 +52,17 @@ router.post('/bestSavings', (req, res) => {
                             JOIN_MEMBER,
                             nvl((select count(product_no) from consult_product where type = 2 and product_no = si.NO group by(product_no)), 0) product_count,
                             nvl((select count(savings_no) from savings_log where savings_no = si.NO group by(savings_no)), 0) savings_count,
+                            so.intr_rate,
+                            so.intr_rate2, 
+                            so.rsrv_type,
                             ROWNUM
-                        FROM savings_info si
+                        FROM savings_info si, savings_options so
+                        WHERE si.fin_co_no = si.fin_co_no and
+                            si.fin_prdt_cd = so.fin_prdt_cd and
+                            si.dcls_month = so.dcls_month and
+                            so.save_trm = 12
                         order by (product_count*2) + savings_count desc)
-                    WHERE ROWNUM < 6`;
+                        WHERE ROWNUM < 6`;
 
     oracledb.query(statement, []).then(function (dbResult) {
         let bestSavings = oracledb.transformToAssociated(dbResult);

@@ -4,11 +4,18 @@
 
 import React from 'react';
 import './css/ShortCut.css';
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 export default class ShortCut extends React.Component {
 
     constructor(props) {
         super(props);
+        this.empUrl = `http://104.198.112.172:3000/${this.props.clip}`;
+        this.handleClickClip = this.handleClickClip.bind(this);
+    }
+
+    handleClickClip(){
+        window.alert('명함을 클립보드에 복사했습니다');
     }
 
     render() {
@@ -28,6 +35,12 @@ export default class ShortCut extends React.Component {
                         </li>
                         <li>
                             <a href={`${this.props.sns}`}><img src="/images/twitterIcon.png"/></a>
+                        </li>
+                        <li>
+                            <CopyToClipboard
+                                text={this.empUrl}>
+                                <a onClick={this.handleClickClip}><img src="/images/shareIcon.png"/></a>
+                            </CopyToClipboard>
                         </li>
                     </ul>
                 </div>

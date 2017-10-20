@@ -5,6 +5,12 @@
     background-size: cover;
 }
 
+.commodity-title-div{
+    background: linear-gradient(to bottom right, #03a4a5 0, #f18181 100%);
+    padding-bottom: 3vh;
+    margin-top: 3vh;
+}
+
 .commodity-detail-main-title-div {
     min-height: 70vh;
     padding: 2vw;
@@ -26,7 +32,7 @@
     height: 6vh;
     padding-left: 2vw;
     line-height: 6vh;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     margin-bottom: 2vh;
     background: white;
     color: black;
@@ -35,11 +41,13 @@
 
 .commodity-detail-bank-title {
     height: 10vh;
-    line-height: 15vh;
-    font-size: 3rem;
-    color: dimgray;
+    line-height: 12vh;
+    font-size: 1.7rem;
+    color: white;
+    text-align: center;
     padding-left: 2vw;
-    font-weight: 600;
+    font-weight: 500;
+    clear: both;
 }
 
 .commodity-detail-bank-title span{
@@ -48,9 +56,10 @@
 
 .commodity-detail-product-title {
     height: 7vh;
-    line-height: 7vh;
-    color: dimgray;
-    font-size: 1.85rem;
+    line-height: 3vh;
+    color: white;
+    font-size: 1.75rem;
+    text-align: center;
     padding-left: 3vw;
     /* font-weight: bold; */
     font-family: 'Hana L' !important;
@@ -70,7 +79,7 @@
 
 .commodity-detail-sub-div {
     min-height: 10vh;
-    margin: 2vh auto;
+    margin: 5vh auto;
     font-family: 'Nanum Barun Gothic';
 }
 
@@ -85,7 +94,7 @@
 .detail-join-member-div{
     min-height: 6vh !important;
     line-height: 6vh !important;
-    font-size: 1.5rem !important;
+    font-size: 1.3rem !important;
     background: white !important;
     color: black !important;
     /* border: 2px solid rgba(169, 169, 169, 0.7); */
@@ -112,7 +121,7 @@ thead > td{
     background-color: white;
     text-align: center;
     color: dimgray;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-family: 'Nanum Barun Gothic';
     padding: 2vw;
 }
@@ -131,7 +140,7 @@ thead > td{
     text-align: left !important;
     color: dimgray !important;
     font-weight: 400 !important;
-    font-size: 1.4rem !important;
+    font-size: 1.3rem !important;
     /* border: 2px solid lightgray; */
     height: auto !important;
     line-height: 4vh !important;
@@ -191,34 +200,23 @@ thead > td{
     font-size: 1.1rem !important;
 }
 
-.type-title-deposit{
-    font-size: 1.5rem;
+.type-title{
+    font-size: 1rem;
     line-height: 4vh;
     height: 5vh;
-    margin: 0 0 1vw 2vw;
-    padding: 3px;
+    margin: 0 2vw 1vw 2vw;
+    padding: 10px;
     font-weight: 600;
-    color: #0e8071;
+    color: white;
     border-radius: 3px;
     display: inline-block;
     font-family: 'Nanum Barun Gothic';
-}
-
-.type-title-savings{
-    font-size: 1.5rem;
-    line-height: 4vh;
-    height: 5vh;
-    margin: 0 0 1vw 2vw;
-    padding: 3px;
-    font-weight: 600;
-    color: #f18282;
-    border-radius: 3px;
-    display: inline-block;
-    font-family: 'Nanum Barun Gothic';
+    float: right;
 }
 
 .savings-type-div{
     display: inline-block;
+    float: right;
 }
 
 .rsrv-type-span{
@@ -226,17 +224,4 @@ thead > td{
     padding-left: 2vw;
     display: inline-block;
     margin-top: 1vh;
-}
-
-.scroll-top-span{
-    display: inline-block;
-    width: 17vw;
-    height: 17vw;
-    background: #488680;
-    color: white;
-    border-radius: 50%;
-    line-height: 17vw;
-    text-align: center;
-    font-weight: bold;
-    font-size: 1.3rem;
 }
