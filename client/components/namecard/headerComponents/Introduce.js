@@ -7,7 +7,7 @@ import axios from 'axios';
 import Slider from 'react-slick';
 import ShortCut from './ShortCut';
 import history from '../../../history';
-import {Helmet} from 'react-helmet';
+// import {Helmet} from 'react-helmet';
 import './css/Introduce.css';
 import '../../../global_css/clearDiv.css';
 import '../../../global_css/slick.css';
@@ -90,12 +90,12 @@ export default class Introduce extends React.Component {
         return (
             <div className="namecard-whole-div">
 
-                <Helmet>
-                    <meta property="og:title" content={`하나 영업사원 ${this.state.name}입니다.`}/>
-                    <meta property="og:url" content={`http://104.198.112.172:3000/${this.props.name}`}/>
-                    <meta property="og:image" content={`/images/HanaTiLogo.jpg`}/>
-                    <meta property="og:description" content="야호~! 하고싶은 말"/>
-                </Helmet>
+                {/*<Helmet>*/}
+                    {/*<meta property="og:title" content={`하나 영업사원 ${this.state.name}입니다.`}/>*/}
+                    {/*<meta property="og:url" content={`http://104.198.112.172:3000/${this.props.name}`}/>*/}
+                    {/*<meta property="og:image" content={`/images/HanaTiLogo.jpg`}/>*/}
+                    {/*<meta property="og:description" content="야호~! 하고싶은 말"/>*/}
+                {/*</Helmet>*/}
 
 
                 <Slider {...this.sliderSettings}>
