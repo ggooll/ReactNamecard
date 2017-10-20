@@ -10,7 +10,7 @@ export default class NoMatch extends React.Component {
         super(props);
 
         this.state = {
-           code : this.props.location.state.code
+           code : this.props.location.state !== undefined ? this.props.location.state.code : undefined
         };
     }
 
@@ -27,10 +27,10 @@ export default class NoMatch extends React.Component {
                 <div className="clear-div-4"/>
                 <div>
                     <div>
-                        <a href="https://www.kebhana.com/"> 하나은행으로 가기 </a>
+                        <a href="https://m.kebhana.com/"> 하나은행으로 가기 </a>
                     </div>
                     <div>
-                        <a href="https://www.hanacard.co.kr/"> 하나 카드 보기</a>
+                        <a href="https://m.hanacard.co.kr/"> 하나 카드 보기</a>
                     </div>
                     <div>
                         <a href="#"> 다른 곳으로 보내기 4</a>

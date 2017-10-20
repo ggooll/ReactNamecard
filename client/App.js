@@ -8,7 +8,6 @@ import OnDemand from './components/page/OnDemand';
 import OnDemandResult from './components/page/OnDemandResult';
 import OverAll from './components/page/OverAll';
 import Consult from './components/page/Consult';
-import Survey from './components/page/Survey';
 import CommodityDetail from './components/page/CommodityDetail';
 import ConsultDetail from './components/page/ConsultDetail';
 import ChatBot from './components/page/ChatBot';
@@ -106,11 +105,6 @@ export default class App extends React.Component {
                             <Route name="Reservation"
                                    exact path={`/:empcode/reservation`}
                                    component={Reservation}/>
-
-                            {/* 상담 관련 상품 정보 보기 추가 */}
-                            <Route name="survey"
-                                   exact path={`/:empcode/survey`}
-                                   component={Survey}/>
 
                             <Route name="home"
                                    exact path={`/:empcode`}
