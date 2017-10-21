@@ -122,7 +122,7 @@ export default class Consult extends React.Component {
                 </div>
                 <div className="clear-div-2"/>
 
-                {this.state.consults.length === 0 ?
+                {this.state.consults.length !== 0 ?
                     <div className="item-section-div">
                         <Timeline>
                             {this.state.consults.map((consult, idx) => {
