@@ -1,15 +1,16 @@
 .consult-header-div {
-    width: 100vw !important;
     height: 7vh;
     background-color: white;
     color: #000;
     line-height: 7vh;
-    font-size: 1.5rem;
+    font-size: 1em;
+    padding-left: 2vw;
     border-bottom: 1px solid lightgray;
 }
 
 .header-grid {
     border-top: 1px solid darkslategray;
+    background: rgba(234, 234, 234, 0.6);
 }
 
 .consult-header-div span {
@@ -18,18 +19,18 @@
 }
 
 .consult-content-div {
-    margin: 0 auto;
+    margin: 1vh auto;
     width: 90vw;
     padding: 4vh 0;
-    min-height: 20vh;
+    min-height: 35vh;
     overflow: auto;
-    font-size: 1.65rem;
+    font-size: 1.5rem;
 }
 
 .consult-div {
     position: relative;
     height: 12vh;
-    margin-bottom: 2vh;
+    margin: 0 2vw 2vh 2vw;
     background-color: #fff;
     border: 1px solid lightgray;
     border-radius: 4px;
@@ -50,7 +51,7 @@
 
 .consult-product-name span {
     margin-left: 4vw;
-    font-size: 1.8rem;
+    font-size: 1.6rem;
 }
 
 .consult-product-intro {
@@ -86,6 +87,11 @@
     font-family: Hana L;
 }
 
+.consult-hr{
+    background-color: dimgray;
+    margin: 0 0 2vh 0;
+}
+
 .deposit-link {
     background-color: #0e9192;
 }
@@ -95,6 +101,6 @@
 }
 
 .category-intro {
-    font-size: 1.5rem;
-    margin-left: 2vw;
+    font-size: 1.4rem;
+    padding-left: 2vw;
 }

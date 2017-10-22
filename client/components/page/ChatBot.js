@@ -48,6 +48,11 @@ export default class ChatBot extends React.Component {
                 trigger: '2',
             },
             {
+                id: 'return',
+                message: '다른 조건으로 검색해 보시겠어요?',
+                trigger: '2'
+            },
+            {
                 id: '2',
                 options: [
                     {value: '1', label: '상품 추천', trigger: '3'},
@@ -88,8 +93,7 @@ export default class ChatBot extends React.Component {
                     {value: '6', label: '6개월', trigger: '5'},
                     {value: '12', label: '1년', trigger: '5'},
                     {value: '24', label: '2년', trigger: '5'},
-                    {value: '36', label: '3년', trigger: '5'},
-                    {value: '60', label: '5년이상', trigger: '5'},
+                    {value: '36', label: '3년이상', trigger: '5'},
                     {value: '8', label: '이전', trigger: '3'},
                     {value: '9', label: '처음', trigger: '1'},
                 ],
@@ -100,8 +104,7 @@ export default class ChatBot extends React.Component {
                     {value: '6', label: '6개월', trigger: '21'},
                     {value: '12', label: '1년', trigger: '21'},
                     {value: '24', label: '2년', trigger: '21'},
-                    {value: '36', label: '3년', trigger: '21'},
-                    {value: '60', label: '5년이상', trigger: '21'},
+                    {value: '36', label: '3년이상', trigger: '21'},
                     {value: '8', label: '이전', trigger: '3'},
                     {value: '9', label: '처음', trigger: '1'},
                 ],
@@ -148,9 +151,9 @@ export default class ChatBot extends React.Component {
                 trigger: '8',
                 validator: (value) => {
                             if (isNaN(value)) {
-                                return 'value must be a number';
+                                return '숫자만 입력해주세요!';
                             } else if (value < 0) {
-                                return 'value must be positive';
+                                return '0보다 작은값은 안되요ㅜㅜ';
                             }
                             return true;
                         },
@@ -266,7 +269,7 @@ export default class ChatBot extends React.Component {
             {
                 id: 'final',
                 component: <ChatReview />,
-                end: true
+                trigger: 'return'
             }
         ];
 

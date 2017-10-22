@@ -34,6 +34,7 @@ router.post('/existCustomer', (req, res) => {
             let saltedNum = bcrypt.hashSync(randNum, salt);
             console.log('generate : ' + randNum);
             res.json({
+                randNum: randNum,
                 saltedNum: saltedNum,
                 authUser: auth[0]["NO"]
             });

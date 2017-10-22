@@ -137,7 +137,7 @@ export default class ChatReview extends React.Component {
                                 <div>해당 상품을 <span>{this.state.period}</span> 개월동안</div>
                                 <div>월 <span>{resource.moneyWithComma(this.state.amount)}</span> 원을 저금시</div>
                                 <div>
-                                    세전 실수령액은 총 <span>{this.calculateSavingsValue(Number(filteredItems[0]["INTR_RATE"]), filteredItems[0]["INTR_RATE_TYPE"])}</span> 원 입니다
+                                    세전 만기 수령액 <span>{this.calculateSavingsValue(Number(filteredItems[0]["INTR_RATE"]), filteredItems[0]["INTR_RATE_TYPE"])}</span> 원 입니다
                                 </div>
                             </div>
                         </div>
@@ -147,7 +147,8 @@ export default class ChatReview extends React.Component {
                     </div>
                 </div> :
                 <div>
-                    <p>상품이 없습니다 T_T</p>
+                    <p>죄송합니다!</p>
+                    <p>요청하신 조건에 맞는 상품이 없습니다 T_T</p>
                 </div>
         );
     }

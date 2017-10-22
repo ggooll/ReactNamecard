@@ -123,7 +123,7 @@ export default class ConsultDetail extends React.Component {
                             </Col>
                         );
                     })}
-                    <div className="clear-div-4"/>
+                    <div className="clear-div-3"/>
                 </div>
             );
         }
@@ -138,7 +138,7 @@ export default class ConsultDetail extends React.Component {
                         {this.renderConsult()}
                     </Row>
                 </Grid>
-                <hr/>
+                <hr className="consult-hr"/>
 
                 <div className="item-section-div">
                     <Grid>

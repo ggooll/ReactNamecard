@@ -31,13 +31,13 @@
 }
 
 .reserve-success{
-    color: dodgerblue;
+    color: #0081ff;
 }
 
 .reserve-wait{
-    color: #147754;
+    color: #016b45;
 }
 
 .reserve-cancel{
-    color:darkred;
+    color: #d20000;
 }

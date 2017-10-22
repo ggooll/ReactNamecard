@@ -59,14 +59,13 @@ export default class Reservation extends React.Component {
                                     }
                                 </div>
                                 <div className="clear-div-1"/>
-                                <div className="reservation-list-location">
-                                    장소 : {item["LOCATION"]}
-                                </div>
 
                                 <div className="reservation-list-location">
                                     시간 : {item["START_DATE"]}
                                 </div>
-
+                                <div className="reservation-list-location">
+                                    장소 : {item["LOCATION"]}
+                                </div>
                                 {item["MSG"] !== null ?
                                     <div className="reservation-list-location">
                                         메시지 : {item["MSG"]}

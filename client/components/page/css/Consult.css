@@ -1,4 +1,5 @@
 .consult-background-div {
+    margin-top: -2px;
     height: 20vh;
     background: url("https://image.shutterstock.com/z/stock-photo-business-partners-taking-notes-at-seminar-101562343.jpg");
     background-size: cover;
@@ -41,7 +42,7 @@
     text-align: center;
     width: 100vw;
     height: 10vh;
-    background-color: #e6e6e6;
+    background-color: rgba(230, 230, 230, 0.74);
     display: table;
 }
 

@@ -69,7 +69,7 @@ export default class AuthExistModal extends React.Component {
     getAuthNumber(component) {
         axios.post('/api/auth/existCustomer', {'phone': component.state.phone}).then((promiseNumber) => {
             if (promiseNumber.data !== false) {
-                window.alert('요청하신 번호로 인증번호가 발송되었습니다');
+                window.alert('요청하신 번호로 인증번호가 발송되었습니다. ( ' + promiseNumber.data.randNum + ' )');
                 console.log(promiseNumber.data.authUser);
                 component.setState({
                     refSaltedNumber: promiseNumber.data.saltedNum,
