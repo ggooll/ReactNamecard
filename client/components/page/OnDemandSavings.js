@@ -153,10 +153,10 @@ export default class OnDemandSavings extends React.Component {
             let typeS = this.state.rsrvTypeS;
             let typeF = this.state.rsrvTypeF;
             let paramType = '';
-            if((typeS === '' && typeF === '') || (typeS === 'S' && typeF === 'F')){
+            if((typeS === '' && typeF === '') || (typeS === 'rsrvType-selected' && typeF === 'rsrvType-selected')){
                 paramType = 'M';
             } else {
-                paramType = typeF !== '' ? 'S' : 'F';
+                paramType = typeF !== '' ? 'F' : 'S';
             }
 
             let passParam = {

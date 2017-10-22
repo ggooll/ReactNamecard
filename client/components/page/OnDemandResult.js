@@ -101,7 +101,6 @@ export default class OnDemandResult extends React.Component {
     // db select
     getCommodities(param, callback) {
         axios.post('/api/ondemand/getResult', {passParam: param}).then((results) => {
-
             let commodities = results.data.map((result)=>{
                 result['visible'] = 1;
                 return result;
@@ -151,9 +150,10 @@ export default class OnDemandResult extends React.Component {
             let specialOptions = results.data;
             let optionName = param.product === 'deposit_info' ? 'DEPOSIT_NO' : 'SAVINGS_NO';
 
+            console.log(specialOptions);
+
             let appliedSpecialCommodities = filteredCommodities.map((commodity) => {
 
-                console.log(commodity);
                 commodity["specialOptions"] = specialOptions.filter((option) => {
                     if (option[`${optionName}`] === commodity[`${optionName}`]) {
                         return option;

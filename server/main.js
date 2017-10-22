@@ -30,7 +30,7 @@ const port = 3000;
 const devPort = 3001;
 // const sslPort = 3002;
 const db = require('oracledb-autoreconnect');
-db.oracledb.maxRows = 300;
+db.oracledb.maxRows = 1000;
 const dbConfig = require('./database/config');
 
 /**
